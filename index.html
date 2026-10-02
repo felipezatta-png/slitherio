@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
-      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+      content="width=device-width,initial-scale=1.0,user-scalable=no">
 
-<title>CUIA.IO 3D</title>
+<title>Cuia.io 3D — Chimarrão City</title>
 
 <style>
 *{
-    box-sizing:border-box;
     margin:0;
     padding:0;
+    box-sizing:border-box;
 }
 
 html,body{
     width:100%;
     height:100%;
     overflow:hidden;
-    background:#07100b;
+    background:#09110b;
     font-family:Arial,Helvetica,sans-serif;
     touch-action:none;
 }
@@ -27,93 +27,116 @@ canvas{
     display:block;
 }
 
-#loading{
+#loading,
+#menu,
+#gameover{
     position:fixed;
     inset:0;
     z-index:100;
     display:flex;
     align-items:center;
     justify-content:center;
+}
+
+#loading{
     flex-direction:column;
     background:
-        radial-gradient(circle,#1c3b22,#050a06 70%);
+        radial-gradient(circle at center,#274b2c,#050a06 70%);
     color:white;
+}
+
+#loading .cup{
+    font-size:90px;
+    animation:pulse 1.4s infinite;
 }
 
 #loading h1{
-    font-size:55px;
-    color:#b9d978;
-    letter-spacing:-4px;
+    color:#b8db79;
+    font-size:42px;
+    margin-top:10px;
 }
 
 #loading p{
-    color:#82977f;
-    margin-top:12px;
+    color:#91a38e;
+    margin-top:10px;
 }
 
-#menu{
-    position:fixed;
-    inset:0;
-    z-index:50;
+@keyframes pulse{
+    50%{transform:scale(1.12)}
+}
+
+#menu,
+#gameover{
     display:none;
-    align-items:center;
-    justify-content:center;
-    background:#020604bb;
-    backdrop-filter:blur(8px);
+    background:#020603d9;
+    backdrop-filter:blur(10px);
 }
 
 .panel{
-    width:min(500px,92vw);
+    width:min(520px,92vw);
     padding:35px;
     border-radius:28px;
     background:
-        linear-gradient(145deg,#18271bd9,#07100bd9);
+        linear-gradient(
+            145deg,
+            #17271bd9,
+            #07100bdd
+        );
     border:1px solid #ffffff12;
     box-shadow:
-        0 30px 100px #000c,
+        0 30px 100px #000b,
         inset 0 1px #ffffff12;
-    text-align:center;
     color:white;
+    text-align:center;
 }
 
 .logo{
-    font-size:68px;
+    font-size:64px;
     font-weight:1000;
-    letter-spacing:-6px;
-    color:#b8d871;
+    color:#b9dc79;
+    letter-spacing:-5px;
 }
 
 .subtitle{
-    color:#879a84;
-    text-transform:uppercase;
-    letter-spacing:4px;
+    color:#81927e;
     font-size:11px;
+    letter-spacing:4px;
+    text-transform:uppercase;
 }
 
-.desc{
-    margin:20px 0;
-    color:#aab9a7;
-    line-height:1.6;
+.description{
+    margin:22px 0;
+    color:#acb9a8;
+    line-height:1.65;
 }
 
-#start{
+button{
     width:100%;
     border:0;
-    border-radius:15px;
     padding:17px;
-    background:linear-gradient(100deg,#a9d56d,#579e4e);
-    color:#11200d;
-    font-size:17px;
-    font-weight:900;
+    border-radius:15px;
     cursor:pointer;
+    font-weight:900;
+    font-size:16px;
+}
+
+#start,
+#again{
+    background:
+        linear-gradient(
+            100deg,
+            #b6dc75,
+            #5c9f50
+        );
+    color:#10200d;
 }
 
 #hud{
-    position:fixed;
-    z-index:20;
-    inset:0;
-    pointer-events:none;
     display:none;
+    position:fixed;
+    inset:0;
+    z-index:20;
+    pointer-events:none;
 }
 
 .top{
@@ -124,166 +147,169 @@ canvas{
 
     display:flex;
     justify-content:space-between;
-    align-items:flex-start;
     gap:10px;
 }
 
 .box{
-    min-width:125px;
     padding:10px 14px;
+    min-width:125px;
+
     border-radius:14px;
-    background:#07100ddd;
+
+    background:#06100bdc;
     border:1px solid #ffffff12;
-    backdrop-filter:blur(10px);
+
     color:white;
+    backdrop-filter:blur(8px);
 }
 
 .label{
-    color:#708271;
+    color:#738473;
     font-size:10px;
     text-transform:uppercase;
     letter-spacing:1px;
 }
 
 .value{
-    margin-top:4px;
-    font-size:22px;
+    margin-top:3px;
+    font-size:21px;
     font-weight:900;
 }
 
 #size{
-    color:#badc78;
+    color:#bade77;
 }
 
 .progress{
-    margin-top:7px;
-    width:170px;
+    width:180px;
     height:7px;
-    background:#ffffff12;
+    margin-top:7px;
+
     border-radius:20px;
+    background:#ffffff12;
     overflow:hidden;
 }
 
 #progress{
     width:5%;
     height:100%;
-    background:linear-gradient(90deg,#72b955,#e0c36d);
+
+    background:
+        linear-gradient(
+            90deg,
+            #65a950,
+            #e0c36d
+        );
+}
+
+#objective{
+    position:absolute;
+    left:50%;
+    top:90px;
+    transform:translateX(-50%);
+
+    color:#c3d2bf;
+    font-size:12px;
+
+    padding:8px 15px;
+    border-radius:30px;
+
+    background:#07100bd9;
+    border:1px solid #ffffff0d;
 }
 
 #message{
     position:absolute;
     left:50%;
     top:45%;
-    transform:translate(-50%,-50%) scale(.5);
+
+    transform:
+        translate(-50%,-50%)
+        scale(.5);
+
     opacity:0;
 
     text-align:center;
 
-    color:#d9ef9a;
-    font-size:clamp(45px,10vw,100px);
+    color:#d9ef99;
+
+    font-size:
+        clamp(45px,9vw,105px);
+
     font-weight:1000;
     letter-spacing:-5px;
 
     text-shadow:
-        0 0 15px #a9d66a,
-        0 0 60px #5f9c45,
-        0 10px 30px #000;
+        0 0 20px #9bd25d,
+        0 0 80px #5d984a,
+        0 15px 35px #000;
 
     transition:
-        opacity .5s,
-        transform .7s cubic-bezier(.15,1.5,.3,1);
+        .6s
+        cubic-bezier(.15,1.5,.3,1);
 }
 
 #message.show{
     opacity:1;
-    transform:translate(-50%,-50%) scale(1);
+    transform:
+        translate(-50%,-50%)
+        scale(1);
 }
 
 #message small{
     display:block;
     margin-top:12px;
-    font-size:15px;
+    font-size:14px;
     letter-spacing:3px;
-    color:#d6ddce;
+    color:#d4dfcf;
+}
+
+#hint{
+    position:absolute;
+    bottom:18px;
+    left:50%;
+    transform:translateX(-50%);
+
+    color:#82907f;
+    font-size:12px;
 }
 
 #mobile{
-    position:fixed;
-    left:25px;
-    bottom:25px;
-    width:130px;
-    height:130px;
     display:none;
+
+    position:fixed;
     z-index:30;
 
+    left:22px;
+    bottom:22px;
+
+    width:135px;
+    height:135px;
+
     border-radius:50%;
-    background:#ffffff0b;
+
+    background:#ffffff08;
     border:1px solid #ffffff18;
 }
 
 #stick{
     position:absolute;
+
     width:52px;
     height:52px;
+
     left:50%;
     top:50%;
-    transform:translate(-50%,-50%);
+
+    transform:
+        translate(-50%,-50%);
+
     border-radius:50%;
-    background:#a9d46d;
-    box-shadow:0 0 30px #9dcc6533;
-}
 
-#hint{
-    position:absolute;
-    left:50%;
-    bottom:20px;
-    transform:translateX(-50%);
-    color:#829181;
-    font-size:12px;
-    text-shadow:0 2px 8px #000;
-}
+    background:#a9d66d;
 
-#gameover{
-    position:fixed;
-    inset:0;
-    z-index:60;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    background:#020603dd;
-    backdrop-filter:blur(8px);
-}
-
-.final{
-    width:min(430px,90vw);
-    padding:38px;
-    border-radius:25px;
-    background:#0b170deF;
-    border:1px solid #ffffff12;
-    color:white;
-    text-align:center;
-}
-
-.final h2{
-    font-size:40px;
-    margin-bottom:10px;
-}
-
-.finalScore{
-    font-size:45px;
-    color:#b7d979;
-    font-weight:1000;
-    margin:18px;
-}
-
-#again{
-    width:100%;
-    border:0;
-    padding:16px;
-    border-radius:14px;
-    background:#77b75b;
-    color:#12200f;
-    font-weight:900;
+    box-shadow:
+        0 0 30px #9dcc6535;
 }
 
 @media(max-width:700px){
@@ -297,12 +323,17 @@ canvas{
     }
 
     .box{
-        min-width:100px;
+        min-width:95px;
         padding:8px 10px;
     }
 
     .progress{
-        width:110px;
+        width:100px;
+    }
+
+    #objective{
+        top:85px;
+        white-space:nowrap;
     }
 }
 </style>
@@ -311,25 +342,28 @@ canvas{
 <body>
 
 <div id="loading">
-    <h1>🧉</h1>
+    <div class="cup">🧉</div>
     <h1>CUIA.IO 3D</h1>
-    <p>Preparando a cidade...</p>
+    <p>Construindo Chimarrão City...</p>
 </div>
 
 <div id="menu">
+
     <div class="panel">
 
         <div class="logo">CUIA.IO</div>
 
         <div class="subtitle">
-            a cidade vai virar chimarrão
+            Chimarrão City
         </div>
 
-        <div class="desc">
-            Comece pequeno. Engula erva-mate, água,
-            objetos, pessoas, carros e cavalos.
-            Cresça até conseguir engolir o maior
-            prédio da cidade.
+        <div class="description">
+            Controle uma cuia gigante e atravesse uma cidade
+            cheia de erva-mate, água, árvores, pessoas,
+            carros, cavalos, casas e arranha-céus.
+            <br><br>
+            Quanto mais você engole, maior fica.
+            Seu objetivo é alcançar o prédio gigante.
         </div>
 
         <button id="start">
@@ -337,6 +371,7 @@ canvas{
         </button>
 
     </div>
+
 </div>
 
 <div id="hud">
@@ -350,7 +385,7 @@ canvas{
 
         <div class="box">
             <div class="label">Tamanho</div>
-            <div class="value" id="size">1.0</div>
+            <div class="value" id="size">12</div>
 
             <div class="progress">
                 <div id="progress"></div>
@@ -359,9 +394,13 @@ canvas{
 
         <div class="box">
             <div class="label">Tempo</div>
-            <div class="value" id="timer">02:00</div>
+            <div class="value" id="timer">03:00</div>
         </div>
 
+    </div>
+
+    <div id="objective">
+        🧉 Alcance tamanho 150 para engolir o prédio gigante
     </div>
 
     <div id="message">
@@ -370,7 +409,7 @@ canvas{
     </div>
 
     <div id="hint">
-        WASD / SETAS / MOUSE — MOVA A CUIA
+        WASD / SETAS / MOUSE PARA MOVER
     </div>
 
 </div>
@@ -381,13 +420,29 @@ canvas{
 
 <div id="gameover">
 
-    <div class="final">
+    <div class="panel">
 
-        <h2>Fim do chimarrão</h2>
+        <div style="font-size:55px">
+            🧉
+        </div>
 
-        <div>Você fez</div>
+        <h2 style="font-size:35px;margin:10px">
+            Fim do chimarrão
+        </h2>
 
-        <div class="finalScore" id="finalScore">
+        <p style="color:#89998a">
+            Pontuação
+        </p>
+
+        <div
+            id="finalScore"
+            style="
+                font-size:45px;
+                color:#b8dc78;
+                font-weight:1000;
+                margin:12px
+            "
+        >
             0
         </div>
 
@@ -399,15 +454,39 @@ canvas{
 
 </div>
 
+
 <script type="module">
 
-import * as THREE
-from "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js";
+/*
+============================================================
+ THREE.JS
+============================================================
+*/
+
+import * as THREE from
+"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js";
 
 
-/* =========================================================
-   RENDERER
-========================================================= */
+/*
+============================================================
+ CONFIGURAÇÃO
+============================================================
+*/
+
+const WORLD = 1800;
+
+const GAME_TIME = 180;
+
+const START_SIZE = 12;
+
+const MAX_SIZE = 180;
+
+
+/*
+============================================================
+ RENDERER
+============================================================
+*/
 
 const renderer =
     new THREE.WebGLRenderer({
@@ -418,7 +497,7 @@ const renderer =
 renderer.setPixelRatio(
     Math.min(
         window.devicePixelRatio || 1,
-        1.75
+        1.5
     )
 );
 
@@ -427,78 +506,89 @@ renderer.setSize(
     innerHeight
 );
 
-renderer.shadowMap.enabled=true;
-renderer.shadowMap.type=
-    THREE.PCFSoftShadowMap;
-
-renderer.outputColorSpace=
+renderer.outputColorSpace =
     THREE.SRGBColorSpace;
 
-renderer.toneMapping=
+renderer.toneMapping =
     THREE.ACESFilmicToneMapping;
 
-renderer.toneMappingExposure=1.15;
+renderer.toneMappingExposure = 1.15;
+
+
+/*
+ Sombras mais baratas.
+*/
+
+renderer.shadowMap.enabled = true;
+
+renderer.shadowMap.type =
+    THREE.PCFShadowMap;
 
 document.body.appendChild(
     renderer.domElement
 );
 
 
-/* =========================================================
-   CENA
-========================================================= */
+/*
+============================================================
+ CENA
+============================================================
+*/
 
 const scene =
     new THREE.Scene();
 
 scene.background =
-    new THREE.Color("#91aa87");
+    new THREE.Color("#91a989");
 
 scene.fog =
     new THREE.Fog(
-        "#91aa87",
-        300,
-        1500
+        "#91a989",
+        500,
+        1700
     );
 
 
-/* =========================================================
-   CÂMERA
-========================================================= */
+/*
+============================================================
+ CÂMERA
+============================================================
+*/
 
 const camera =
     new THREE.PerspectiveCamera(
         55,
-        innerWidth/innerHeight,
+        innerWidth / innerHeight,
         .1,
         3000
     );
 
 camera.position.set(
     0,
-    220,
+    190,
     230
 );
 
 
-/* =========================================================
-   LUZ
-========================================================= */
+/*
+============================================================
+ ILUMINAÇÃO
+============================================================
+*/
 
-const hemi =
+scene.add(
     new THREE.HemisphereLight(
-        "#d9efd1",
-        "#243024",
-        2.0
-    );
-
-scene.add(hemi);
+        "#d9eed6",
+        "#253126",
+        2.2
+    )
+);
 
 
 const sun =
     new THREE.DirectionalLight(
-        "#fff4d6",
-        3.5
+        "#fff1d2",
+        3.0
     );
 
 sun.position.set(
@@ -507,164 +597,138 @@ sun.position.set(
     200
 );
 
-sun.castShadow=true;
+sun.castShadow = true;
 
-sun.shadow.mapSize.width=2048;
-sun.shadow.mapSize.height=2048;
 
-sun.shadow.camera.left=-700;
-sun.shadow.camera.right=700;
-sun.shadow.camera.top=700;
-sun.shadow.camera.bottom=-700;
+/*
+ SOMENTE elementos grandes
+ recebem sombras pesadas.
+*/
+
+sun.shadow.mapSize.width = 1024;
+sun.shadow.mapSize.height = 1024;
+
+sun.shadow.camera.left = -600;
+sun.shadow.camera.right = 600;
+sun.shadow.camera.top = 600;
+sun.shadow.camera.bottom = -600;
 
 scene.add(sun);
 
 
-/* =========================================================
-   CONFIG
-========================================================= */
+/*
+============================================================
+ MATERIAIS
+============================================================
+*/
 
-const WORLD=1800;
+/*
+ Materiais são reutilizados.
+ Isso reduz bastante o custo.
+*/
 
-const GAME_TIME=120;
+const mats = {
 
-const objects=[];
+    grass:
+        new THREE.MeshLambertMaterial({
+            color:"#718d67"
+        }),
 
-let running=false;
-let won=false;
+    road:
+        new THREE.MeshLambertMaterial({
+            color:"#414946"
+        }),
 
-let score=0;
-let timeLeft=GAME_TIME;
+    sidewalk:
+        new THREE.MeshLambertMaterial({
+            color:"#8c9084"
+        }),
 
+    wood:
+        new THREE.MeshLambertMaterial({
+            color:"#67452e"
+        }),
 
-/* =========================================================
-   CUIA
-========================================================= */
+    green:
+        new THREE.MeshLambertMaterial({
+            color:"#3f783d"
+        }),
 
-const bowl=
-    new THREE.Group();
+    green2:
+        new THREE.MeshLambertMaterial({
+            color:"#558c42"
+        }),
 
-scene.add(bowl);
+    skin:
+        new THREE.MeshLambertMaterial({
+            color:"#bd8060"
+        }),
 
-const bowlBody=
-    new THREE.Mesh(
-        new THREE.SphereGeometry(
-            1,
-            32,
-            20
-        ),
-        new THREE.MeshStandardMaterial({
-            color:"#7d5434",
-            roughness:.65,
-            metalness:.05
+    blue:
+        new THREE.MeshLambertMaterial({
+            color:"#466f9b"
+        }),
+
+    red:
+        new THREE.MeshLambertMaterial({
+            color:"#ad5148"
+        }),
+
+    yellow:
+        new THREE.MeshLambertMaterial({
+            color:"#c8aa55"
+        }),
+
+    water:
+        new THREE.MeshLambertMaterial({
+            color:"#52aeb8",
+            transparent:true,
+            opacity:.85
+        }),
+
+    herb:
+        new THREE.MeshLambertMaterial({
+            color:"#427d35"
+        }),
+
+    horse:
+        new THREE.MeshLambertMaterial({
+            color:"#70482d"
+        }),
+
+    building1:
+        new THREE.MeshLambertMaterial({
+            color:"#7e8b88"
+        }),
+
+    building2:
+        new THREE.MeshLambertMaterial({
+            color:"#9b9681"
+        }),
+
+    building3:
+        new THREE.MeshLambertMaterial({
+            color:"#6e8183"
+        }),
+
+    giant:
+        new THREE.MeshLambertMaterial({
+            color:"#a69a79"
+        }),
+
+    glass:
+        new THREE.MeshLambertMaterial({
+            color:"#79a5ad"
         })
-    );
 
-bowlBody.scale.set(
-    1,
-    .55,
-    1
-);
-
-bowlBody.castShadow=true;
-bowlBody.receiveShadow=true;
-
-bowl.add(bowlBody);
+};
 
 
 /*
-  Interior preto/verde.
+============================================================
+ CHÃO
+============================================================
 */
-
-const inside=
-    new THREE.Mesh(
-        new THREE.CylinderGeometry(
-            .72,
-            .88,
-            .25,
-            32
-        ),
-        new THREE.MeshStandardMaterial({
-            color:"#172016",
-            roughness:1
-        })
-    );
-
-inside.position.y=.1;
-
-bowl.add(inside);
-
-
-/*
-  Erva mate.
-*/
-
-const herb =
-    new THREE.Mesh(
-        new THREE.SphereGeometry(
-            .55,
-            24,
-            12
-        ),
-        new THREE.MeshStandardMaterial({
-            color:"#365c2b",
-            roughness:1
-        })
-    );
-
-herb.scale.y=.25;
-herb.position.y=.18;
-
-bowl.add(herb);
-
-
-/*
-  Bomba.
-*/
-
-const bombilla =
-    new THREE.Mesh(
-        new THREE.CylinderGeometry(
-            .045,
-            .045,
-            1.35,
-            12
-        ),
-        new THREE.MeshStandardMaterial({
-            color:"#c4bda7",
-            metalness:.8,
-            roughness:.25
-        })
-    );
-
-bombilla.rotation.z=
-    -Math.PI/5;
-
-bombilla.position.set(
-    .35,
-    .45,
-    0
-);
-
-bowl.add(bombilla);
-
-
-/*
-  Escala inicial.
-*/
-
-let bowlRadius=1;
-
-bowl.scale.setScalar(
-    bowlRadius
-);
-
-bowl.position.y=.8;
-
-
-/* =========================================================
-   CHÃO
-========================================================= */
 
 const ground =
     new THREE.Mesh(
@@ -672,56 +736,78 @@ const ground =
             WORLD*2,
             WORLD*2
         ),
-        new THREE.MeshStandardMaterial({
-            color:"#76936c",
-            roughness:.9
-        })
+        mats.grass
     );
 
-ground.rotation.x=-Math.PI/2;
-ground.receiveShadow=true;
+ground.rotation.x =
+    -Math.PI/2;
+
+ground.receiveShadow = true;
 
 scene.add(ground);
 
 
-/* =========================================================
-   RUAS
-========================================================= */
+/*
+============================================================
+ RUAS
+============================================================
+*/
 
-const roadMaterial =
-    new THREE.MeshStandardMaterial({
-        color:"#454d47",
-        roughness:.95
-    });
+function createRoad(
+    x,
+    z,
+    width,
+    depth
+){
 
-
-function road(x,z,w,d){
-
-    const mesh =
+    const road =
         new THREE.Mesh(
             new THREE.BoxGeometry(
-                w,
-                .025,
-                d
+                width,
+                .04,
+                depth
             ),
-            roadMaterial
+            mats.road
         );
 
-    mesh.position.set(
+    road.position.set(
         x,
-        .015,
+        .02,
         z
     );
 
-    mesh.receiveShadow=true;
+    scene.add(road);
 
-    scene.add(mesh);
+
+    /*
+      calçada
+    */
+
+    const sidewalk =
+        new THREE.Mesh(
+            new THREE.BoxGeometry(
+                width+8,
+                .08,
+                depth+8
+            ),
+            mats.sidewalk
+        );
+
+    sidewalk.position.set(
+        x,
+        .01,
+        z
+    );
+
+    /*
+      fica abaixo da rua
+    */
+
+    sidewalk.position.y=.0;
+
+    scene.add(sidewalk);
 }
 
-
-/*
-  grade urbana
-*/
 
 for(
     let x=-WORLD;
@@ -729,14 +815,15 @@ for(
     x+=180
 ){
 
-    road(
+    createRoad(
         x,
         0,
-        32,
+        30,
         WORLD*2
     );
 
 }
+
 
 for(
     let z=-WORLD;
@@ -744,29 +831,125 @@ for(
     z+=180
 ){
 
-    road(
+    createRoad(
         0,
         z,
         WORLD*2,
-        32
+        30
     );
 
 }
 
 
-/* =========================================================
-   FUNÇÕES DE OBJETOS
-========================================================= */
+/*
+============================================================
+ OBJETOS
+============================================================
+*/
 
-function material(color){
+const objects=[];
 
-    return new THREE.MeshStandardMaterial({
-        color,
-        roughness:.8
-    });
 
-}
+/*
+ geometria compartilhada.
+*/
 
+const geo = {
+
+    tiny:
+        new THREE.SphereGeometry(
+            1,
+            8,
+            6
+        ),
+
+    treeTrunk:
+        new THREE.CylinderGeometry(
+            .7,
+            .9,
+            8,
+            7
+        ),
+
+    treeCrown:
+        new THREE.IcosahedronGeometry(
+            1,
+            1
+        ),
+
+    person:
+        new THREE.CapsuleGeometry(
+            1,
+            2,
+            4,
+            6
+        ),
+
+    head:
+        new THREE.SphereGeometry(
+            1,
+            8,
+            6
+        ),
+
+    car:
+        new THREE.BoxGeometry(
+            2,
+            1,
+            1.4
+        ),
+
+    window:
+        new THREE.BoxGeometry(
+            1,
+            .7,
+            .08
+        ),
+
+    horseBody:
+        new THREE.BoxGeometry(
+            2.5,
+            1.1,
+            1.1
+        ),
+
+    horseHead:
+        new THREE.BoxGeometry(
+            .9,
+            1,
+            .8
+        ),
+
+    building:
+        new THREE.BoxGeometry(
+            1,
+            1,
+            1
+        ),
+
+    water:
+        new THREE.CylinderGeometry(
+            1,
+            1,
+            .15,
+            10
+        ),
+
+    herb:
+        new THREE.ConeGeometry(
+            1,
+            1.5,
+            6
+        )
+
+};
+
+
+/*
+============================================================
+ CRIAR OBJETO
+============================================================
+*/
 
 function addObject(
     type,
@@ -774,9 +957,9 @@ function addObject(
     z,
     radius,
     height,
-    color,
     value,
-    minSize
+    minSize,
+    colorMat
 ){
 
     const group =
@@ -791,250 +974,251 @@ function addObject(
     scene.add(group);
 
 
-    let mesh;
+    let collisionRadius =
+        radius;
 
 
-    if(type==="building"){
+    /*
+    ========================================================
+    ERVA
+    ========================================================
+    */
 
-        mesh =
+    if(type==="herb"){
+
+        const mesh =
             new THREE.Mesh(
-                new THREE.BoxGeometry(
-                    radius*2,
-                    height,
-                    radius*2
-                ),
-                material(color)
+                geo.herb,
+                colorMat || mats.herb
             );
+
+        mesh.scale.set(
+            radius,
+            height,
+            radius
+        );
 
         mesh.position.y=
-            height/2;
-
-        mesh.castShadow=true;
-        mesh.receiveShadow=true;
+            height*.75;
 
         group.add(mesh);
-
-
-        /*
-          Janelas.
-        */
-
-        const windowMat=
-            new THREE.MeshStandardMaterial({
-                color:"#d9d28a",
-                emissive:"#514c27",
-                emissiveIntensity:.35
-            });
-
-
-        const rows=
-            Math.min(
-                10,
-                Math.floor(height/8)
-            );
-
-
-        for(
-            let y=5;
-            y<height-3;
-            y+=8
-        ){
-
-            for(
-                let side=-1;
-                side<=1;
-                side+=2
-            ){
-
-                for(
-                    let i=-radius+5;
-                    i<radius;
-                    i+=10
-                ){
-
-                    const win=
-                        new THREE.Mesh(
-                            new THREE.BoxGeometry(
-                                3,
-                                3,
-                                .12
-                            ),
-                            windowMat
-                        );
-
-                    win.position.set(
-                        i,
-                        y,
-                        side*radius
-                    );
-
-                    group.add(win);
-
-                }
-
-            }
-
-        }
 
     }
 
 
-    else if(type==="car"){
+    /*
+    ========================================================
+    ÁGUA
+    ========================================================
+    */
 
-        mesh=
+    else if(type==="water"){
+
+        const mesh =
             new THREE.Mesh(
-                new THREE.BoxGeometry(
-                    radius*1.7,
-                    height*.55,
-                    radius
-                ),
-                material(color)
+                geo.water,
+                mats.water
             );
 
-        mesh.position.y=
-            height*.45;
-
-        mesh.castShadow=true;
+        mesh.scale.set(
+            radius,
+            1,
+            radius
+        );
 
         group.add(mesh);
 
+    }
 
-        const glass=
+
+    /*
+    ========================================================
+    ÁRVORE
+    ========================================================
+    */
+
+    else if(type==="tree"){
+
+        const trunk =
             new THREE.Mesh(
-                new THREE.BoxGeometry(
-                    radius*.75,
-                    height*.35,
-                    radius*.8
-                ),
-                material("#86a8aa")
+                geo.treeTrunk,
+                mats.wood
             );
 
+        trunk.scale.set(
+            radius*.18,
+            height/8,
+            radius*.18
+        );
+
+        trunk.position.y=
+            height*.45;
+
+        group.add(trunk);
+
+
+        const crown =
+            new THREE.Mesh(
+                geo.treeCrown,
+                colorMat || mats.green
+            );
+
+        crown.scale.set(
+            radius,
+            radius*1.15,
+            radius
+        );
+
+        crown.position.y=
+            height;
+
+        group.add(crown);
+
+        /*
+          Árvores pequenas não projetam sombra.
+        */
+
+    }
+
+
+    /*
+    ========================================================
+    PESSOA
+    ========================================================
+    */
+
+    else if(type==="person"){
+
+        const body =
+            new THREE.Mesh(
+                geo.person,
+                colorMat || mats.blue
+            );
+
+        body.scale.set(
+            radius*.35,
+            radius*.6,
+            radius*.35
+        );
+
+        body.position.y=
+            radius*.65;
+
+        group.add(body);
+
+
+        const head =
+            new THREE.Mesh(
+                geo.head,
+                mats.skin
+            );
+
+        head.scale.setScalar(
+            radius*.38
+        );
+
+        head.position.y=
+            radius*1.5;
+
+        group.add(head);
+
+    }
+
+
+    /*
+    ========================================================
+    CARRO
+    ========================================================
+    */
+
+    else if(type==="car"){
+
+        const body =
+            new THREE.Mesh(
+                geo.car,
+                colorMat || mats.red
+            );
+
+        body.scale.set(
+            radius,
+            height*.55,
+            radius*.65
+        );
+
+        body.position.y=
+            height*.45;
+
+        group.add(body);
+
+
+        const glass =
+            new THREE.Mesh(
+                geo.window,
+                mats.glass
+            );
+
+        glass.scale.set(
+            radius*.55,
+            height*.35,
+            radius*.55
+        );
+
         glass.position.y=
-            height*.78;
+            height*.75;
 
         group.add(glass);
 
     }
 
 
-    else if(type==="tree"){
-
-        const trunk=
-            new THREE.Mesh(
-                new THREE.CylinderGeometry(
-                    radius*.15,
-                    radius*.2,
-                    height,
-                    10
-                ),
-                material("#65472f")
-            );
-
-        trunk.position.y=
-            height/2;
-
-        trunk.castShadow=true;
-
-        group.add(trunk);
-
-
-        const crown=
-            new THREE.Mesh(
-                new THREE.SphereGeometry(
-                    radius,
-                    16,
-                    12
-                ),
-                material(color)
-            );
-
-        crown.position.y=
-            height;
-
-        crown.castShadow=true;
-
-        group.add(crown);
-
-    }
-
-
-    else if(type==="person"){
-
-        const body=
-            new THREE.Mesh(
-                new THREE.CapsuleGeometry(
-                    radius*.32,
-                    radius*.9,
-                    6,
-                    10
-                ),
-                material(color)
-            );
-
-        body.position.y=
-            radius*.75;
-
-        body.castShadow=true;
-
-        group.add(body);
-
-
-        const head=
-            new THREE.Mesh(
-                new THREE.SphereGeometry(
-                    radius*.4,
-                    12,
-                    10
-                ),
-                material("#bd805f")
-            );
-
-        head.position.y=
-            radius*1.65;
-
-        group.add(head);
-
-    }
-
+    /*
+    ========================================================
+    CAVALO
+    ========================================================
+    */
 
     else if(type==="horse"){
 
-        const body=
+        const body =
             new THREE.Mesh(
-                new THREE.BoxGeometry(
-                    radius*1.6,
-                    radius*.7,
-                    radius*.65
-                ),
-                material(color)
+                geo.horseBody,
+                mats.horse
             );
 
-        body.position.y=
-            radius*.75;
+        body.scale.set(
+            radius*.6,
+            radius*.6,
+            radius*.5
+        );
 
-        body.castShadow=true;
+        body.position.y=
+            radius*.7;
 
         group.add(body);
 
 
-        const head=
+        const head =
             new THREE.Mesh(
-                new THREE.BoxGeometry(
-                    radius*.55,
-                    radius*.65,
-                    radius*.5
-                ),
-                material(color)
+                geo.horseHead,
+                mats.horse
             );
 
+        head.scale.setScalar(
+            radius*.5
+        );
+
         head.position.set(
-            radius*.9,
+            radius*.7,
             radius*1.05,
             0
         );
 
         group.add(head);
 
+
+        /*
+          4 pernas simples
+        */
 
         for(
             let i=-1;
@@ -1048,74 +1232,101 @@ function addObject(
                 j+=2
             ){
 
-                const leg=
+                const leg =
                     new THREE.Mesh(
-                        new THREE.CylinderGeometry(
-                            radius*.08,
-                            radius*.08,
-                            radius*.9,
-                            8
-                        ),
-                        material(color)
+                        geo.tiny,
+                        mats.horse
                     );
 
+                leg.scale.set(
+                    radius*.1,
+                    radius*.55,
+                    radius*.1
+                );
+
                 leg.position.set(
-                    i*radius*.5,
-                    radius*.35,
-                    j*radius*.2
+                    i*radius*.38,
+                    radius*.3,
+                    j*radius*.25
                 );
 
                 group.add(leg);
-
             }
-
         }
 
     }
 
 
-    else if(type==="herb"){
+    /*
+    ========================================================
+    PRÉDIO
+    ========================================================
+    */
 
-        mesh=
+    else if(type==="building"){
+
+        const body =
             new THREE.Mesh(
-                new THREE.ConeGeometry(
-                    radius,
-                    height,
-                    8
-                ),
-                material(color)
+                geo.building,
+                colorMat || mats.building1
             );
 
-        mesh.position.y=
+        body.scale.set(
+            radius*2,
+            height,
+            radius*2
+        );
+
+        body.position.y=
             height/2;
 
-        group.add(mesh);
+        /*
+          Só prédios importantes têm sombra.
+        */
 
-    }
+        if(
+            height>100
+        ){
+
+            body.castShadow=true;
+            body.receiveShadow=true;
+
+        }
+
+        group.add(body);
 
 
-    else if(type==="water"){
+        /*
+          Algumas janelas grandes.
+          Não criamos centenas de meshes.
+        */
 
-        mesh=
-            new THREE.Mesh(
-                new THREE.CylinderGeometry(
-                    radius,
-                    radius,
-                    .15,
-                    20
+        if(height>45){
+
+            const front =
+                new THREE.Mesh(
+                    geo.window,
+                    mats.yellow
+                );
+
+            front.scale.set(
+                radius*.55,
+                Math.min(
+                    10,
+                    height*.08
                 ),
-                new THREE.MeshStandardMaterial({
-                    color:"#54b5bd",
-                    transparent:true,
-                    opacity:.8,
-                    roughness:.15,
-                    metalness:.1
-                })
+                1
             );
 
-        mesh.position.y=.08;
+            front.position.set(
+                0,
+                height*.55,
+                radius*2+.1
+            );
 
-        group.add(mesh);
+            group.add(front);
+
+        }
 
     }
 
@@ -1134,13 +1345,9 @@ function addObject(
 
         minSize,
 
+        collisionRadius,
+
         alive:true,
-
-        vx:0,
-
-        vz:0,
-
-        angle:Math.random()*Math.PI*2,
 
         speed:
             type==="person"
@@ -1148,10 +1355,14 @@ function addObject(
             :type==="horse"
             ?4
             :type==="car"
-            ?9
+            ?7
             :0,
 
-        timer:Math.random()*10
+        direction:
+            Math.random()*Math.PI*2,
+
+        changeTimer:
+            Math.random()*4
 
     };
 
@@ -1162,97 +1373,165 @@ function addObject(
 }
 
 
-/* =========================================================
-   CIDADE
-========================================================= */
+/*
+============================================================
+ CIDADE
+============================================================
+*/
 
-function generateCity(){
+function rand(min,max){
+
+    return (
+        Math.random()*
+        (max-min)
+    )+min;
+
+}
+
+
+function randomPosition(){
 
     /*
-      prédios
+      Distribui objetos pelo mundo.
+    */
+
+    return {
+
+        x:rand(
+            -WORLD+30,
+            WORLD-30
+        ),
+
+        z:rand(
+            -WORLD+30,
+            WORLD-30
+        )
+
+    };
+
+}
+
+
+/*
+============================================================
+ PRÉDIOS
+============================================================
+*/
+
+function generateBuildings(){
+
+    /*
+      130 prédios.
     */
 
     for(
         let i=0;
-        i<75;
+        i<130;
         i++
     ){
 
-        const x=
-            Math.round(
-                THREE.MathUtils.randFloat(
-                    -WORLD+50,
-                    WORLD-50
-                )/180
-            )*180+
-            THREE.MathUtils.randFloat(
-                -55,
-                55
-            );
+        const p=
+            randomPosition();
 
-        const z=
-            Math.round(
-                THREE.MathUtils.randFloat(
-                    -WORLD+50,
-                    WORLD-50
-                )/180
-            )*180+
-            THREE.MathUtils.randFloat(
-                -55,
-                55
-            );
 
+        /*
+          prédio gigante no final.
+        */
 
         const giant=
             i===0;
 
 
-        const radius=
-            giant
-            ?75
-            :THREE.MathUtils.randFloat(
-                18,
-                38
-            );
-
-
-        const height=
-            giant
-            ?250
-            :THREE.MathUtils.randFloat(
-                25,
-                100
-            );
-
-
         addObject(
             "building",
-            x,
-            z,
-            radius,
-            height,
+            giant ? 540 : p.x,
+            giant ? 540 : p.z,
+
+            giant ? 95 : rand(13,28),
+
+            giant ? 280 : rand(30,105),
+
+            giant ? 100000 : 150,
+
+            giant ? 150 : rand(24,42),
+
             giant
-                ?"#b7a57e"
-                :[
-                    "#8c9694",
-                    "#73878a",
-                    "#a49b89",
-                    "#7b8e83"
+                ? mats.giant
+                : [
+                    mats.building1,
+                    mats.building2,
+                    mats.building3
                 ][
                     Math.floor(
-                        Math.random()*4
+                        Math.random()*3
                     )
-                ],
-            giant?10000:150,
-            giant?125:radius+8
+                ]
         );
 
     }
 
+}
+
+
+/*
+============================================================
+ ÁRVORES
+============================================================
+*/
+
+function generateTrees(){
 
     /*
-      árvores
+      350 árvores.
     */
+
+    for(
+        let i=0;
+        i<350;
+        i++
+    ){
+
+        const p=
+            randomPosition();
+
+        addObject(
+            "tree",
+            p.x,
+            p.z,
+            rand(4,8),
+            rand(12,25),
+            18,
+            10,
+            Math.random()>.5
+                ? mats.green
+                : mats.green2
+        );
+
+    }
+
+}
+
+
+/*
+============================================================
+ CARROS
+============================================================
+*/
+
+function generateCars(){
+
+    /*
+      180 carros.
+    */
+
+    const colors=[
+        mats.red,
+        mats.blue,
+        mats.yellow,
+        mats.green,
+        mats.building2
+    ];
+
 
     for(
         let i=0;
@@ -1260,201 +1539,366 @@ function generateCity(){
         i++
     ){
 
-        addObject(
-            "tree",
-            THREE.MathUtils.randFloat(
-                -WORLD,
-                WORLD
-            ),
-            THREE.MathUtils.randFloat(
-                -WORLD,
-                WORLD
-            ),
-            THREE.MathUtils.randFloat(
-                5,
-                11
-            ),
-            THREE.MathUtils.randFloat(
-                15,
-                30
-            ),
-            "#3f793f",
-            15,
-            10
-        );
+        const p=
+            randomPosition();
 
-    }
-
-
-    /*
-      carros
-    */
-
-    for(
-        let i=0;
-        i<90;
-        i++
-    ){
 
         addObject(
             "car",
-            THREE.MathUtils.randFloat(
-                -WORLD,
-                WORLD
-            ),
-            THREE.MathUtils.randFloat(
-                -WORLD,
-                WORLD
-            ),
-            8,
-            4,
-            [
-                "#bd5147",
-                "#426e98",
-                "#d0b25d",
-                "#4e6658",
-                "#8d8c8a"
-            ][
+            p.x,
+            p.z,
+            5,
+            3,
+            45,
+            15,
+            colors[
                 Math.floor(
-                    Math.random()*5
+                    Math.random()*
+                    colors.length
                 )
-            ],
-            40,
-            18
-        );
-
-    }
-
-
-    /*
-      pessoas
-    */
-
-    for(
-        let i=0;
-        i<100;
-        i++
-    ){
-
-        addObject(
-            "person",
-            THREE.MathUtils.randFloat(
-                -WORLD,
-                WORLD
-            ),
-            THREE.MathUtils.randFloat(
-                -WORLD,
-                WORLD
-            ),
-            3,
-            5,
-            "#5479a5",
-            30,
-            10
-        );
-
-    }
-
-
-    /*
-      erva-mate
-    */
-
-    for(
-        let i=0;
-        i<250;
-        i++
-    ){
-
-        addObject(
-            "herb",
-            THREE.MathUtils.randFloat(
-                -WORLD,
-                WORLD
-            ),
-            THREE.MathUtils.randFloat(
-                -WORLD,
-                WORLD
-            ),
-            2,
-            3,
-            "#4c8f3c",
-            5,
-            3
-        );
-
-    }
-
-
-    /*
-      água
-    */
-
-    for(
-        let i=0;
-        i<70;
-        i++
-    ){
-
-        addObject(
-            "water",
-            THREE.MathUtils.randFloat(
-                -WORLD,
-                WORLD
-            ),
-            THREE.MathUtils.randFloat(
-                -WORLD,
-                WORLD
-            ),
-            5,
-            1,
-            "#55b6be",
-            12,
-            5
-        );
-
-    }
-
-
-    /*
-      cavalos
-    */
-
-    for(
-        let i=0;
-        i<25;
-        i++
-    ){
-
-        addObject(
-            "horse",
-            THREE.MathUtils.randFloat(
-                -WORLD,
-                WORLD
-            ),
-            THREE.MathUtils.randFloat(
-                -WORLD,
-                WORLD
-            ),
-            11,
-            8,
-            "#795238",
-            100,
-            20
+            ]
         );
 
     }
 
 }
 
-generateCity();
+
+/*
+============================================================
+ PESSOAS
+============================================================
+*/
+
+function generatePeople(){
+
+    /*
+      350 pessoas.
+    */
+
+    for(
+        let i=0;
+        i<350;
+        i++
+    ){
+
+        const p=
+            randomPosition();
 
 
-/* =========================================================
-   CONTROLE
-========================================================= */
+        addObject(
+            "person",
+            p.x,
+            p.z,
+            3,
+            5,
+            35,
+            9,
+            Math.random()>.5
+                ? mats.blue
+                : mats.red
+        );
+
+    }
+
+}
+
+
+/*
+============================================================
+ ERVA-MATE
+============================================================
+*/
+
+function generateHerb(){
+
+    /*
+      650 pequenos objetos.
+    */
+
+    for(
+        let i=0;
+        i<650;
+        i++
+    ){
+
+        const p=
+            randomPosition();
+
+
+        addObject(
+            "herb",
+            p.x,
+            p.z,
+            rand(1.5,3),
+            rand(1.5,3),
+            6,
+            4,
+            mats.herb
+        );
+
+    }
+
+}
+
+
+/*
+============================================================
+ ÁGUA
+============================================================
+*/
+
+function generateWater(){
+
+    /*
+      160 pontos de água.
+    */
+
+    for(
+        let i=0;
+        i<160;
+        i++
+    ){
+
+        const p=
+            randomPosition();
+
+
+        addObject(
+            "water",
+            p.x,
+            p.z,
+            rand(3,6),
+            1,
+            15,
+            7,
+            mats.water
+        );
+
+    }
+
+}
+
+
+/*
+============================================================
+ CAVALOS
+============================================================
+*/
+
+function generateHorses(){
+
+    /*
+      60 cavalos.
+    */
+
+    for(
+        let i=0;
+        i<60;
+        i++
+    ){
+
+        const p=
+            randomPosition();
+
+
+        addObject(
+            "horse",
+            p.x,
+            p.z,
+            9,
+            7,
+            120,
+            20,
+            mats.horse
+        );
+
+    }
+
+}
+
+
+/*
+============================================================
+ GERAÇÃO
+============================================================
+*/
+
+function createCity(){
+
+    generateBuildings();
+
+    generateTrees();
+
+    generateCars();
+
+    generatePeople();
+
+    generateHerb();
+
+    generateWater();
+
+    generateHorses();
+
+}
+
+
+/*
+============================================================
+ CUIA
+============================================================
+*/
+
+const bowl =
+    new THREE.Group();
+
+scene.add(bowl);
+
+
+/*
+ Corpo principal.
+*/
+
+const bowlBody =
+    new THREE.Mesh(
+        new THREE.SphereGeometry(
+            1,
+            24,
+            16
+        ),
+        new THREE.MeshStandardMaterial({
+            color:"#805432",
+            roughness:.7
+        })
+    );
+
+bowlBody.scale.set(
+    1,
+    .62,
+    1
+);
+
+bowlBody.castShadow=true;
+
+bowl.add(bowlBody);
+
+
+/*
+ Interior.
+*/
+
+const inside =
+    new THREE.Mesh(
+        new THREE.CylinderGeometry(
+            .72,
+            .88,
+            .3,
+            24
+        ),
+        new THREE.MeshStandardMaterial({
+            color:"#172015",
+            roughness:1
+        })
+    );
+
+inside.position.y=.15;
+
+bowl.add(inside);
+
+
+/*
+ Erva.
+*/
+
+const herb =
+    new THREE.Mesh(
+        new THREE.SphereGeometry(
+            .55,
+            16,
+            8
+        ),
+        mats.herb
+    );
+
+herb.scale.y=.25;
+
+herb.position.y=.3;
+
+bowl.add(herb);
+
+
+/*
+ Bomba.
+*/
+
+const bombilla =
+    new THREE.Mesh(
+        new THREE.CylinderGeometry(
+            .045,
+            .045,
+            1.35,
+            8
+        ),
+        new THREE.MeshStandardMaterial({
+            color:"#bcb49e",
+            metalness:.8,
+            roughness:.25
+        })
+    );
+
+bombilla.rotation.z=
+    -Math.PI*.2;
+
+bombilla.position.set(
+    .35,
+    .55,
+    0
+);
+
+bowl.add(bombilla);
+
+
+/*
+============================================================
+ TAMANHO
+============================================================
+*/
+
+let bowlRadius =
+    START_SIZE;
+
+bowl.scale.setScalar(
+    bowlRadius
+);
+
+bowl.position.y=
+    bowlRadius*.6;
+
+
+/*
+============================================================
+ ESTADO
+============================================================
+*/
+
+let running=false;
+
+let won=false;
+
+let score=0;
+
+let timeLeft=
+    GAME_TIME;
+
+
+/*
+============================================================
+ INPUT
+============================================================
+*/
 
 const keys={};
+
 
 window.addEventListener(
     "keydown",
@@ -1464,6 +1908,7 @@ window.addEventListener(
         ]=true;
     }
 );
+
 
 window.addEventListener(
     "keyup",
@@ -1475,36 +1920,39 @@ window.addEventListener(
 );
 
 
-/* =========================================================
-   MOUSE
-========================================================= */
+/*
+============================================================
+ MOUSE
+============================================================
+*/
 
-const pointer={
-    x:0,
-    y:0
-};
+let mouseX=0;
+let mouseY=0;
+
 
 window.addEventListener(
     "pointermove",
     e=>{
 
-        pointer.x=
-            (e.clientX/
-            innerWidth-.5)*2;
+        mouseX=
+            e.clientX/
+            innerWidth*2-1;
 
-        pointer.y=
-            (e.clientY/
-            innerHeight-.5)*2;
+        mouseY=
+            e.clientY/
+            innerHeight*2-1;
 
     }
 );
 
 
-/* =========================================================
-   JOYSTICK
-========================================================= */
+/*
+============================================================
+ JOYSTICK
+============================================================
+*/
 
-const joystick=
+const mobile=
     document.getElementById(
         "mobile"
     );
@@ -1514,94 +1962,109 @@ const stick=
         "stick"
     );
 
+
 let joyActive=false;
 
-const joy={
-    x:0,
-    y:0
-};
+let joyX=0;
+let joyY=0;
 
 
-joystick.addEventListener(
+mobile.addEventListener(
     "pointerdown",
     e=>{
 
         joyActive=true;
 
-        joystick.setPointerCapture(
+        mobile.setPointerCapture(
             e.pointerId
         );
 
-        updateJoystick(e);
+        joystickMove(e);
 
     }
 );
 
 
-joystick.addEventListener(
+mobile.addEventListener(
     "pointermove",
     e=>{
 
         if(joyActive)
-            updateJoystick(e);
+            joystickMove(e);
 
     }
 );
 
 
-joystick.addEventListener(
+mobile.addEventListener(
     "pointerup",
-    releaseJoystick
+    joystickRelease
 );
 
-joystick.addEventListener(
+
+mobile.addEventListener(
     "pointercancel",
-    releaseJoystick
+    joystickRelease
 );
 
 
-function updateJoystick(e){
+function joystickMove(e){
 
     const r=
-        joystick.getBoundingClientRect();
+        mobile.getBoundingClientRect();
 
-    const cx=
-        r.left+r.width/2;
+    let x=
+        e.clientX-
+        (
+            r.left+
+            r.width/2
+        );
 
-    const cy=
-        r.top+r.height/2;
+    let y=
+        e.clientY-
+        (
+            r.top+
+            r.height/2
+        );
 
-    let dx=e.clientX-cx;
-    let dy=e.clientY-cy;
-
-    const max=43;
+    const max=42;
 
     const len=
-        Math.hypot(dx,dy);
+        Math.hypot(x,y);
+
 
     if(len>max){
 
-        dx=dx/len*max;
-        dy=dy/len*max;
+        x=
+            x/len*max;
+
+        y=
+            y/len*max;
 
     }
 
-    joy.x=dx/max;
-    joy.y=dy/max;
+
+    joyX=x/max;
+    joyY=y/max;
+
 
     stick.style.transform=
-        `translate(
-            calc(-50% + ${dx}px),
-            calc(-50% + ${dy}px)
-        )`;
+        `
+        translate(
+            calc(-50% + ${x}px),
+            calc(-50% + ${y}px)
+        )
+        `;
+
 }
 
 
-function releaseJoystick(){
+function joystickRelease(){
 
     joyActive=false;
-    joy.x=0;
-    joy.y=0;
+
+    joyX=0;
+    joyY=0;
 
     stick.style.transform=
         "translate(-50%,-50%)";
@@ -1609,30 +2072,43 @@ function releaseJoystick(){
 }
 
 
-/* =========================================================
-   MOVIMENTO
-========================================================= */
+/*
+============================================================
+ DIREÇÃO
+============================================================
+*/
 
-const velocity=
-    new THREE.Vector3();
-
-
-function getDirection(){
+function direction(){
 
     let x=0;
     let z=0;
 
 
-    if(keys.w||keys.arrowup)
+    if(
+        keys.w ||
+        keys.arrowup
+    )
         z-=1;
 
-    if(keys.s||keys.arrowdown)
+
+    if(
+        keys.s ||
+        keys.arrowdown
+    )
         z+=1;
 
-    if(keys.a||keys.arrowleft)
+
+    if(
+        keys.a ||
+        keys.arrowleft
+    )
         x-=1;
 
-    if(keys.d||keys.arrowright)
+
+    if(
+        keys.d ||
+        keys.arrowright
+    )
         x+=1;
 
 
@@ -1642,15 +2118,15 @@ function getDirection(){
         joyActive
     ){
 
-        x=joy.x;
-        z=joy.y;
+        x=joyX;
+        z=joyY;
 
     }
 
 
     /*
-      Mouse controla a direção quando
-      não há teclado.
+      mouse apenas como controle
+      auxiliar quando nada mais foi usado.
     */
 
     if(
@@ -1659,8 +2135,19 @@ function getDirection(){
         !joyActive
     ){
 
-        x=pointer.x;
-        z=pointer.y;
+        /*
+          zona morta.
+        */
+
+        if(
+            Math.abs(mouseX)>.08 ||
+            Math.abs(mouseY)>.08
+        ){
+
+            x=mouseX;
+            z=mouseY;
+
+        }
 
     }
 
@@ -1677,35 +2164,55 @@ function getDirection(){
     }
 
 
-    return {
-        x,
-        z
-    };
+    return {x,z};
 
 }
 
-
-/* =========================================================
-   COLISÃO CIRCULAR 3D
-========================================================= */
 
 /*
-  A cuia possui um raio real.
-  Cada objeto possui uma esfera/cilindro
-  de colisão.
-
-  Se a cuia ainda não consegue engolir,
-  o movimento é bloqueado.
-
-  Se consegue engolir,
-  o objeto é consumido.
+============================================================
+ CRESCIMENTO
+============================================================
 */
 
-function collisionRadius(o){
+function growthFor(type){
 
-    return o.radius;
+    switch(type){
+
+        case "herb":
+            return .025;
+
+        case "water":
+            return .045;
+
+        case "person":
+            return .09;
+
+        case "tree":
+            return .12;
+
+        case "car":
+            return .30;
+
+        case "horse":
+            return .65;
+
+        case "building":
+            return 1.3;
+
+        default:
+            return .03;
+
+    }
+
 }
 
+
+/*
+============================================================
+ PODE ENGOLIR?
+============================================================
+*/
 
 function canEat(o){
 
@@ -1714,148 +2221,70 @@ function canEat(o){
 }
 
 
-function attemptEat(o){
-
-    if(!o.alive)
-        return false;
-
-    if(!canEat(o))
-        return false;
-
-
-    /*
-      objeto deve estar suficientemente
-      dentro da cuia
-    */
-
-    const dx=
-        o.group.position.x-
-        bowl.position.x;
-
-    const dz=
-        o.group.position.z-
-        bowl.position.z;
-
-    const d=
-        Math.hypot(dx,dz);
-
-
-    if(
-        d<
-        Math.max(
-            .5,
-            bowlRadius-
-            o.radius*.35
-        )
-    ){
-
-        consume(o);
-
-        return true;
-
-    }
-
-    return false;
-
-}
-
-
-/* =========================================================
-   CONSUMIR
-========================================================= */
+/*
+============================================================
+ CONSUMIR
+============================================================
+*/
 
 function consume(o){
 
+    if(!o.alive)
+        return;
+
+
     o.alive=false;
 
-    /*
-      crescimento.
-    */
 
-    let growth;
-
-
-    switch(o.type){
-
-        case "herb":
-            growth=.035;
-            break;
-
-        case "water":
-            growth=.05;
-            break;
-
-        case "person":
-            growth=.13;
-            break;
-
-        case "tree":
-            growth=.12;
-            break;
-
-        case "car":
-            growth=.35;
-            break;
-
-        case "horse":
-            growth=.55;
-            break;
-
-        case "building":
-            growth=
-                o.value>=10000
-                ?2.5
-                :1.0;
-            break;
-
-        default:
-            growth=.05;
-
-    }
+    bowlRadius=
+        Math.min(
+            MAX_SIZE,
+            bowlRadius+
+            growthFor(o.type)
+        );
 
 
-    bowlRadius+=growth;
-
-
-    score+=o.value;
+    score+=
+        o.value;
 
 
     /*
-      Animação de desaparecimento.
+      Pequena animação de absorção.
     */
 
-    const startScale=
-        o.group.scale.x;
+    const start=
+        performance.now();
+
+    const duration=220;
 
 
-    let t=0;
+    function animateEat(now){
 
-
-    function shrink(){
-
-        if(!o.group)
-            return;
-
-
-        t+=.12;
-
-        const s=
-            Math.max(
-                0,
-                1-t
+        const p=
+            Math.min(
+                1,
+                (now-start)/
+                duration
             );
 
-        o.group.scale.setScalar(s);
+
+        const scale=
+            1-p;
+
+
+        o.group.scale.setScalar(
+            scale
+        );
+
 
         o.group.position.y=
-            .5+
-            (1-s)*2;
+            p*5;
 
 
-        if(t<1){
+        if(p<1){
 
             requestAnimationFrame(
-                shrink
+                animateEat
             );
 
         }else{
@@ -1868,215 +2297,22 @@ function consume(o){
 
     }
 
-    shrink();
+
+    requestAnimationFrame(
+        animateEat
+    );
 
 
     /*
-      vitória.
+      prédio gigante.
     */
 
     if(
         o.type==="building" &&
-        o.value>=10000
+        o.value>=100000
     ){
 
-        win();
-
-    }
-
-}
-
-
-/* =========================================================
-   MOVIMENTO + COLISÃO
-========================================================= */
-
-function moveBowl(dt){
-
-    const dir=
-        getDirection();
-
-
-    const speed=
-        42/
-        (
-            1+
-            bowlRadius/85
-        );
-
-
-    velocity.set(
-        dir.x*speed*dt,
-        0,
-        dir.z*speed*dt
-    );
-
-
-    if(
-        Math.abs(velocity.x)<.0001 &&
-        Math.abs(velocity.z)<.0001
-    )
-        return;
-
-
-    const nextX=
-        bowl.position.x+
-        velocity.x;
-
-    const nextZ=
-        bowl.position.z+
-        velocity.z;
-
-
-    /*
-      Verificamos primeiro a posição
-      inteira.
-    */
-
-    let blocked=false;
-
-
-    for(const o of objects){
-
-        if(!o.alive)
-            continue;
-
-
-        const ox=
-            o.group.position.x;
-
-        const oz=
-            o.group.position.z;
-
-
-        const dx=
-            nextX-ox;
-
-        const dz=
-            nextZ-oz;
-
-
-        const d=
-            Math.hypot(dx,dz);
-
-
-        const combined=
-            bowlRadius+
-            collisionRadius(o);
-
-
-        /*
-          Se encostou.
-        */
-
-        if(d<combined){
-
-            /*
-              Primeiro tentamos engolir.
-            */
-
-            const eaten=
-                attemptEatAt(
-                    o,
-                    nextX,
-                    nextZ
-                );
-
-
-            if(eaten)
-                continue;
-
-
-            /*
-              Não consegue engolir:
-              BLOQUEIA.
-            */
-
-            blocked=true;
-
-
-            /*
-              Empurra a cuia para fora
-              do objeto, simulando colisão.
-            */
-
-            if(d>.001){
-
-                const nx=
-                    dx/d;
-
-                const nz=
-                    dz/d;
-
-                /*
-                  Apenas movimento tangencial.
-                */
-
-                const tangentX=
-                    velocity.x-
-                    nx*(
-                        velocity.x*nx+
-                        velocity.z*nz
-                    );
-
-                const tangentZ=
-                    velocity.z-
-                    nz*(
-                        velocity.x*nx+
-                        velocity.z*nz
-                    );
-
-
-                /*
-                  tenta deslizar.
-                */
-
-                const slideX=
-                    bowl.position.x+
-                    tangentX;
-
-                const slideZ=
-                    bowl.position.z+
-                    tangentZ;
-
-
-                if(
-                    !collidesAt(
-                        slideX,
-                        slideZ
-                    )
-                ){
-
-                    bowl.position.x=
-                        slideX;
-
-                    bowl.position.z=
-                        slideZ;
-
-                }
-
-            }
-
-        }
-
-    }
-
-
-    if(!blocked){
-
-        bowl.position.x=
-            THREE.MathUtils.clamp(
-                nextX,
-                -WORLD+bowlRadius,
-                WORLD-bowlRadius
-            );
-
-        bowl.position.z=
-            THREE.MathUtils.clamp(
-                nextZ,
-                -WORLD+bowlRadius,
-                WORLD-bowlRadius
-            );
+        victory();
 
     }
 
@@ -2084,53 +2320,20 @@ function moveBowl(dt){
 
 
 /*
-  Checagem sem alterar estado.
+============================================================
+ TENTAR ENGOLIR
+============================================================
 */
 
-function collidesAt(x,z){
-
-    for(const o of objects){
-
-        if(!o.alive)
-            continue;
-
-        if(canEat(o))
-            continue;
-
-
-        const dx=
-            x-o.group.position.x;
-
-        const dz=
-            z-o.group.position.z;
-
-        const d=
-            Math.hypot(dx,dz);
-
-
-        if(
-            d<
-            bowlRadius+
-            collisionRadius(o)
-        )
-            return true;
-
-    }
-
-    return false;
-
-}
-
-
-/*
-  Tenta comer considerando a nova posição.
-*/
-
-function attemptEatAt(
+function tryEat(
     o,
     x,
     z
 ){
+
+    if(!o.alive)
+        return false;
+
 
     if(!canEat(o))
         return false;
@@ -2142,17 +2345,23 @@ function attemptEatAt(
     const dz=
         o.group.position.z-z;
 
-    const d=
-        Math.hypot(dx,dz);
 
+    const distance=
+        Math.hypot(
+            dx,
+            dz
+        );
+
+
+    /*
+      O centro do objeto precisa
+      entrar suficientemente na cuia.
+    */
 
     if(
-        d<
-        Math.max(
-            .5,
-            bowlRadius-
-            o.radius*.35
-        )
+        distance<
+        bowlRadius-
+        o.collisionRadius*.25
     ){
 
         consume(o);
@@ -2167,13 +2376,269 @@ function attemptEatAt(
 }
 
 
-/* =========================================================
-   OBJETOS MÓVEIS
-========================================================= */
+/*
+============================================================
+ COLISÃO
+============================================================
+*/
 
-function updateObjects(dt){
+function collides(
+    x,
+    z
+){
 
-    for(const o of objects){
+    for(
+        const o of objects
+    ){
+
+        if(!o.alive)
+            continue;
+
+
+        /*
+          objetos que já podem ser
+          engolidos não bloqueiam.
+        */
+
+        if(
+            canEat(o)
+        )
+            continue;
+
+
+        const dx=
+            x-
+            o.group.position.x;
+
+        const dz=
+            z-
+            o.group.position.z;
+
+
+        const distance=
+            Math.hypot(
+                dx,
+                dz
+            );
+
+
+        if(
+            distance<
+            bowlRadius+
+            o.collisionRadius
+        ){
+
+            return true;
+
+        }
+
+    }
+
+
+    return false;
+
+}
+
+
+/*
+============================================================
+ MOVIMENTO DA CUIA
+============================================================
+*/
+
+function moveBowl(dt){
+
+    const dir=
+        direction();
+
+
+    const speed=
+        50/
+        (
+            1+
+            bowlRadius*.025
+        );
+
+
+    const dx=
+        dir.x*
+        speed*
+        dt;
+
+
+    const dz=
+        dir.z*
+        speed*
+        dt;
+
+
+    if(
+        Math.abs(dx)+
+        Math.abs(dz)
+        <
+        .0001
+    )
+        return;
+
+
+    /*
+      Fazemos vários pequenos passos.
+      Isso evita atravessar objetos grandes
+      quando a velocidade aumenta.
+    */
+
+    const steps=
+        Math.max(
+            1,
+            Math.ceil(
+                Math.hypot(dx,dz)/
+                Math.max(
+                    2,
+                    bowlRadius*.3
+                )
+            )
+        );
+
+
+    const sx=
+        dx/steps;
+
+    const sz=
+        dz/steps;
+
+
+    for(
+        let step=0;
+        step<steps;
+        step++
+    ){
+
+        const nx=
+            bowl.position.x+
+            sx;
+
+        const nz=
+            bowl.position.z+
+            sz;
+
+
+        /*
+          Primeiro verifica se existe
+          objeto consumível nessa posição.
+        */
+
+        for(
+            const o of objects
+        ){
+
+            if(!o.alive)
+                continue;
+
+
+            if(
+                canEat(o)
+            ){
+
+                tryEat(
+                    o,
+                    nx,
+                    nz
+                );
+
+            }
+
+        }
+
+
+        /*
+          Depois verifica colisão.
+        */
+
+        if(
+            collides(
+                nx,
+                nz
+            )
+        ){
+
+            /*
+              Tentativa de deslizar
+              lateralmente.
+            */
+
+            if(
+                !collides(
+                    bowl.position.x+
+                    sx,
+                    bowl.position.z
+                )
+            ){
+
+                bowl.position.x+=sx;
+
+            }
+
+
+            else if(
+                !collides(
+                    bowl.position.x,
+                    bowl.position.z+
+                    sz
+                )
+            ){
+
+                bowl.position.z+=sz;
+
+            }
+
+
+            break;
+
+        }
+
+
+        bowl.position.x=
+            nx;
+
+        bowl.position.z=
+            nz;
+
+    }
+
+
+    /*
+      limites do mundo.
+    */
+
+    bowl.position.x=
+        THREE.MathUtils.clamp(
+            bowl.position.x,
+            -WORLD+bowlRadius,
+            WORLD-bowlRadius
+        );
+
+
+    bowl.position.z=
+        THREE.MathUtils.clamp(
+            bowl.position.z,
+            -WORLD+bowlRadius,
+            WORLD-bowlRadius
+        );
+
+}
+
+
+/*
+============================================================
+ OBJETOS MÓVEIS
+============================================================
+*/
+
+function updateMovingObjects(dt){
+
+    for(
+        const o of objects
+    ){
 
         if(!o.alive)
             continue;
@@ -2181,55 +2646,57 @@ function updateObjects(dt){
 
         if(
             o.type!=="person" &&
-            o.type!=="horse" &&
-            o.type!=="car"
+            o.type!=="car" &&
+            o.type!=="horse"
         )
             continue;
 
 
-        o.timer-=dt;
+        o.changeTimer-=dt;
 
 
-        if(o.timer<=0){
+        if(
+            o.changeTimer<=0
+        ){
 
-            o.timer=
-                THREE.MathUtils.randFloat(
-                    1,
-                    4
-                );
+            o.changeTimer=
+                rand(1,4);
 
-            o.angle+=
-                THREE.MathUtils.randFloat(
-                    -.9,
-                    .9
+            o.direction+=
+                rand(
+                    -.8,
+                    .8
                 );
 
         }
 
 
         o.group.position.x+=
-            Math.cos(o.angle)*
+            Math.cos(
+                o.direction
+            )*
             o.speed*
             dt;
+
 
         o.group.position.z+=
-            Math.sin(o.angle)*
+            Math.sin(
+                o.direction
+            )*
             o.speed*
             dt;
 
-
-        /*
-          limites.
-        */
 
         if(
             Math.abs(
                 o.group.position.x
-            )>WORLD
+            )>
+            WORLD
         ){
 
-            o.angle=
-                Math.PI-o.angle;
+            o.direction=
+                Math.PI-
+                o.direction;
 
         }
 
@@ -2237,65 +2704,55 @@ function updateObjects(dt){
         if(
             Math.abs(
                 o.group.position.z
-            )>WORLD
+            )>
+            WORLD
         ){
 
-            o.angle=
-                -o.angle;
+            o.direction=
+                -o.direction;
 
         }
 
 
-        /*
-          Faz o modelo olhar para a direção.
-        */
-
         o.group.rotation.y=
-            -o.angle+
-            Math.PI/2;
+            -o.direction;
 
     }
 
 }
 
 
-/* =========================================================
-   CÂMERA
-========================================================= */
-
-const cameraTarget=
-    new THREE.Vector3();
+/*
+============================================================
+ CÂMERA
+============================================================
+*/
 
 function updateCamera(dt){
 
     const distance=
-        230+
-        bowlRadius*1.7;
+        235+
+        bowlRadius*1.8;
+
 
     const height=
-        185+
-        bowlRadius*1.15;
+        190+
+        bowlRadius*1.25;
 
 
-    const targetX=
-        bowl.position.x;
-
-    const targetZ=
-        bowl.position.z;
-
-
-    cameraTarget.set(
-        targetX,
-        0,
-        targetZ
-    );
+    const target=
+        new THREE.Vector3(
+            bowl.position.x,
+            0,
+            bowl.position.z
+        );
 
 
     const desired=
         new THREE.Vector3(
-            targetX,
+            bowl.position.x,
             height,
-            targetZ+
+            bowl.position.z+
             distance
         );
 
@@ -2303,20 +2760,24 @@ function updateCamera(dt){
     camera.position.lerp(
         desired,
         1-
-        Math.exp(-4*dt)
+        Math.exp(
+            -4*dt
+        )
     );
 
 
     camera.lookAt(
-        cameraTarget
+        target
     );
 
 }
 
 
-/* =========================================================
-   ESCALA DA CUIA
-========================================================= */
+/*
+============================================================
+ ATUALIZA CUIA
+============================================================
+*/
 
 function updateBowl(){
 
@@ -2325,23 +2786,17 @@ function updateBowl(){
     );
 
 
-    /*
-      sombra dinâmica visual.
-    */
-
-    bowlBody.material.roughness=
-        .55+
-        Math.min(
-            .4,
-            bowlRadius/500
-        );
+    bowl.position.y=
+        bowlRadius*.55;
 
 }
 
 
-/* =========================================================
-   HUD
-========================================================= */
+/*
+============================================================
+ HUD
+============================================================
+*/
 
 function updateHUD(){
 
@@ -2359,14 +2814,12 @@ function updateHUD(){
         bowlRadius.toFixed(1);
 
 
-    /*
-      maior prédio exige aproximadamente 125.
-    */
-
-    const p=
+    const progress=
         Math.min(
             100,
-            bowlRadius/125*100
+            bowlRadius/
+            150*
+            100
         );
 
 
@@ -2374,97 +2827,122 @@ function updateHUD(){
         "progress"
     ).style.width=
         Math.max(
-            3,
-            p
-        )+"%";
+            4,
+            progress
+        )+
+        "%";
 
 
-    const min=
+    const minutes=
         Math.floor(
             timeLeft/60
         );
 
-    const sec=
+
+    const seconds=
         Math.floor(
             timeLeft%60
         )
         .toString()
-        .padStart(2,"0");
+        .padStart(
+            2,
+            "0"
+        );
 
 
     document.getElementById(
         "timer"
     ).textContent=
-        `${min}:${sec}`;
+        `${minutes}:${seconds}`;
 
 }
 
 
-/* =========================================================
-   VITÓRIA
-========================================================= */
+/*
+============================================================
+ VITÓRIA
+============================================================
+*/
 
-function win(){
+function victory(){
 
     if(won)
         return;
+
 
     won=true;
 
     running=false;
 
 
-    const msg=
-        document.getElementById(
+    document
+        .getElementById(
             "message"
+        )
+        .classList
+        .add(
+            "show"
         );
-
-    msg.classList.add(
-        "show"
-    );
 
 
     /*
-      efeito de vitória:
-      pequena expansão.
+      animação de comemoração.
     */
 
-    let pulse=0;
+    const start=
+        performance.now();
 
 
-    function victoryAnimation(){
+    function celebration(now){
 
-        pulse+=.035;
+        const t=
+            (now-start)/
+            1000;
+
 
         bowl.rotation.y=
-            Math.sin(pulse)*.15;
+            Math.sin(t*4)*
+            .15;
+
 
         bowl.position.y=
-            .8+
-            Math.sin(pulse*2)*.15;
+            bowlRadius*.55+
+            Math.sin(t*6)*
+            bowlRadius*.04;
 
-        if(pulse<8)
+
+        if(t<8){
+
             requestAnimationFrame(
-                victoryAnimation
+                celebration
             );
+
+        }
 
     }
 
-    victoryAnimation();
+
+    requestAnimationFrame(
+        celebration
+    );
 
 }
 
 
-/* =========================================================
-   GAME OVER
-========================================================= */
+/*
+============================================================
+ GAME OVER
+============================================================
+*/
 
 function gameOver(){
 
     if(won)
         return;
 
+
     running=false;
+
 
     document.getElementById(
         "finalScore"
@@ -2472,6 +2950,7 @@ function gameOver(){
         score.toLocaleString(
             "pt-BR"
         );
+
 
     document.getElementById(
         "gameover"
@@ -2481,47 +2960,91 @@ function gameOver(){
 }
 
 
-/* =========================================================
-   RESET
-========================================================= */
+/*
+============================================================
+ RESET
+============================================================
+*/
 
 function resetGame(){
 
     /*
-      remove objetos antigos.
+      Limpa cidade anterior.
     */
 
-    for(const o of objects){
+    for(
+        const o of objects
+    ){
 
-        if(o.group.parent)
+        if(
+            o.group.parent
+        ){
+
             o.group.parent.remove(
                 o.group
             );
 
+        }
+
     }
+
 
     objects.length=0;
 
 
-    generateCity();
+    /*
+      Recria cidade.
+    */
+
+    createCity();
+
+
+    /*
+      Cuia começa GRANDE.
+    */
+
+    bowlRadius=
+        START_SIZE;
 
 
     bowl.position.set(
         0,
-        .8,
+        bowlRadius*.55,
         0
     );
 
-    bowlRadius=1;
 
-    bowl.scale.setScalar(1);
+    bowl.scale.setScalar(
+        bowlRadius
+    );
 
 
     score=0;
-    timeLeft=GAME_TIME;
+
+    timeLeft=
+        GAME_TIME;
+
+    won=false;
 
     running=true;
-    won=false;
+
+
+    document.getElementById(
+        "menu"
+    ).style.display=
+        "none";
+
+
+    document.getElementById(
+        "gameover"
+    ).style.display=
+        "none";
+
+
+    document.getElementById(
+        "hud"
+    ).style.display=
+        "block";
 
 
     document.getElementById(
@@ -2530,62 +3053,62 @@ function resetGame(){
         "show"
     );
 
-    document.getElementById(
-        "gameover"
-    ).style.display=
-        "none";
-
-    document.getElementById(
-        "menu"
-    ).style.display=
-        "none";
-
-    document.getElementById(
-        "hud"
-    ).style.display=
-        "block";
-
 }
 
 
-/* =========================================================
-   BOTÕES
-========================================================= */
+/*
+============================================================
+ BOTÕES
+============================================================
+*/
 
 document
-    .getElementById("start")
-    .onclick=
-    resetGame;
+    .getElementById(
+        "start"
+    )
+    .addEventListener(
+        "click",
+        resetGame
+    );
 
 
 document
-    .getElementById("again")
-    .onclick=
-    resetGame;
+    .getElementById(
+        "again"
+    )
+    .addEventListener(
+        "click",
+        resetGame
+    );
 
 
-/* =========================================================
-   RESIZE
-========================================================= */
+/*
+============================================================
+ RESIZE
+============================================================
+*/
 
 window.addEventListener(
     "resize",
     ()=>{
+
         camera.aspect=
             innerWidth/
             innerHeight;
 
         camera.updateProjectionMatrix();
 
+
         renderer.setSize(
             innerWidth,
             innerHeight
         );
 
+
         renderer.setPixelRatio(
             Math.min(
                 devicePixelRatio||1,
-                1.75
+                1.5
             )
         );
 
@@ -2593,11 +3116,13 @@ window.addEventListener(
 );
 
 
-/* =========================================================
-   GAME LOOP
-========================================================= */
+/*
+============================================================
+ GAME LOOP
+============================================================
+*/
 
-let last=
+let previous=
     performance.now();
 
 
@@ -2609,14 +3134,16 @@ function animate(now){
 
 
     let dt=
-        (now-last)/1000;
+        (now-previous)/
+        1000;
 
-    last=now;
+
+    previous=now;
 
 
     /*
-      Evita explosões de física
-      ao trocar de aba.
+      Evita salto de física
+      depois de trocar de aba.
     */
 
     dt=
@@ -2631,15 +3158,18 @@ function animate(now){
         timeLeft-=dt;
 
 
-        if(timeLeft<=0){
+        if(
+            timeLeft<=0
+        ){
 
             timeLeft=0;
 
             gameOver();
 
-        }else{
+        }
+        else{
 
-            updateObjects(dt);
+            updateMovingObjects(dt);
 
             moveBowl(dt);
 
@@ -2662,26 +3192,40 @@ function animate(now){
 }
 
 
+/*
+============================================================
+ INICIALIZAÇÃO
+============================================================
+*/
+
+createCity();
+
 animate(
     performance.now()
 );
 
 
-/* =========================================================
-   LOADING
-========================================================= */
+/*
+ Pequeno atraso para a tela
+ de loading não piscar.
+*/
 
 setTimeout(
     ()=>{
+
         document.getElementById(
             "loading"
-        ).style.display="none";
+        ).style.display=
+            "none";
+
 
         document.getElementById(
             "menu"
-        ).style.display="flex";
+        ).style.display=
+            "flex";
+
     },
-    800
+    1000
 );
 
 </script>
