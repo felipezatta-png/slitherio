@@ -2,8 +2,10 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Cuia.io — A Cuia que Engole a Cidade</title>
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+<title>CUIA.IO 3D</title>
 
 <style>
 *{
@@ -16,328 +18,277 @@ html,body{
     width:100%;
     height:100%;
     overflow:hidden;
-    background:#08110d;
+    background:#07100b;
     font-family:Arial,Helvetica,sans-serif;
-    color:#fff;
-    user-select:none;
     touch-action:none;
 }
 
 canvas{
     display:block;
-    width:100%;
-    height:100%;
 }
 
-button{
-    font-family:inherit;
+#loading{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    background:
+        radial-gradient(circle,#1c3b22,#050a06 70%);
+    color:white;
 }
 
-/* =========================
-   MENU
-========================= */
+#loading h1{
+    font-size:55px;
+    color:#b9d978;
+    letter-spacing:-4px;
+}
+
+#loading p{
+    color:#82977f;
+    margin-top:12px;
+}
 
 #menu{
     position:fixed;
     inset:0;
-    z-index:20;
-
-    display:flex;
+    z-index:50;
+    display:none;
     align-items:center;
     justify-content:center;
-
-    background:
-        radial-gradient(
-            circle at 50% 35%,
-            #294d2eaa,
-            transparent 42%
-        ),
-        linear-gradient(
-            145deg,
-            #061009f5,
-            #020604fa
-        );
+    background:#020604bb;
+    backdrop-filter:blur(8px);
 }
 
-.card{
+.panel{
     width:min(500px,92vw);
-    padding:38px;
-
-    text-align:center;
-
-    border:1px solid #b9d69b22;
+    padding:35px;
     border-radius:28px;
-
     background:
-        linear-gradient(
-            145deg,
-            #152419f2,
-            #07100bf2
-        );
-
+        linear-gradient(145deg,#18271bd9,#07100bd9);
+    border:1px solid #ffffff12;
     box-shadow:
         0 30px 100px #000c,
         inset 0 1px #ffffff12;
+    text-align:center;
+    color:white;
 }
 
 .logo{
-    font-size:clamp(48px,12vw,78px);
+    font-size:68px;
     font-weight:1000;
-    letter-spacing:-5px;
-
-    background:
-        linear-gradient(
-            100deg,
-            #c4df7d,
-            #55a84c,
-            #d5a85e
-        );
-
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
+    letter-spacing:-6px;
+    color:#b8d871;
 }
 
-.logoSmall{
-    margin-top:-8px;
-    color:#b8cda7;
-    font-size:14px;
-    letter-spacing:4px;
+.subtitle{
+    color:#879a84;
     text-transform:uppercase;
+    letter-spacing:4px;
+    font-size:11px;
 }
 
-.description{
+.desc{
     margin:20px 0;
-
-    color:#9db29d;
+    color:#aab9a7;
     line-height:1.6;
-    font-size:14px;
 }
 
-.features{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-
-    margin:25px 0;
-}
-
-.feature{
-    padding:13px;
-
-    border-radius:14px;
-    border:1px solid #ffffff0b;
-    background:#ffffff05;
-
-    color:#9db19f;
-    font-size:12px;
-}
-
-.feature b{
-    display:block;
-    margin-bottom:4px;
-    color:#e9f1e4;
-    font-size:14px;
-}
-
-#play{
+#start{
     width:100%;
-    min-height:52px;
-
     border:0;
     border-radius:15px;
-
-    cursor:pointer;
-
-    color:#15200f;
-    font-weight:900;
+    padding:17px;
+    background:linear-gradient(100deg,#a9d56d,#579e4e);
+    color:#11200d;
     font-size:17px;
-
-    background:
-        linear-gradient(
-            100deg,
-            #a8d36e,
-            #5eae5c
-        );
-
-    box-shadow:
-        0 10px 35px #5eae5c33;
+    font-weight:900;
+    cursor:pointer;
 }
-
-#play:hover{
-    filter:brightness(1.08);
-}
-
-.best{
-    margin-top:15px;
-
-    color:#718171;
-    font-size:12px;
-}
-
-/* =========================
-   HUD
-========================= */
 
 #hud{
     position:fixed;
+    z-index:20;
     inset:0;
-    z-index:10;
-
     pointer-events:none;
+    display:none;
 }
 
-#topHud{
+.top{
     position:absolute;
-    top:16px;
-    left:16px;
-    right:16px;
+    top:15px;
+    left:15px;
+    right:15px;
 
     display:flex;
     justify-content:space-between;
     align-items:flex-start;
+    gap:10px;
 }
 
-.hudBox{
+.box{
+    min-width:125px;
     padding:10px 14px;
-
+    border-radius:14px;
+    background:#07100ddd;
     border:1px solid #ffffff12;
-    border-radius:13px;
-
-    background:#08130ddd;
-
-    backdrop-filter:blur(12px);
-
-    box-shadow:0 10px 30px #0006;
+    backdrop-filter:blur(10px);
+    color:white;
 }
 
 .label{
-    color:#718575;
+    color:#708271;
     font-size:10px;
-    letter-spacing:1px;
     text-transform:uppercase;
+    letter-spacing:1px;
 }
 
 .value{
-    margin-top:3px;
-
+    margin-top:4px;
     font-size:22px;
     font-weight:900;
 }
 
-#sizeValue{
-    color:#b5d878;
-}
-
-#timer{
-    text-align:center;
-}
-
-#timerValue{
-    color:#d7e7cc;
-}
-
-#progressBox{
-    width:180px;
+#size{
+    color:#badc78;
 }
 
 .progress{
-    width:100%;
+    margin-top:7px;
+    width:170px;
     height:7px;
-
-    margin-top:8px;
-
+    background:#ffffff12;
     border-radius:20px;
     overflow:hidden;
-
-    background:#ffffff0d;
 }
 
-#progressBar{
+#progress{
     width:5%;
     height:100%;
-
-    border-radius:20px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #77bd57,
-            #d5bd62
-        );
+    background:linear-gradient(90deg,#72b955,#e0c36d);
 }
 
-#hint{
+#message{
     position:absolute;
-
     left:50%;
-    bottom:24px;
+    top:45%;
+    transform:translate(-50%,-50%) scale(.5);
+    opacity:0;
 
-    transform:translateX(-50%);
+    text-align:center;
 
-    color:#91a691;
-    font-size:12px;
+    color:#d9ef9a;
+    font-size:clamp(45px,10vw,100px);
+    font-weight:1000;
+    letter-spacing:-5px;
 
-    text-shadow:0 2px 8px #000;
+    text-shadow:
+        0 0 15px #a9d66a,
+        0 0 60px #5f9c45,
+        0 10px 30px #000;
+
+    transition:
+        opacity .5s,
+        transform .7s cubic-bezier(.15,1.5,.3,1);
 }
 
-#minimap{
-    position:absolute;
-
-    right:16px;
-    bottom:16px;
-
-    width:150px;
-    height:150px;
-
-    border-radius:15px;
-
-    border:1px solid #ffffff18;
-
-    background:#071009cc;
+#message.show{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(1);
 }
 
-/* =========================
-   MOBILE
-========================= */
+#message small{
+    display:block;
+    margin-top:12px;
+    font-size:15px;
+    letter-spacing:3px;
+    color:#d6ddce;
+}
 
-#joystick{
-    position:absolute;
-
+#mobile{
+    position:fixed;
     left:25px;
     bottom:25px;
-
-    width:125px;
-    height:125px;
-
+    width:130px;
+    height:130px;
     display:none;
+    z-index:30;
 
-    border:1px solid #ffffff18;
     border-radius:50%;
-
-    background:#ffffff07;
+    background:#ffffff0b;
+    border:1px solid #ffffff18;
 }
 
 #stick{
     position:absolute;
-
+    width:52px;
+    height:52px;
     left:50%;
     top:50%;
-
-    width:50px;
-    height:50px;
-
     transform:translate(-50%,-50%);
-
     border-radius:50%;
+    background:#a9d46d;
+    box-shadow:0 0 30px #9dcc6533;
+}
 
-    background:#a9cf6e;
-    box-shadow:0 0 25px #a9cf6e44;
+#hint{
+    position:absolute;
+    left:50%;
+    bottom:20px;
+    transform:translateX(-50%);
+    color:#829181;
+    font-size:12px;
+    text-shadow:0 2px 8px #000;
+}
+
+#gameover{
+    position:fixed;
+    inset:0;
+    z-index:60;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:#020603dd;
+    backdrop-filter:blur(8px);
+}
+
+.final{
+    width:min(430px,90vw);
+    padding:38px;
+    border-radius:25px;
+    background:#0b170deF;
+    border:1px solid #ffffff12;
+    color:white;
+    text-align:center;
+}
+
+.final h2{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+.finalScore{
+    font-size:45px;
+    color:#b7d979;
+    font-weight:1000;
+    margin:18px;
+}
+
+#again{
+    width:100%;
+    border:0;
+    padding:16px;
+    border-radius:14px;
+    background:#77b75b;
+    color:#12200f;
+    font-weight:900;
 }
 
 @media(max-width:700px){
 
-    #joystick{
+    #mobile{
         display:block;
     }
 
@@ -345,237 +296,102 @@ button{
         display:none;
     }
 
-    #minimap{
-        width:105px;
-        height:105px;
-    }
-
-    #progressBox{
-        width:130px;
-    }
-
-    .hudBox{
+    .box{
+        min-width:100px;
         padding:8px 10px;
     }
 
-}
-
-/* =========================
-   GAME OVER
-========================= */
-
-#gameover{
-    position:fixed;
-    inset:0;
-    z-index:30;
-
-    display:none;
-
-    align-items:center;
-    justify-content:center;
-
-    background:#020603cc;
-
-    backdrop-filter:blur(6px);
-}
-
-.gameoverCard{
-    width:min(420px,90vw);
-
-    padding:36px;
-
-    text-align:center;
-
-    border-radius:24px;
-
-    border:1px solid #ffffff14;
-
-    background:#0a160dde;
-
-    box-shadow:0 30px 100px #000;
-}
-
-.gameoverCard h2{
-    font-size:40px;
-    margin-bottom:10px;
-}
-
-.finalScore{
-    margin:18px 0;
-
-    color:#b7d97b;
-    font-size:38px;
-    font-weight:900;
-}
-
-#restart{
-    width:100%;
-    min-height:50px;
-
-    border:0;
-    border-radius:14px;
-
-    background:#74b65c;
-    color:#12200f;
-
-    font-weight:900;
-    cursor:pointer;
+    .progress{
+        width:110px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="game"></canvas>
-
-<!-- =========================
-     MENU
-========================= -->
+<div id="loading">
+    <h1>🧉</h1>
+    <h1>CUIA.IO 3D</h1>
+    <p>Preparando a cidade...</p>
+</div>
 
 <div id="menu">
-
-    <div class="card">
+    <div class="panel">
 
         <div class="logo">CUIA.IO</div>
 
-        <div class="logoSmall">
-            A cidade é seu chimarrão
+        <div class="subtitle">
+            a cidade vai virar chimarrão
         </div>
 
-        <div class="description">
-            Controle uma cuia gigante e engula tudo pela frente.
-            Comece pelas pequenas coisas e cresça até conseguir
-            devorar prédios, carros, cavalos e muito mais.
+        <div class="desc">
+            Comece pequeno. Engula erva-mate, água,
+            objetos, pessoas, carros e cavalos.
+            Cresça até conseguir engolir o maior
+            prédio da cidade.
         </div>
 
-        <div class="features">
-
-            <div class="feature">
-                <b>🧉 Cuia</b>
-                Seu buraco começa pequeno.
-            </div>
-
-            <div class="feature">
-                <b>🌿 Erva-mate</b>
-                Colete erva para crescer.
-            </div>
-
-            <div class="feature">
-                <b>🐎 Gaúchos</b>
-                Cuidado com os cavaleiros.
-            </div>
-
-            <div class="feature">
-                <b>🏙️ Cidade</b>
-                Engula tudo.
-            </div>
-
-        </div>
-
-        <button id="play">
+        <button id="start">
             COMEÇAR O CHIMARRÃO
         </button>
 
-        <div class="best">
-            Recorde:
-            <b id="best">0</b>
-        </div>
-
     </div>
-
 </div>
-
-
-<!-- =========================
-     HUD
-========================= -->
 
 <div id="hud">
 
-    <div id="topHud">
+    <div class="top">
 
-        <div class="hudBox">
-
-            <div class="label">
-                Pontos
-            </div>
-
-            <div class="value" id="score">
-                0
-            </div>
-
+        <div class="box">
+            <div class="label">Pontos</div>
+            <div class="value" id="score">0</div>
         </div>
 
-        <div class="hudBox" id="timer">
-
-            <div class="label">
-                Tempo
-            </div>
-
-            <div class="value" id="timerValue">
-                02:00
-            </div>
-
-        </div>
-
-        <div class="hudBox" id="progressBox">
-
-            <div class="label">
-                Tamanho da cuia
-            </div>
-
-            <div class="value" id="sizeValue">
-                18
-            </div>
+        <div class="box">
+            <div class="label">Tamanho</div>
+            <div class="value" id="size">1.0</div>
 
             <div class="progress">
-                <div id="progressBar"></div>
+                <div id="progress"></div>
             </div>
+        </div>
 
+        <div class="box">
+            <div class="label">Tempo</div>
+            <div class="value" id="timer">02:00</div>
         </div>
 
     </div>
 
-    <canvas
-        id="minimap"
-        width="150"
-        height="150">
-    </canvas>
-
-    <div id="hint">
-        MOUSE / TOQUE = MOVER A CUIA
+    <div id="message">
+        🧉 MATE PRONTO!
+        <small>A cidade inteira virou chimarrão.</small>
     </div>
 
-    <div id="joystick">
-        <div id="stick"></div>
+    <div id="hint">
+        WASD / SETAS / MOUSE — MOVA A CUIA
     </div>
 
 </div>
 
-
-<!-- =========================
-     GAME OVER
-========================= -->
+<div id="mobile">
+    <div id="stick"></div>
+</div>
 
 <div id="gameover">
 
-    <div class="gameoverCard">
+    <div class="final">
 
         <h2>Fim do chimarrão</h2>
 
-        <div>
-            Pontuação
-        </div>
+        <div>Você fez</div>
 
         <div class="finalScore" id="finalScore">
             0
         </div>
 
-        <div style="color:#80917f;margin-bottom:20px">
-            Você conseguiu engolir uma boa parte da cidade.
-        </div>
-
-        <button id="restart">
+        <button id="again">
             NOVO CHIMARRÃO
         </button>
 
@@ -583,410 +399,996 @@ button{
 
 </div>
 
+<script type="module">
 
-<script>
-"use strict";
+import * as THREE
+from "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js";
+
 
 /* =========================================================
-   CANVAS
+   RENDERER
 ========================================================= */
 
-const canvas =
-    document.getElementById("game");
-
-const ctx =
-    canvas.getContext("2d",{
-        alpha:false,
-        desynchronized:true
+const renderer =
+    new THREE.WebGLRenderer({
+        antialias:true,
+        powerPreference:"high-performance"
     });
 
-const minimap =
-    document.getElementById("minimap");
+renderer.setPixelRatio(
+    Math.min(
+        window.devicePixelRatio || 1,
+        1.75
+    )
+);
 
-const mctx =
-    minimap.getContext("2d");
+renderer.setSize(
+    innerWidth,
+    innerHeight
+);
 
-let W=0;
-let H=0;
-let DPR=1;
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=
+    THREE.PCFSoftShadowMap;
 
-function resize(){
+renderer.outputColorSpace=
+    THREE.SRGBColorSpace;
 
-    W=window.innerWidth;
-    H=window.innerHeight;
+renderer.toneMapping=
+    THREE.ACESFilmicToneMapping;
 
-    DPR=
-        Math.min(
-            window.devicePixelRatio || 1,
-            2
+renderer.toneMappingExposure=1.15;
+
+document.body.appendChild(
+    renderer.domElement
+);
+
+
+/* =========================================================
+   CENA
+========================================================= */
+
+const scene =
+    new THREE.Scene();
+
+scene.background =
+    new THREE.Color("#91aa87");
+
+scene.fog =
+    new THREE.Fog(
+        "#91aa87",
+        300,
+        1500
+    );
+
+
+/* =========================================================
+   CÂMERA
+========================================================= */
+
+const camera =
+    new THREE.PerspectiveCamera(
+        55,
+        innerWidth/innerHeight,
+        .1,
+        3000
+    );
+
+camera.position.set(
+    0,
+    220,
+    230
+);
+
+
+/* =========================================================
+   LUZ
+========================================================= */
+
+const hemi =
+    new THREE.HemisphereLight(
+        "#d9efd1",
+        "#243024",
+        2.0
+    );
+
+scene.add(hemi);
+
+
+const sun =
+    new THREE.DirectionalLight(
+        "#fff4d6",
+        3.5
+    );
+
+sun.position.set(
+    -300,
+    500,
+    200
+);
+
+sun.castShadow=true;
+
+sun.shadow.mapSize.width=2048;
+sun.shadow.mapSize.height=2048;
+
+sun.shadow.camera.left=-700;
+sun.shadow.camera.right=700;
+sun.shadow.camera.top=700;
+sun.shadow.camera.bottom=-700;
+
+scene.add(sun);
+
+
+/* =========================================================
+   CONFIG
+========================================================= */
+
+const WORLD=1800;
+
+const GAME_TIME=120;
+
+const objects=[];
+
+let running=false;
+let won=false;
+
+let score=0;
+let timeLeft=GAME_TIME;
+
+
+/* =========================================================
+   CUIA
+========================================================= */
+
+const bowl=
+    new THREE.Group();
+
+scene.add(bowl);
+
+const bowlBody=
+    new THREE.Mesh(
+        new THREE.SphereGeometry(
+            1,
+            32,
+            20
+        ),
+        new THREE.MeshStandardMaterial({
+            color:"#7d5434",
+            roughness:.65,
+            metalness:.05
+        })
+    );
+
+bowlBody.scale.set(
+    1,
+    .55,
+    1
+);
+
+bowlBody.castShadow=true;
+bowlBody.receiveShadow=true;
+
+bowl.add(bowlBody);
+
+
+/*
+  Interior preto/verde.
+*/
+
+const inside=
+    new THREE.Mesh(
+        new THREE.CylinderGeometry(
+            .72,
+            .88,
+            .25,
+            32
+        ),
+        new THREE.MeshStandardMaterial({
+            color:"#172016",
+            roughness:1
+        })
+    );
+
+inside.position.y=.1;
+
+bowl.add(inside);
+
+
+/*
+  Erva mate.
+*/
+
+const herb =
+    new THREE.Mesh(
+        new THREE.SphereGeometry(
+            .55,
+            24,
+            12
+        ),
+        new THREE.MeshStandardMaterial({
+            color:"#365c2b",
+            roughness:1
+        })
+    );
+
+herb.scale.y=.25;
+herb.position.y=.18;
+
+bowl.add(herb);
+
+
+/*
+  Bomba.
+*/
+
+const bombilla =
+    new THREE.Mesh(
+        new THREE.CylinderGeometry(
+            .045,
+            .045,
+            1.35,
+            12
+        ),
+        new THREE.MeshStandardMaterial({
+            color:"#c4bda7",
+            metalness:.8,
+            roughness:.25
+        })
+    );
+
+bombilla.rotation.z=
+    -Math.PI/5;
+
+bombilla.position.set(
+    .35,
+    .45,
+    0
+);
+
+bowl.add(bombilla);
+
+
+/*
+  Escala inicial.
+*/
+
+let bowlRadius=1;
+
+bowl.scale.setScalar(
+    bowlRadius
+);
+
+bowl.position.y=.8;
+
+
+/* =========================================================
+   CHÃO
+========================================================= */
+
+const ground =
+    new THREE.Mesh(
+        new THREE.PlaneGeometry(
+            WORLD*2,
+            WORLD*2
+        ),
+        new THREE.MeshStandardMaterial({
+            color:"#76936c",
+            roughness:.9
+        })
+    );
+
+ground.rotation.x=-Math.PI/2;
+ground.receiveShadow=true;
+
+scene.add(ground);
+
+
+/* =========================================================
+   RUAS
+========================================================= */
+
+const roadMaterial =
+    new THREE.MeshStandardMaterial({
+        color:"#454d47",
+        roughness:.95
+    });
+
+
+function road(x,z,w,d){
+
+    const mesh =
+        new THREE.Mesh(
+            new THREE.BoxGeometry(
+                w,
+                .025,
+                d
+            ),
+            roadMaterial
         );
 
-    canvas.width=
-        Math.floor(W*DPR);
-
-    canvas.height=
-        Math.floor(H*DPR);
-
-    ctx.setTransform(
-        DPR,0,
-        0,DPR,
-        0,0
+    mesh.position.set(
+        x,
+        .015,
+        z
     );
+
+    mesh.receiveShadow=true;
+
+    scene.add(mesh);
 }
 
-window.addEventListener(
-    "resize",
-    resize
-);
 
-resize();
+/*
+  grade urbana
+*/
 
-
-/* =========================================================
-   CONFIGURAÇÃO
-========================================================= */
-
-const WORLD=5000;
-
-const CONFIG={
-
-    cityObjects:850,
-
-    buildings:90,
-
-    cars:65,
-
-    trees:150,
-
-    pedestrians:70,
-
-    herbs:170,
-
-    chimarrao:55,
-
-    gauchos:18,
-
-    horses:18,
-
-    particles:350,
-
-    startRadius:22,
-
-    growthPerSmallObject:.045,
-
-    timeLimit:120
-
-};
-
-
-/* =========================================================
-   UTILITÁRIOS
-========================================================= */
-
-const TAU=Math.PI*2;
-
-function rand(a,b){
-    return Math.random()*(b-a)+a;
-}
-
-function clamp(v,a,b){
-    return Math.max(a,Math.min(b,v));
-}
-
-function distanceSq(
-    ax,ay,bx,by
+for(
+    let x=-WORLD;
+    x<=WORLD;
+    x+=180
 ){
-    const dx=ax-bx;
-    const dy=ay-by;
 
-    return dx*dx+dy*dy;
-}
-
-function distance(
-    ax,ay,bx,by
-){
-    return Math.hypot(
-        ax-bx,
-        ay-by
+    road(
+        x,
+        0,
+        32,
+        WORLD*2
     );
+
 }
 
-function lerp(a,b,t){
-    return a+(b-a)*t;
+for(
+    let z=-WORLD;
+    z<=WORLD;
+    z+=180
+){
+
+    road(
+        0,
+        z,
+        WORLD*2,
+        32
+    );
+
 }
 
 
 /* =========================================================
-   INPUT
+   FUNÇÕES DE OBJETOS
 ========================================================= */
 
-const input={
+function material(color){
 
-    x:W/2,
-    y:H/2,
+    return new THREE.MeshStandardMaterial({
+        color,
+        roughness:.8
+    });
 
-    joystickX:0,
-    joystickY:0,
-
-    joystick:false
-};
+}
 
 
-window.addEventListener(
-    "mousemove",
-    e=>{
+function addObject(
+    type,
+    x,
+    z,
+    radius,
+    height,
+    color,
+    value,
+    minSize
+){
 
-        input.x=e.clientX;
-        input.y=e.clientY;
+    const group =
+        new THREE.Group();
+
+    group.position.set(
+        x,
+        0,
+        z
+    );
+
+    scene.add(group);
+
+
+    let mesh;
+
+
+    if(type==="building"){
+
+        mesh =
+            new THREE.Mesh(
+                new THREE.BoxGeometry(
+                    radius*2,
+                    height,
+                    radius*2
+                ),
+                material(color)
+            );
+
+        mesh.position.y=
+            height/2;
+
+        mesh.castShadow=true;
+        mesh.receiveShadow=true;
+
+        group.add(mesh);
+
+
+        /*
+          Janelas.
+        */
+
+        const windowMat=
+            new THREE.MeshStandardMaterial({
+                color:"#d9d28a",
+                emissive:"#514c27",
+                emissiveIntensity:.35
+            });
+
+
+        const rows=
+            Math.min(
+                10,
+                Math.floor(height/8)
+            );
+
+
+        for(
+            let y=5;
+            y<height-3;
+            y+=8
+        ){
+
+            for(
+                let side=-1;
+                side<=1;
+                side+=2
+            ){
+
+                for(
+                    let i=-radius+5;
+                    i<radius;
+                    i+=10
+                ){
+
+                    const win=
+                        new THREE.Mesh(
+                            new THREE.BoxGeometry(
+                                3,
+                                3,
+                                .12
+                            ),
+                            windowMat
+                        );
+
+                    win.position.set(
+                        i,
+                        y,
+                        side*radius
+                    );
+
+                    group.add(win);
+
+                }
+
+            }
+
+        }
 
     }
-);
 
 
-/* =========================================================
-   CAMERA
-========================================================= */
+    else if(type==="car"){
 
-const camera={
+        mesh=
+            new THREE.Mesh(
+                new THREE.BoxGeometry(
+                    radius*1.7,
+                    height*.55,
+                    radius
+                ),
+                material(color)
+            );
 
-    x:0,
-    y:0,
+        mesh.position.y=
+            height*.45;
 
-    zoom:1
-};
+        mesh.castShadow=true;
+
+        group.add(mesh);
+
+
+        const glass=
+            new THREE.Mesh(
+                new THREE.BoxGeometry(
+                    radius*.75,
+                    height*.35,
+                    radius*.8
+                ),
+                material("#86a8aa")
+            );
+
+        glass.position.y=
+            height*.78;
+
+        group.add(glass);
+
+    }
+
+
+    else if(type==="tree"){
+
+        const trunk=
+            new THREE.Mesh(
+                new THREE.CylinderGeometry(
+                    radius*.15,
+                    radius*.2,
+                    height,
+                    10
+                ),
+                material("#65472f")
+            );
+
+        trunk.position.y=
+            height/2;
+
+        trunk.castShadow=true;
+
+        group.add(trunk);
+
+
+        const crown=
+            new THREE.Mesh(
+                new THREE.SphereGeometry(
+                    radius,
+                    16,
+                    12
+                ),
+                material(color)
+            );
+
+        crown.position.y=
+            height;
+
+        crown.castShadow=true;
+
+        group.add(crown);
+
+    }
+
+
+    else if(type==="person"){
+
+        const body=
+            new THREE.Mesh(
+                new THREE.CapsuleGeometry(
+                    radius*.32,
+                    radius*.9,
+                    6,
+                    10
+                ),
+                material(color)
+            );
+
+        body.position.y=
+            radius*.75;
+
+        body.castShadow=true;
+
+        group.add(body);
+
+
+        const head=
+            new THREE.Mesh(
+                new THREE.SphereGeometry(
+                    radius*.4,
+                    12,
+                    10
+                ),
+                material("#bd805f")
+            );
+
+        head.position.y=
+            radius*1.65;
+
+        group.add(head);
+
+    }
+
+
+    else if(type==="horse"){
+
+        const body=
+            new THREE.Mesh(
+                new THREE.BoxGeometry(
+                    radius*1.6,
+                    radius*.7,
+                    radius*.65
+                ),
+                material(color)
+            );
+
+        body.position.y=
+            radius*.75;
+
+        body.castShadow=true;
+
+        group.add(body);
+
+
+        const head=
+            new THREE.Mesh(
+                new THREE.BoxGeometry(
+                    radius*.55,
+                    radius*.65,
+                    radius*.5
+                ),
+                material(color)
+            );
+
+        head.position.set(
+            radius*.9,
+            radius*1.05,
+            0
+        );
+
+        group.add(head);
+
+
+        for(
+            let i=-1;
+            i<=1;
+            i+=2
+        ){
+
+            for(
+                let j=-1;
+                j<=1;
+                j+=2
+            ){
+
+                const leg=
+                    new THREE.Mesh(
+                        new THREE.CylinderGeometry(
+                            radius*.08,
+                            radius*.08,
+                            radius*.9,
+                            8
+                        ),
+                        material(color)
+                    );
+
+                leg.position.set(
+                    i*radius*.5,
+                    radius*.35,
+                    j*radius*.2
+                );
+
+                group.add(leg);
+
+            }
+
+        }
+
+    }
+
+
+    else if(type==="herb"){
+
+        mesh=
+            new THREE.Mesh(
+                new THREE.ConeGeometry(
+                    radius,
+                    height,
+                    8
+                ),
+                material(color)
+            );
+
+        mesh.position.y=
+            height/2;
+
+        group.add(mesh);
+
+    }
+
+
+    else if(type==="water"){
+
+        mesh=
+            new THREE.Mesh(
+                new THREE.CylinderGeometry(
+                    radius,
+                    radius,
+                    .15,
+                    20
+                ),
+                new THREE.MeshStandardMaterial({
+                    color:"#54b5bd",
+                    transparent:true,
+                    opacity:.8,
+                    roughness:.15,
+                    metalness:.1
+                })
+            );
+
+        mesh.position.y=.08;
+
+        group.add(mesh);
+
+    }
+
+
+    const object={
+
+        group,
+
+        type,
+
+        radius,
+
+        height,
+
+        value,
+
+        minSize,
+
+        alive:true,
+
+        vx:0,
+
+        vz:0,
+
+        angle:Math.random()*Math.PI*2,
+
+        speed:
+            type==="person"
+            ?3
+            :type==="horse"
+            ?4
+            :type==="car"
+            ?9
+            :0,
+
+        timer:Math.random()*10
+
+    };
+
+
+    objects.push(object);
+
+    return object;
+}
 
 
 /* =========================================================
    CIDADE
 ========================================================= */
 
-const objects=[];
-
-
-/*
-Tipos:
-
-building
-car
-tree
-person
-herb
-water
-chimarrao
-gaucho
-horse
-lamp
-bench
-house
-*/
-
-function addObject(
-    type,
-    x,
-    y,
-    radius,
-    value,
-    color
-){
-
-    objects.push({
-
-        type,
-        x,
-        y,
-
-        radius,
-
-        value,
-
-        color,
-
-        alive:true,
-
-        phase:rand(0,TAU),
-
-        vx:0,
-        vy:0,
-
-        angle:rand(0,TAU)
-
-    });
-
-}
-
-
-/* =========================================================
-   GERADOR DA CIDADE
-========================================================= */
-
 function generateCity(){
 
-    objects.length=0;
-
-
-    /* ruas */
-
     /*
-      Em vez de gerar prédios totalmente aleatórios,
-      criamos uma malha urbana simples.
+      prédios
     */
 
-    const block=420;
-
     for(
-        let x=-WORLD+block;
-        x<WORLD;
-        x+=block
+        let i=0;
+        i<75;
+        i++
     ){
 
-        for(
-            let y=-WORLD+block;
-            y<WORLD;
-            y+=block
-        ){
+        const x=
+            Math.round(
+                THREE.MathUtils.randFloat(
+                    -WORLD+50,
+                    WORLD-50
+                )/180
+            )*180+
+            THREE.MathUtils.randFloat(
+                -55,
+                55
+            );
 
-            /*
-              prédios no interior dos quarteirões
-            */
+        const z=
+            Math.round(
+                THREE.MathUtils.randFloat(
+                    -WORLD+50,
+                    WORLD-50
+                )/180
+            )*180+
+            THREE.MathUtils.randFloat(
+                -55,
+                55
+            );
 
-            const buildingCount=
-                Math.floor(rand(1,4));
 
-            for(
-                let i=0;
-                i<buildingCount;
-                i++
-            ){
+        const giant=
+            i===0;
 
-                const bx=
-                    x+rand(-130,130);
 
-                const by=
-                    y+rand(-130,130);
+        const radius=
+            giant
+            ?75
+            :THREE.MathUtils.randFloat(
+                18,
+                38
+            );
 
-                addObject(
-                    "building",
-                    bx,
-                    by,
-                    rand(55,95),
-                    80,
-                    [
-                        "#8e9b9b",
-                        "#a2a49b",
-                        "#7f8e86",
-                        "#b2a994"
-                    ][
-                        Math.floor(
-                            Math.random()*4
-                        )
-                    ]
-                );
 
-            }
+        const height=
+            giant
+            ?250
+            :THREE.MathUtils.randFloat(
+                25,
+                100
+            );
 
-            /*
-              árvores
-            */
 
-            for(
-                let i=0;
-                i<2;
-                i++
-            ){
-
-                addObject(
-                    "tree",
-                    x+rand(-160,160),
-                    y+rand(-160,160),
-                    rand(18,27),
-                    10,
-                    "#4e8a4b"
-                );
-
-            }
-
-        }
+        addObject(
+            "building",
+            x,
+            z,
+            radius,
+            height,
+            giant
+                ?"#b7a57e"
+                :[
+                    "#8c9694",
+                    "#73878a",
+                    "#a49b89",
+                    "#7b8e83"
+                ][
+                    Math.floor(
+                        Math.random()*4
+                    )
+                ],
+            giant?10000:150,
+            giant?125:radius+8
+        );
 
     }
 
 
-    /* carros */
+    /*
+      árvores
+    */
 
     for(
         let i=0;
-        i<CONFIG.cars;
+        i<180;
         i++
     ){
 
-        const horizontal=
-            Math.random()<.5;
+        addObject(
+            "tree",
+            THREE.MathUtils.randFloat(
+                -WORLD,
+                WORLD
+            ),
+            THREE.MathUtils.randFloat(
+                -WORLD,
+                WORLD
+            ),
+            THREE.MathUtils.randFloat(
+                5,
+                11
+            ),
+            THREE.MathUtils.randFloat(
+                15,
+                30
+            ),
+            "#3f793f",
+            15,
+            10
+        );
 
-        const road=
-            Math.round(
-                rand(
-                    -WORLD,
-                    WORLD
-                )/420
-            )*420;
+    }
 
-        let x,y,angle;
 
-        if(horizontal){
+    /*
+      carros
+    */
 
-            x=rand(-WORLD,WORLD);
-            y=road;
-
-            angle=
-                Math.random()<.5
-                ?0
-                :Math.PI;
-
-        }else{
-
-            x=road;
-            y=rand(-WORLD,WORLD);
-
-            angle=
-                Math.random()<.5
-                ?Math.PI/2
-                :-Math.PI/2;
-
-        }
+    for(
+        let i=0;
+        i<90;
+        i++
+    ){
 
         addObject(
             "car",
-            x,y,
-            17,
-            16,
-            Math.random()<.5
-            ?"#d95b4b"
-            :"#4b79a7"
+            THREE.MathUtils.randFloat(
+                -WORLD,
+                WORLD
+            ),
+            THREE.MathUtils.randFloat(
+                -WORLD,
+                WORLD
+            ),
+            8,
+            4,
+            [
+                "#bd5147",
+                "#426e98",
+                "#d0b25d",
+                "#4e6658",
+                "#8d8c8a"
+            ][
+                Math.floor(
+                    Math.random()*5
+                )
+            ],
+            40,
+            18
         );
 
     }
 
 
-    /* bancos */
+    /*
+      pessoas
+    */
 
     for(
         let i=0;
-        i<55;
+        i<100;
         i++
     ){
 
         addObject(
-            "bench",
-            rand(-WORLD,WORLD),
-            rand(-WORLD,WORLD),
-            15,
-            12,
-            "#775437"
+            "person",
+            THREE.MathUtils.randFloat(
+                -WORLD,
+                WORLD
+            ),
+            THREE.MathUtils.randFloat(
+                -WORLD,
+                WORLD
+            ),
+            3,
+            5,
+            "#5479a5",
+            30,
+            10
         );
 
     }
 
 
-    /* postes */
+    /*
+      erva-mate
+    */
+
+    for(
+        let i=0;
+        i<250;
+        i++
+    ){
+
+        addObject(
+            "herb",
+            THREE.MathUtils.randFloat(
+                -WORLD,
+                WORLD
+            ),
+            THREE.MathUtils.randFloat(
+                -WORLD,
+                WORLD
+            ),
+            2,
+            3,
+            "#4c8f3c",
+            5,
+            3
+        );
+
+    }
+
+
+    /*
+      água
+    */
 
     for(
         let i=0;
@@ -995,215 +1397,772 @@ function generateCity(){
     ){
 
         addObject(
-            "lamp",
-            rand(-WORLD,WORLD),
-            rand(-WORLD,WORLD),
-            11,
-            9,
-            "#4b524c"
-        );
-
-    }
-
-
-    /* pessoas */
-
-    for(
-        let i=0;
-        i<CONFIG.pedestrians;
-        i++
-    ){
-
-        addObject(
-            "person",
-            rand(-WORLD,WORLD),
-            rand(-WORLD,WORLD),
-            12,
-            20,
-            "#c48a68"
-        );
-
-    }
-
-
-    /* erva mate */
-
-    for(
-        let i=0;
-        i<CONFIG.herbs;
-        i++
-    ){
-
-        addObject(
-            "herb",
-            rand(-WORLD,WORLD),
-            rand(-WORLD,WORLD),
-            rand(6,10),
-            8,
-            "#4f9c42"
-        );
-
-    }
-
-
-    /* água de chimarrão */
-
-    for(
-        let i=0;
-        i<CONFIG.chimarrao;
-        i++
-    ){
-
-        addObject(
             "water",
-            rand(-WORLD,WORLD),
-            rand(-WORLD,WORLD),
-            rand(12,17),
-            15,
-            "#63b8bd"
+            THREE.MathUtils.randFloat(
+                -WORLD,
+                WORLD
+            ),
+            THREE.MathUtils.randFloat(
+                -WORLD,
+                WORLD
+            ),
+            5,
+            1,
+            "#55b6be",
+            12,
+            5
         );
 
     }
 
 
-    /* gaúchos */
+    /*
+      cavalos
+    */
 
     for(
         let i=0;
-        i<CONFIG.gauchos;
-        i++
-    ){
-
-        addObject(
-            "gaucho",
-            rand(-WORLD,WORLD),
-            rand(-WORLD,WORLD),
-            17,
-            35,
-            "#b68b58"
-        );
-
-    }
-
-
-    /* cavalos */
-
-    for(
-        let i=0;
-        i<CONFIG.horses;
+        i<25;
         i++
     ){
 
         addObject(
             "horse",
-            rand(-WORLD,WORLD),
-            rand(-WORLD,WORLD),
-            26,
-            55,
-            "#855d3c"
+            THREE.MathUtils.randFloat(
+                -WORLD,
+                WORLD
+            ),
+            THREE.MathUtils.randFloat(
+                -WORLD,
+                WORLD
+            ),
+            11,
+            8,
+            "#795238",
+            100,
+            20
         );
 
     }
 
 }
 
+generateCity();
+
 
 /* =========================================================
-   CUIA
+   CONTROLE
 ========================================================= */
 
-const hole={
+const keys={};
 
+window.addEventListener(
+    "keydown",
+    e=>{
+        keys[
+            e.key.toLowerCase()
+        ]=true;
+    }
+);
+
+window.addEventListener(
+    "keyup",
+    e=>{
+        keys[
+            e.key.toLowerCase()
+        ]=false;
+    }
+);
+
+
+/* =========================================================
+   MOUSE
+========================================================= */
+
+const pointer={
     x:0,
-    y:0,
+    y:0
+};
 
-    radius:CONFIG.startRadius,
+window.addEventListener(
+    "pointermove",
+    e=>{
 
-    score:0,
+        pointer.x=
+            (e.clientX/
+            innerWidth-.5)*2;
 
-    alive:true,
+        pointer.y=
+            (e.clientY/
+            innerHeight-.5)*2;
 
-    speed:390
+    }
+);
 
+
+/* =========================================================
+   JOYSTICK
+========================================================= */
+
+const joystick=
+    document.getElementById(
+        "mobile"
+    );
+
+const stick=
+    document.getElementById(
+        "stick"
+    );
+
+let joyActive=false;
+
+const joy={
+    x:0,
+    y:0
 };
 
 
+joystick.addEventListener(
+    "pointerdown",
+    e=>{
+
+        joyActive=true;
+
+        joystick.setPointerCapture(
+            e.pointerId
+        );
+
+        updateJoystick(e);
+
+    }
+);
+
+
+joystick.addEventListener(
+    "pointermove",
+    e=>{
+
+        if(joyActive)
+            updateJoystick(e);
+
+    }
+);
+
+
+joystick.addEventListener(
+    "pointerup",
+    releaseJoystick
+);
+
+joystick.addEventListener(
+    "pointercancel",
+    releaseJoystick
+);
+
+
+function updateJoystick(e){
+
+    const r=
+        joystick.getBoundingClientRect();
+
+    const cx=
+        r.left+r.width/2;
+
+    const cy=
+        r.top+r.height/2;
+
+    let dx=e.clientX-cx;
+    let dy=e.clientY-cy;
+
+    const max=43;
+
+    const len=
+        Math.hypot(dx,dy);
+
+    if(len>max){
+
+        dx=dx/len*max;
+        dy=dy/len*max;
+
+    }
+
+    joy.x=dx/max;
+    joy.y=dy/max;
+
+    stick.style.transform=
+        `translate(
+            calc(-50% + ${dx}px),
+            calc(-50% + ${dy}px)
+        )`;
+}
+
+
+function releaseJoystick(){
+
+    joyActive=false;
+    joy.x=0;
+    joy.y=0;
+
+    stick.style.transform=
+        "translate(-50%,-50%)";
+
+}
+
+
 /* =========================================================
-   PARTÍCULAS
+   MOVIMENTO
 ========================================================= */
 
-const particles=[];
+const velocity=
+    new THREE.Vector3();
 
-function explode(
-    x,
-    y,
-    color,
-    amount=10
-){
 
-    for(
-        let i=0;
-        i<amount;
-        i++
+function getDirection(){
+
+    let x=0;
+    let z=0;
+
+
+    if(keys.w||keys.arrowup)
+        z-=1;
+
+    if(keys.s||keys.arrowdown)
+        z+=1;
+
+    if(keys.a||keys.arrowleft)
+        x-=1;
+
+    if(keys.d||keys.arrowright)
+        x+=1;
+
+
+    if(
+        x===0 &&
+        z===0 &&
+        joyActive
     ){
 
-        if(
-            particles.length>=
-            CONFIG.particles
+        x=joy.x;
+        z=joy.y;
+
+    }
+
+
+    /*
+      Mouse controla a direção quando
+      não há teclado.
+    */
+
+    if(
+        x===0 &&
+        z===0 &&
+        !joyActive
+    ){
+
+        x=pointer.x;
+        z=pointer.y;
+
+    }
+
+
+    const len=
+        Math.hypot(x,z);
+
+
+    if(len>1){
+
+        x/=len;
+        z/=len;
+
+    }
+
+
+    return {
+        x,
+        z
+    };
+
+}
+
+
+/* =========================================================
+   COLISÃO CIRCULAR 3D
+========================================================= */
+
+/*
+  A cuia possui um raio real.
+  Cada objeto possui uma esfera/cilindro
+  de colisão.
+
+  Se a cuia ainda não consegue engolir,
+  o movimento é bloqueado.
+
+  Se consegue engolir,
+  o objeto é consumido.
+*/
+
+function collisionRadius(o){
+
+    return o.radius;
+}
+
+
+function canEat(o){
+
+    return bowlRadius>=o.minSize;
+
+}
+
+
+function attemptEat(o){
+
+    if(!o.alive)
+        return false;
+
+    if(!canEat(o))
+        return false;
+
+
+    /*
+      objeto deve estar suficientemente
+      dentro da cuia
+    */
+
+    const dx=
+        o.group.position.x-
+        bowl.position.x;
+
+    const dz=
+        o.group.position.z-
+        bowl.position.z;
+
+    const d=
+        Math.hypot(dx,dz);
+
+
+    if(
+        d<
+        Math.max(
+            .5,
+            bowlRadius-
+            o.radius*.35
         )
+    ){
+
+        consume(o);
+
+        return true;
+
+    }
+
+    return false;
+
+}
+
+
+/* =========================================================
+   CONSUMIR
+========================================================= */
+
+function consume(o){
+
+    o.alive=false;
+
+    /*
+      crescimento.
+    */
+
+    let growth;
+
+
+    switch(o.type){
+
+        case "herb":
+            growth=.035;
             break;
 
-        const a=rand(0,TAU);
-        const s=rand(30,180);
+        case "water":
+            growth=.05;
+            break;
 
-        particles.push({
+        case "person":
+            growth=.13;
+            break;
 
-            x,
-            y,
+        case "tree":
+            growth=.12;
+            break;
 
-            vx:Math.cos(a)*s,
-            vy:Math.sin(a)*s,
+        case "car":
+            growth=.35;
+            break;
 
-            life:rand(.3,.8),
-            maxLife:.8,
+        case "horse":
+            growth=.55;
+            break;
 
-            size:rand(2,6),
+        case "building":
+            growth=
+                o.value>=10000
+                ?2.5
+                :1.0;
+            break;
 
-            color
+        default:
+            growth=.05;
 
-        });
+    }
+
+
+    bowlRadius+=growth;
+
+
+    score+=o.value;
+
+
+    /*
+      Animação de desaparecimento.
+    */
+
+    const startScale=
+        o.group.scale.x;
+
+
+    let t=0;
+
+
+    function shrink(){
+
+        if(!o.group)
+            return;
+
+
+        t+=.12;
+
+        const s=
+            Math.max(
+                0,
+                1-t
+            );
+
+        o.group.scale.setScalar(s);
+
+        o.group.position.y=
+            .5+
+            (1-s)*2;
+
+
+        if(t<1){
+
+            requestAnimationFrame(
+                shrink
+            );
+
+        }else{
+
+            scene.remove(
+                o.group
+            );
+
+        }
+
+    }
+
+    shrink();
+
+
+    /*
+      vitória.
+    */
+
+    if(
+        o.type==="building" &&
+        o.value>=10000
+    ){
+
+        win();
 
     }
 
 }
 
 
-function updateParticles(dt){
+/* =========================================================
+   MOVIMENTO + COLISÃO
+========================================================= */
 
-    for(
-        let i=particles.length-1;
-        i>=0;
-        i--
-    ){
+function moveBowl(dt){
 
-        const p=particles[i];
+    const dir=
+        getDirection();
 
-        p.life-=dt;
 
-        if(p.life<=0){
+    const speed=
+        42/
+        (
+            1+
+            bowlRadius/85
+        );
 
-            particles.splice(i,1);
+
+    velocity.set(
+        dir.x*speed*dt,
+        0,
+        dir.z*speed*dt
+    );
+
+
+    if(
+        Math.abs(velocity.x)<.0001 &&
+        Math.abs(velocity.z)<.0001
+    )
+        return;
+
+
+    const nextX=
+        bowl.position.x+
+        velocity.x;
+
+    const nextZ=
+        bowl.position.z+
+        velocity.z;
+
+
+    /*
+      Verificamos primeiro a posição
+      inteira.
+    */
+
+    let blocked=false;
+
+
+    for(const o of objects){
+
+        if(!o.alive)
             continue;
+
+
+        const ox=
+            o.group.position.x;
+
+        const oz=
+            o.group.position.z;
+
+
+        const dx=
+            nextX-ox;
+
+        const dz=
+            nextZ-oz;
+
+
+        const d=
+            Math.hypot(dx,dz);
+
+
+        const combined=
+            bowlRadius+
+            collisionRadius(o);
+
+
+        /*
+          Se encostou.
+        */
+
+        if(d<combined){
+
+            /*
+              Primeiro tentamos engolir.
+            */
+
+            const eaten=
+                attemptEatAt(
+                    o,
+                    nextX,
+                    nextZ
+                );
+
+
+            if(eaten)
+                continue;
+
+
+            /*
+              Não consegue engolir:
+              BLOQUEIA.
+            */
+
+            blocked=true;
+
+
+            /*
+              Empurra a cuia para fora
+              do objeto, simulando colisão.
+            */
+
+            if(d>.001){
+
+                const nx=
+                    dx/d;
+
+                const nz=
+                    dz/d;
+
+                /*
+                  Apenas movimento tangencial.
+                */
+
+                const tangentX=
+                    velocity.x-
+                    nx*(
+                        velocity.x*nx+
+                        velocity.z*nz
+                    );
+
+                const tangentZ=
+                    velocity.z-
+                    nz*(
+                        velocity.x*nx+
+                        velocity.z*nz
+                    );
+
+
+                /*
+                  tenta deslizar.
+                */
+
+                const slideX=
+                    bowl.position.x+
+                    tangentX;
+
+                const slideZ=
+                    bowl.position.z+
+                    tangentZ;
+
+
+                if(
+                    !collidesAt(
+                        slideX,
+                        slideZ
+                    )
+                ){
+
+                    bowl.position.x=
+                        slideX;
+
+                    bowl.position.z=
+                        slideZ;
+
+                }
+
+            }
 
         }
 
-        p.x+=p.vx*dt;
-        p.y+=p.vy*dt;
+    }
 
-        p.vx*=.96;
-        p.vy*=.96;
+
+    if(!blocked){
+
+        bowl.position.x=
+            THREE.MathUtils.clamp(
+                nextX,
+                -WORLD+bowlRadius,
+                WORLD-bowlRadius
+            );
+
+        bowl.position.z=
+            THREE.MathUtils.clamp(
+                nextZ,
+                -WORLD+bowlRadius,
+                WORLD-bowlRadius
+            );
 
     }
+
+}
+
+
+/*
+  Checagem sem alterar estado.
+*/
+
+function collidesAt(x,z){
+
+    for(const o of objects){
+
+        if(!o.alive)
+            continue;
+
+        if(canEat(o))
+            continue;
+
+
+        const dx=
+            x-o.group.position.x;
+
+        const dz=
+            z-o.group.position.z;
+
+        const d=
+            Math.hypot(dx,dz);
+
+
+        if(
+            d<
+            bowlRadius+
+            collisionRadius(o)
+        )
+            return true;
+
+    }
+
+    return false;
+
+}
+
+
+/*
+  Tenta comer considerando a nova posição.
+*/
+
+function attemptEatAt(
+    o,
+    x,
+    z
+){
+
+    if(!canEat(o))
+        return false;
+
+
+    const dx=
+        o.group.position.x-x;
+
+    const dz=
+        o.group.position.z-z;
+
+    const d=
+        Math.hypot(dx,dz);
+
+
+    if(
+        d<
+        Math.max(
+            .5,
+            bowlRadius-
+            o.radius*.35
+        )
+    ){
+
+        consume(o);
+
+        return true;
+
+    }
+
+
+    return false;
 
 }
 
@@ -1220,1164 +2179,82 @@ function updateObjects(dt){
             continue;
 
 
-        if(o.type==="car"){
+        if(
+            o.type!=="person" &&
+            o.type!=="horse" &&
+            o.type!=="car"
+        )
+            continue;
 
-            o.x+=
-                Math.cos(o.angle)*
-                90*
-                dt;
 
-            o.y+=
-                Math.sin(o.angle)*
-                90*
-                dt;
+        o.timer-=dt;
 
-            if(o.x>WORLD+100)
-                o.x=-WORLD;
 
-            if(o.x<-WORLD-100)
-                o.x=WORLD;
+        if(o.timer<=0){
 
-            if(o.y>WORLD+100)
-                o.y=-WORLD;
+            o.timer=
+                THREE.MathUtils.randFloat(
+                    1,
+                    4
+                );
 
-            if(o.y<-WORLD-100)
-                o.y=WORLD;
+            o.angle+=
+                THREE.MathUtils.randFloat(
+                    -.9,
+                    .9
+                );
+
+        }
+
+
+        o.group.position.x+=
+            Math.cos(o.angle)*
+            o.speed*
+            dt;
+
+        o.group.position.z+=
+            Math.sin(o.angle)*
+            o.speed*
+            dt;
+
+
+        /*
+          limites.
+        */
+
+        if(
+            Math.abs(
+                o.group.position.x
+            )>WORLD
+        ){
+
+            o.angle=
+                Math.PI-o.angle;
 
         }
 
 
         if(
-            o.type==="person" ||
-            o.type==="gaucho"
+            Math.abs(
+                o.group.position.z
+            )>WORLD
         ){
 
-            o.phase+=dt;
-
-            if(
-                Math.random()<.008
-            ){
-
-                o.angle+=
-                    rand(-1,1);
-
-            }
-
-            const speed=
-                o.type==="gaucho"
-                ?35
-                :20;
-
-            o.x+=
-                Math.cos(o.angle)*
-                speed*
-                dt;
-
-            o.y+=
-                Math.sin(o.angle)*
-                speed*
-                dt;
+            o.angle=
+                -o.angle;
 
         }
-
-
-        if(o.type==="horse"){
-
-            o.phase+=dt;
-
-            if(
-                Math.random()<.006
-            ){
-
-                o.angle+=
-                    rand(-.8,.8);
-
-            }
-
-            o.x+=
-                Math.cos(o.angle)*
-                27*
-                dt;
-
-            o.y+=
-                Math.sin(o.angle)*
-                27*
-                dt;
-
-        }
-
-    }
-
-}
-
-
-/* =========================================================
-   O QUE A CUIA CONSEGUE ENGOLIR?
-========================================================= */
-
-function minimumRadius(type){
-
-    switch(type){
-
-        case "herb":
-            return 12;
-
-        case "water":
-            return 15;
-
-        case "person":
-            return 22;
-
-        case "lamp":
-            return 25;
-
-        case "bench":
-            return 30;
-
-        case "tree":
-            return 38;
-
-        case "car":
-            return 48;
-
-        case "horse":
-            return 58;
-
-        case "gaucho":
-            return 45;
-
-        case "building":
-            return 100;
-
-        default:
-            return 20;
-
-    }
-
-}
-
-
-/* =========================================================
-   COMER OBJETOS
-========================================================= */
-
-function eatObjects(){
-
-    const r=hole.radius;
-
-    /*
-      Só verificamos objetos próximos.
-      Como a cidade tem centenas de objetos,
-      evitamos fazer operações pesadas em objetos
-      que estão muito longe da câmera.
-    */
-
-    const search=r+120;
-
-    for(const o of objects){
-
-        if(!o.alive)
-            continue;
-
-        const d2=
-            distanceSq(
-                hole.x,
-                hole.y,
-                o.x,
-                o.y
-            );
-
-        if(d2>search*search)
-            continue;
-
-
-        const min=
-            minimumRadius(o.type);
 
 
         /*
-          O objeto precisa caber dentro da cuia.
+          Faz o modelo olhar para a direção.
         */
 
-        if(r<min)
-            continue;
-
-
-        const eatDistance=
-            Math.max(
-                4,
-                r-o.radius*.45
-            );
-
-
-        if(d2<eatDistance*eatDistance){
-
-            o.alive=false;
-
-            hole.score+=o.value;
-
-            /*
-              crescimento escalado para impedir
-              crescimento absurdo com objetos pequenos
-            */
-
-            let growth=
-                CONFIG.growthPerSmallObject;
-
-            if(o.type==="building")
-                growth=.45;
-
-            if(o.type==="horse")
-                growth=.24;
-
-            if(o.type==="gaucho")
-                growth=.16;
-
-            if(o.type==="car")
-                growth=.14;
-
-            hole.radius+=growth;
-
-            explode(
-                o.x,
-                o.y,
-                o.color,
-                o.type==="building"
-                ?22
-                :7
-            );
-
-        }
+        o.group.rotation.y=
+            -o.angle+
+            Math.PI/2;
 
     }
-
-}
-
-
-/* =========================================================
-   DESENHO DO CHÃO
-========================================================= */
-
-function drawGround(){
-
-    ctx.fillStyle="#7c9272";
-
-    ctx.fillRect(
-        -WORLD,
-        -WORLD,
-        WORLD*2,
-        WORLD*2
-    );
-
-
-    /* ruas */
-
-    const road=420;
-
-    ctx.fillStyle="#4c554d";
-
-    for(
-        let x=-WORLD;
-        x<=WORLD;
-        x+=road
-    ){
-
-        ctx.fillRect(
-            x-42,
-            -WORLD,
-            84,
-            WORLD*2
-        );
-
-    }
-
-    for(
-        let y=-WORLD;
-        y<=WORLD;
-        y+=road
-    ){
-
-        ctx.fillRect(
-            -WORLD,
-            y-42,
-            WORLD*2,
-            84
-        );
-
-    }
-
-
-    /* faixas */
-
-    ctx.strokeStyle="#d8c87977";
-    ctx.lineWidth=4;
-    ctx.setLineDash([35,30]);
-
-    for(
-        let x=-WORLD;
-        x<=WORLD;
-        x+=road
-    ){
-
-        ctx.beginPath();
-
-        ctx.moveTo(x,-WORLD);
-        ctx.lineTo(x,WORLD);
-
-        ctx.stroke();
-
-    }
-
-    for(
-        let y=-WORLD;
-        y<=WORLD;
-        y+=road
-    ){
-
-        ctx.beginPath();
-
-        ctx.moveTo(-WORLD,y);
-        ctx.lineTo(WORLD,y);
-
-        ctx.stroke();
-
-    }
-
-    ctx.setLineDash([]);
-
-
-    /* pequenos detalhes do terreno */
-
-    ctx.fillStyle="#ffffff08";
-
-    for(
-        let x=-WORLD;
-        x<WORLD;
-        x+=100
-    ){
-
-        for(
-            let y=-WORLD;
-            y<WORLD;
-            y+=100
-        ){
-
-            ctx.fillRect(
-                x+8,
-                y+8,
-                2,
-                2
-            );
-
-        }
-
-    }
-
-}
-
-
-/* =========================================================
-   DESENHO DOS OBJETOS
-========================================================= */
-
-function drawObject(o,time){
-
-    if(!o.alive)
-        return;
-
-
-    const x=o.x;
-    const y=o.y;
-    const r=o.radius;
-
-
-    ctx.save();
-
-    ctx.translate(x,y);
-
-
-    /* sombra */
-
-    ctx.fillStyle="#0003";
-
-    ctx.beginPath();
-
-    ctx.ellipse(
-        3,
-        5,
-        r,
-        r*.55,
-        0,
-        0,
-        TAU
-    );
-
-    ctx.fill();
-
-
-    switch(o.type){
-
-        /* ---------------------
-           PRÉDIO
-        --------------------- */
-
-        case "building":
-
-            ctx.fillStyle=o.color;
-
-            ctx.fillRect(
-                -r,
-                -r,
-                r*2,
-                r*2
-            );
-
-            ctx.strokeStyle="#ffffff25";
-            ctx.lineWidth=3;
-
-            ctx.strokeRect(
-                -r,
-                -r,
-                r*2,
-                r*2
-            );
-
-
-            const windowSize=
-                Math.max(5,r*.13);
-
-            ctx.fillStyle="#dce3a566";
-
-            for(
-                let xx=-r+15;
-                xx<r-10;
-                xx+=25
-            ){
-
-                for(
-                    let yy=-r+15;
-                    yy<r-10;
-                    yy+=27
-                ){
-
-                    ctx.fillRect(
-                        xx,
-                        yy,
-                        windowSize,
-                        windowSize
-                    );
-
-                }
-
-            }
-
-            break;
-
-
-        /* ---------------------
-           CARRO
-        --------------------- */
-
-        case "car":
-
-            ctx.rotate(o.angle);
-
-            ctx.fillStyle=o.color;
-
-            ctx.fillRect(
-                -r,
-                -r*.55,
-                r*2,
-                r*1.1
-            );
-
-            ctx.fillStyle="#8eb4bd";
-
-            ctx.fillRect(
-                -r*.35,
-                -r*.42,
-                r*.7,
-                r*.35
-            );
-
-            ctx.fillStyle="#111";
-
-            ctx.fillRect(
-                -r*.65,
-                -r*.75,
-                r*.32,
-                r*.2
-            );
-
-            ctx.fillRect(
-                r*.33,
-                -r*.75,
-                r*.32,
-                r*.2
-            );
-
-            ctx.fillRect(
-                -r*.65,
-                r*.55,
-                r*.32,
-                r*.2
-            );
-
-            ctx.fillRect(
-                r*.33,
-                r*.55,
-                r*.32,
-                r*.2
-            );
-
-            break;
-
-
-        /* ---------------------
-           ÁRVORE
-        --------------------- */
-
-        case "tree":
-
-            ctx.fillStyle="#684b32";
-
-            ctx.fillRect(
-                -5,
-                -3,
-                10,
-                r+8
-            );
-
-            ctx.fillStyle=o.color;
-
-            ctx.beginPath();
-
-            ctx.arc(
-                0,
-                -r*.35,
-                r,
-                0,
-                TAU
-            );
-
-            ctx.fill();
-
-            ctx.fillStyle="#73a85b";
-
-            ctx.beginPath();
-
-            ctx.arc(
-                -r*.35,
-                -r*.55,
-                r*.55,
-                0,
-                TAU
-            );
-
-            ctx.fill();
-
-            break;
-
-
-        /* ---------------------
-           PESSOA
-        --------------------- */
-
-        case "person":
-
-            ctx.fillStyle="#3b5b9a";
-
-            ctx.fillRect(
-                -6,
-                0,
-                12,
-                13
-            );
-
-            ctx.fillStyle="#d39a72";
-
-            ctx.beginPath();
-
-            ctx.arc(
-                0,
-                -7,
-                6,
-                0,
-                TAU
-            );
-
-            ctx.fill();
-
-            ctx.fillStyle="#4b3326";
-
-            ctx.beginPath();
-
-            ctx.arc(
-                0,
-                -10,
-                6,
-                Math.PI,
-                TAU
-            );
-
-            ctx.fill();
-
-            break;
-
-
-        /* ---------------------
-           ERVA-MATE
-        --------------------- */
-
-        case "herb":
-
-            ctx.fillStyle="#327a32";
-
-            for(
-                let i=0;
-                i<5;
-                i++
-            ){
-
-                const a=
-                    i*TAU/5;
-
-                ctx.beginPath();
-
-                ctx.ellipse(
-                    Math.cos(a)*5,
-                    Math.sin(a)*5,
-                    3,
-                    8,
-                    a,
-                    0,
-                    TAU
-                );
-
-                ctx.fill();
-
-            }
-
-            break;
-
-
-        /* ---------------------
-           ÁGUA
-        --------------------- */
-
-        case "water":
-
-            ctx.fillStyle="#4faeb5";
-
-            ctx.beginPath();
-
-            ctx.arc(
-                0,
-                0,
-                r,
-                0,
-                TAU
-            );
-
-            ctx.fill();
-
-            ctx.strokeStyle="#b7ffff99";
-            ctx.lineWidth=2;
-
-            ctx.beginPath();
-
-            ctx.arc(
-                -3,
-                -3,
-                r*.55,
-                0,
-                TAU
-            );
-
-            ctx.stroke();
-
-            break;
-
-
-        /* ---------------------
-           CUIA DE CHIMARRÃO
-        --------------------- */
-
-        case "chimarrao":
-
-            ctx.fillStyle="#795536";
-
-            ctx.beginPath();
-
-            ctx.ellipse(
-                0,
-                0,
-                r,
-                r*.75,
-                0,
-                0,
-                TAU
-            );
-
-            ctx.fill();
-
-            ctx.fillStyle="#426b31";
-
-            ctx.beginPath();
-
-            ctx.ellipse(
-                0,
-                -3,
-                r*.75,
-                r*.45,
-                0,
-                0,
-                TAU
-            );
-
-            ctx.fill();
-
-            break;
-
-
-        /* ---------------------
-           GAÚCHO
-        --------------------- */
-
-        case "gaucho":
-
-            /*
-              chapéu
-            */
-
-            ctx.fillStyle="#493522";
-
-            ctx.beginPath();
-
-            ctx.ellipse(
-                0,
-                -r*.7,
-                r*.75,
-                r*.25,
-                0,
-                0,
-                TAU
-            );
-
-            ctx.fill();
-
-            ctx.fillRect(
-                -r*.25,
-                -r*.95,
-                r*.5,
-                r*.35
-            );
-
-
-            /* corpo */
-
-            ctx.fillStyle="#70482f";
-
-            ctx.fillRect(
-                -7,
-                -3,
-                14,
-                19
-            );
-
-
-            /* rosto */
-
-            ctx.fillStyle="#b97853";
-
-            ctx.beginPath();
-
-            ctx.arc(
-                0,
-                -8,
-                7,
-                0,
-                TAU
-            );
-
-            ctx.fill();
-
-
-            /* lenço */
-
-            ctx.fillStyle="#b23d38";
-
-            ctx.fillRect(
-                -6,
-                -1,
-                12,
-                4
-            );
-
-            break;
-
-
-        /* ---------------------
-           CAVALO
-        --------------------- */
-
-        case "horse":
-
-            ctx.rotate(o.angle);
-
-            ctx.fillStyle=o.color;
-
-            ctx.beginPath();
-
-            ctx.ellipse(
-                0,
-                0,
-                r,
-                r*.48,
-                0,
-                0,
-                TAU
-            );
-
-            ctx.fill();
-
-
-            /* pescoço */
-
-            ctx.fillRect(
-                r*.45,
-                -r*.42,
-                r*.45,
-                r*.55
-            );
-
-
-            /* cabeça */
-
-            ctx.beginPath();
-
-            ctx.ellipse(
-                r*.8,
-                -r*.35,
-                r*.35,
-                r*.27,
-                0,
-                0,
-                TAU
-            );
-
-            ctx.fill();
-
-
-            /* pernas */
-
-            ctx.fillRect(
-                -r*.55,
-                r*.25,
-                5,
-                r*.6
-            );
-
-            ctx.fillRect(
-                -r*.1,
-                r*.25,
-                5,
-                r*.6
-            );
-
-            ctx.fillRect(
-                r*.3,
-                r*.25,
-                5,
-                r*.6
-            );
-
-            ctx.fillRect(
-                r*.65,
-                r*.2,
-                5,
-                r*.6
-            );
-
-
-            /* crina */
-
-            ctx.fillStyle="#30251e";
-
-            ctx.fillRect(
-                r*.4,
-                -r*.55,
-                r*.18,
-                r*.65
-            );
-
-            break;
-
-
-        /* ---------------------
-           BANCO
-        --------------------- */
-
-        case "bench":
-
-            ctx.fillStyle=o.color;
-
-            ctx.fillRect(
-                -r,
-                -r*.35,
-                r*2,
-                r*.45
-            );
-
-            ctx.fillRect(
-                -r*.8,
-                r*.25,
-                5,
-                r*.55
-            );
-
-            ctx.fillRect(
-                r*.65,
-                r*.25,
-                5,
-                r*.55
-            );
-
-            break;
-
-
-        /* ---------------------
-           POSTE
-        --------------------- */
-
-        case "lamp":
-
-            ctx.fillStyle=o.color;
-
-            ctx.fillRect(
-                -2,
-                -r,
-                4,
-                r*2
-            );
-
-            ctx.fillStyle="#e7d783";
-
-            ctx.beginPath();
-
-            ctx.arc(
-                0,
-                -r,
-                6,
-                0,
-                TAU
-            );
-
-            ctx.fill();
-
-            break;
-
-    }
-
-
-    ctx.restore();
-
-}
-
-
-/* =========================================================
-   DESENHO DA CUIA PRINCIPAL
-========================================================= */
-
-function drawHole(){
-
-    const r=hole.radius;
-
-
-    /*
-      Sombra externa
-    */
-
-    ctx.save();
-
-    ctx.shadowColor="#000";
-    ctx.shadowBlur=30;
-
-
-    /* borda da cuia */
-
-    const gradient=
-        ctx.createRadialGradient(
-            hole.x-r*.25,
-            hole.y-r*.25,
-            r*.2,
-            hole.x,
-            hole.y,
-            r
-        );
-
-    gradient.addColorStop(
-        0,
-        "#172218"
-    );
-
-    gradient.addColorStop(
-        .65,
-        "#07100b"
-    );
-
-    gradient.addColorStop(
-        1,
-        "#020503"
-    );
-
-
-    ctx.fillStyle=gradient;
-
-    ctx.beginPath();
-
-    ctx.arc(
-        hole.x,
-        hole.y,
-        r,
-        0,
-        TAU
-    );
-
-    ctx.fill();
-
-    ctx.shadowBlur=0;
-
-
-    /*
-      Borda externa
-    */
-
-    ctx.strokeStyle="#a77a46";
-
-    ctx.lineWidth=
-        clamp(r*.12,3,14);
-
-    ctx.stroke();
-
-
-    /*
-      interior escuro
-    */
-
-    ctx.fillStyle="#020302";
-
-    ctx.beginPath();
-
-    ctx.arc(
-        hole.x,
-        hole.y,
-        r*.82,
-        0,
-        TAU
-    );
-
-    ctx.fill();
-
-
-    /*
-      erva mate dentro da cuia
-    */
-
-    ctx.fillStyle="#315629";
-
-    ctx.beginPath();
-
-    ctx.arc(
-        hole.x-r*.1,
-        hole.y-r*.1,
-        r*.55,
-        0,
-        TAU
-    );
-
-    ctx.fill();
-
-
-    /*
-      bombilla
-    */
-
-    ctx.strokeStyle="#b8b0a0";
-
-    ctx.lineWidth=
-        clamp(r*.055,2,7);
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        hole.x+r*.15,
-        hole.y-r*.2
-    );
-
-    ctx.lineTo(
-        hole.x+r*.65,
-        hole.y-r*.7
-    );
-
-    ctx.stroke();
-
-
-    /*
-      reflexo
-    */
-
-    ctx.strokeStyle="#ffffff22";
-
-    ctx.lineWidth=3;
-
-    ctx.beginPath();
-
-    ctx.arc(
-        hole.x-r*.2,
-        hole.y-r*.2,
-        r*.68,
-        Math.PI*1.1,
-        Math.PI*1.65
-    );
-
-    ctx.stroke();
-
-
-    ctx.restore();
-
-}
-
-
-/* =========================================================
-   TRANSFORMAÇÃO DE CÂMERA
-========================================================= */
-
-function beginWorld(){
-
-    ctx.save();
-
-    ctx.translate(
-        W/2,
-        H/2
-    );
-
-    ctx.scale(
-        camera.zoom,
-        camera.zoom
-    );
-
-    ctx.translate(
-        -camera.x,
-        -camera.y
-    );
-
-}
-
-
-function endWorld(){
-
-    ctx.restore();
 
 }
 
@@ -2386,263 +2263,78 @@ function endWorld(){
    CÂMERA
 ========================================================= */
 
+const cameraTarget=
+    new THREE.Vector3();
+
 function updateCamera(dt){
 
-    camera.x=
-        lerp(
-            camera.x,
-            hole.x,
-            1-Math.exp(-7*dt)
+    const distance=
+        230+
+        bowlRadius*1.7;
+
+    const height=
+        185+
+        bowlRadius*1.15;
+
+
+    const targetX=
+        bowl.position.x;
+
+    const targetZ=
+        bowl.position.z;
+
+
+    cameraTarget.set(
+        targetX,
+        0,
+        targetZ
+    );
+
+
+    const desired=
+        new THREE.Vector3(
+            targetX,
+            height,
+            targetZ+
+            distance
         );
 
-    camera.y=
-        lerp(
-            camera.y,
-            hole.y,
-            1-Math.exp(-7*dt)
-        );
+
+    camera.position.lerp(
+        desired,
+        1-
+        Math.exp(-4*dt)
+    );
 
 
-    /*
-      Conforme a cuia cresce,
-      a câmera afasta.
-    */
-
-    const targetZoom=
-        clamp(
-            1.15-
-            hole.radius/650,
-            .42,
-            1.15
-        );
-
-
-    camera.zoom=
-        lerp(
-            camera.zoom,
-            targetZoom,
-            1-Math.exp(-3*dt)
-        );
+    camera.lookAt(
+        cameraTarget
+    );
 
 }
 
 
 /* =========================================================
-   MOVIMENTO DA CUIA
+   ESCALA DA CUIA
 ========================================================= */
 
-function updateHole(dt){
+function updateBowl(){
 
-    let dx=
-        input.x-W/2;
-
-    let dy=
-        input.y-H/2;
-
-
-    if(input.joystick){
-
-        dx=
-            input.joystickX;
-
-        dy=
-            input.joystickY;
-
-        const len=
-            Math.hypot(dx,dy);
-
-        if(len>.05){
-
-            dx/=len;
-            dy/=len;
-
-        }
-
-    }
-
-
-    const len=
-        Math.hypot(dx,dy);
-
-
-    if(len>4){
-
-        dx/=len;
-        dy/=len;
-
-
-        /*
-          Cuia fica mais lenta conforme cresce,
-          mas nunca fica inutilizável.
-        */
-
-        const speed=
-            hole.speed/
-            (1+hole.radius/450);
-
-
-        hole.x+=
-            dx*
-            speed*
-            dt;
-
-        hole.y+=
-            dy*
-            speed*
-            dt;
-
-    }
-
-
-    /*
-      limite do mapa
-    */
-
-    const limit=
-        WORLD-hole.radius;
-
-    hole.x=
-        clamp(
-            hole.x,
-            -limit,
-            limit
-        );
-
-    hole.y=
-        clamp(
-            hole.y,
-            -limit,
-            limit
-        );
-
-}
-
-
-/* =========================================================
-   MINIMAPA
-========================================================= */
-
-function drawMinimap(){
-
-    const size=150;
-
-    mctx.clearRect(
-        0,
-        0,
-        size,
-        size
-    );
-
-    mctx.fillStyle="#071009";
-
-    mctx.fillRect(
-        0,
-        0,
-        size,
-        size
+    bowl.scale.setScalar(
+        bowlRadius
     );
 
 
     /*
-      ruas simplificadas
+      sombra dinâmica visual.
     */
 
-    mctx.strokeStyle="#ffffff09";
-    mctx.lineWidth=1;
-
-    for(
-        let i=0;
-        i<10;
-        i++
-    ){
-
-        const p=
-            10+i*14;
-
-        mctx.beginPath();
-        mctx.moveTo(p,0);
-        mctx.lineTo(p,size);
-        mctx.stroke();
-
-        mctx.beginPath();
-        mctx.moveTo(0,p);
-        mctx.lineTo(size,p);
-        mctx.stroke();
-
-    }
-
-
-    const scale=
-        (size-12)/
-        (WORLD*2);
-
-
-    function mx(x){
-
-        return 6+
-            (x+WORLD)*scale;
-
-    }
-
-    function my(y){
-
-        return 6+
-            (y+WORLD)*scale;
-
-    }
-
-
-    /* objetos importantes */
-
-    for(const o of objects){
-
-        if(!o.alive)
-            continue;
-
-        if(
-            o.type!=="building" &&
-            o.type!=="horse" &&
-            o.type!=="gaucho"
-        )
-            continue;
-
-
-        mctx.fillStyle=
-            o.type==="building"
-            ?"#6d7d70"
-            :"#bd8a58";
-
-
-        mctx.fillRect(
-            mx(o.x),
-            my(o.y),
-            2,
-            2
+    bowlBody.material.roughness=
+        .55+
+        Math.min(
+            .4,
+            bowlRadius/500
         );
-
-    }
-
-
-    /* cuia */
-
-    mctx.fillStyle="#d0e889";
-
-    mctx.shadowColor="#a8d36e";
-    mctx.shadowBlur=8;
-
-    mctx.beginPath();
-
-    mctx.arc(
-        mx(hole.x),
-        my(hole.y),
-        3,
-        0,
-        TAU
-    );
-
-    mctx.fill();
-
-    mctx.shadowBlur=0;
 
 }
 
@@ -2651,258 +2343,114 @@ function drawMinimap(){
    HUD
 ========================================================= */
 
-let timeLeft=
-    CONFIG.timeLimit;
-
 function updateHUD(){
 
-    document.getElementById("score")
-        .textContent=
-        hole.score.toLocaleString(
+    document.getElementById(
+        "score"
+    ).textContent=
+        score.toLocaleString(
             "pt-BR"
         );
 
 
-    document.getElementById("sizeValue")
-        .textContent=
-        Math.floor(hole.radius);
+    document.getElementById(
+        "size"
+    ).textContent=
+        bowlRadius.toFixed(1);
 
 
-    const progress=
-        clamp(
-            hole.radius/160,
-            .05,
-            1
-        )*100;
+    /*
+      maior prédio exige aproximadamente 125.
+    */
+
+    const p=
+        Math.min(
+            100,
+            bowlRadius/125*100
+        );
 
 
-    document.getElementById("progressBar")
-        .style.width=
-        progress+"%";
+    document.getElementById(
+        "progress"
+    ).style.width=
+        Math.max(
+            3,
+            p
+        )+"%";
 
 
-    const minutes=
-        Math.floor(timeLeft/60);
+    const min=
+        Math.floor(
+            timeLeft/60
+        );
 
-    const seconds=
-        Math.floor(timeLeft%60)
+    const sec=
+        Math.floor(
+            timeLeft%60
+        )
         .toString()
         .padStart(2,"0");
 
 
-    document.getElementById("timerValue")
-        .textContent=
-        `${minutes}:${seconds}`;
+    document.getElementById(
+        "timer"
+    ).textContent=
+        `${min}:${sec}`;
 
 }
 
 
 /* =========================================================
-   RENDER
+   VITÓRIA
 ========================================================= */
 
-function render(time){
+function win(){
 
-    ctx.fillStyle="#7c9272";
+    if(won)
+        return;
 
-    ctx.fillRect(
-        0,
-        0,
-        W,
-        H
+    won=true;
+
+    running=false;
+
+
+    const msg=
+        document.getElementById(
+            "message"
+        );
+
+    msg.classList.add(
+        "show"
     );
 
 
-    beginWorld();
-
-
-    drawGround();
-
-
     /*
-      Ordena objetos por posição Y para
-      criar uma pequena sensação de profundidade.
+      efeito de vitória:
+      pequena expansão.
     */
 
-    const visible=[];
-
-    const viewW=
-        W/camera.zoom+300;
-
-    const viewH=
-        H/camera.zoom+300;
+    let pulse=0;
 
 
-    for(const o of objects){
+    function victoryAnimation(){
 
-        if(!o.alive)
-            continue;
+        pulse+=.035;
 
-        if(
-            Math.abs(o.x-camera.x)>
-            viewW ||
-            Math.abs(o.y-camera.y)>
-            viewH
-        )
-            continue;
+        bowl.rotation.y=
+            Math.sin(pulse)*.15;
 
-        visible.push(o);
+        bowl.position.y=
+            .8+
+            Math.sin(pulse*2)*.15;
 
-    }
-
-
-    visible.sort(
-        (a,b)=>a.y-b.y
-    );
-
-
-    for(const o of visible)
-        drawObject(o,time);
-
-
-    /*
-      partículas
-    */
-
-    for(const p of particles){
-
-        ctx.globalAlpha=
-            clamp(
-                p.life/p.maxLife,
-                0,
-                1
+        if(pulse<8)
+            requestAnimationFrame(
+                victoryAnimation
             );
 
-        ctx.fillStyle=p.color;
-
-        ctx.beginPath();
-
-        ctx.arc(
-            p.x,
-            p.y,
-            p.size,
-            0,
-            TAU
-        );
-
-        ctx.fill();
-
     }
 
-    ctx.globalAlpha=1;
-
-
-    /*
-      A cuia fica por cima
-    */
-
-    drawHole();
-
-
-    endWorld();
-
-
-    /*
-      vinheta
-    */
-
-    const vignette=
-        ctx.createRadialGradient(
-            W/2,
-            H/2,
-            Math.min(W,H)*.25,
-            W/2,
-            H/2,
-            Math.max(W,H)*.75
-        );
-
-    vignette.addColorStop(
-        0,
-        "transparent"
-    );
-
-    vignette.addColorStop(
-        1,
-        "#00000055"
-    );
-
-
-    ctx.fillStyle=vignette;
-
-    ctx.fillRect(
-        0,
-        0,
-        W,
-        H
-    );
-
-
-    drawMinimap();
-
-}
-
-
-/* =========================================================
-   GAME STATE
-========================================================= */
-
-let running=false;
-let lastTime=performance.now();
-
-let best=
-    Number(
-        localStorage.getItem(
-            "cuiaBest"
-        )||0
-    );
-
-
-document.getElementById("best")
-    .textContent=
-    best;
-
-
-/* =========================================================
-   START
-========================================================= */
-
-function startGame(){
-
-    generateCity();
-
-
-    hole.x=0;
-    hole.y=0;
-
-    hole.radius=
-        CONFIG.startRadius;
-
-    hole.score=0;
-
-    timeLeft=
-        CONFIG.timeLimit;
-
-
-    particles.length=0;
-
-
-    camera.x=0;
-    camera.y=0;
-    camera.zoom=1;
-
-
-    running=true;
-
-
-    document.getElementById("menu")
-        .style.display="none";
-
-    document.getElementById("gameover")
-        .style.display="none";
-
-
-    input.x=W/2;
-    input.y=H/2;
+    victoryAnimation();
 
 }
 
@@ -2913,370 +2461,228 @@ function startGame(){
 
 function gameOver(){
 
+    if(won)
+        return;
+
     running=false;
 
-
-    if(hole.score>best){
-
-        best=hole.score;
-
-        localStorage.setItem(
-            "cuiaBest",
-            best
-        );
-
-    }
-
-
-    document.getElementById("best")
-        .textContent=
-        best;
-
-
-    document.getElementById("finalScore")
-        .textContent=
-        hole.score.toLocaleString(
+    document.getElementById(
+        "finalScore"
+    ).textContent=
+        score.toLocaleString(
             "pt-BR"
         );
 
-
-    document.getElementById("gameover")
-        .style.display="flex";
+    document.getElementById(
+        "gameover"
+    ).style.display=
+        "flex";
 
 }
 
 
 /* =========================================================
-   UPDATE
+   RESET
 ========================================================= */
 
-function update(dt){
+function resetGame(){
 
-    if(!running)
-        return;
+    /*
+      remove objetos antigos.
+    */
 
+    for(const o of objects){
 
-    timeLeft-=dt;
-
-
-    if(timeLeft<=0){
-
-        timeLeft=0;
-
-        gameOver();
-
-        return;
+        if(o.group.parent)
+            o.group.parent.remove(
+                o.group
+            );
 
     }
 
+    objects.length=0;
 
-    updateHole(dt);
 
-    updateObjects(dt);
+    generateCity();
 
-    eatObjects();
 
-    updateParticles(dt);
+    bowl.position.set(
+        0,
+        .8,
+        0
+    );
 
-    updateCamera(dt);
+    bowlRadius=1;
 
-    updateHUD();
+    bowl.scale.setScalar(1);
+
+
+    score=0;
+    timeLeft=GAME_TIME;
+
+    running=true;
+    won=false;
+
+
+    document.getElementById(
+        "message"
+    ).classList.remove(
+        "show"
+    );
+
+    document.getElementById(
+        "gameover"
+    ).style.display=
+        "none";
+
+    document.getElementById(
+        "menu"
+    ).style.display=
+        "none";
+
+    document.getElementById(
+        "hud"
+    ).style.display=
+        "block";
 
 }
 
 
 /* =========================================================
-   MAIN LOOP
+   BOTÕES
 ========================================================= */
 
-function loop(time){
+document
+    .getElementById("start")
+    .onclick=
+    resetGame;
+
+
+document
+    .getElementById("again")
+    .onclick=
+    resetGame;
+
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+window.addEventListener(
+    "resize",
+    ()=>{
+        camera.aspect=
+            innerWidth/
+            innerHeight;
+
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(
+            innerWidth,
+            innerHeight
+        );
+
+        renderer.setPixelRatio(
+            Math.min(
+                devicePixelRatio||1,
+                1.75
+            )
+        );
+
+    }
+);
+
+
+/* =========================================================
+   GAME LOOP
+========================================================= */
+
+let last=
+    performance.now();
+
+
+function animate(now){
+
+    requestAnimationFrame(
+        animate
+    );
+
 
     let dt=
-        (time-lastTime)/1000;
+        (now-last)/1000;
 
-    lastTime=time;
+    last=now;
 
 
     /*
-      Impede grandes saltos depois de
-      trocar de aba ou minimizar o navegador.
+      Evita explosões de física
+      ao trocar de aba.
     */
 
     dt=
-        clamp(
+        Math.min(
             dt,
-            0,
             .033
         );
 
 
-    update(dt);
+    if(running){
 
-    render(time);
+        timeLeft-=dt;
 
 
-    requestAnimationFrame(loop);
+        if(timeLeft<=0){
 
-}
+            timeLeft=0;
 
+            gameOver();
 
-/* =========================================================
-   BOTÃO MENU
-========================================================= */
+        }else{
 
-document
-    .getElementById("play")
-    .addEventListener(
-        "click",
-        startGame
-    );
+            updateObjects(dt);
 
+            moveBowl(dt);
 
-document
-    .getElementById("restart")
-    .addEventListener(
-        "click",
-        startGame
-    );
+            updateBowl();
 
+            updateCamera(dt);
 
-/* =========================================================
-   JOYSTICK MOBILE
-========================================================= */
-
-const joystick=
-    document.getElementById(
-        "joystick"
-    );
-
-const stick=
-    document.getElementById(
-        "stick"
-    );
-
-let joystickActive=false;
-
-
-function moveJoystick(x,y){
-
-    const rect=
-        joystick.getBoundingClientRect();
-
-
-    const cx=
-        rect.left+
-        rect.width/2;
-
-    const cy=
-        rect.top+
-        rect.height/2;
-
-
-    let dx=x-cx;
-    let dy=y-cy;
-
-
-    const max=
-        rect.width*.37;
-
-
-    const len=
-        Math.hypot(dx,dy);
-
-
-    if(len>max){
-
-        dx=
-            dx/len*max;
-
-        dy=
-            dy/len*max;
-
-    }
-
-
-    stick.style.transform=
-        `translate(
-            calc(-50% + ${dx}px),
-            calc(-50% + ${dy}px)
-        )`;
-
-
-    input.joystickX=
-        dx/max;
-
-    input.joystickY=
-        dy/max;
-
-    input.joystick=true;
-
-}
-
-
-joystick.addEventListener(
-    "touchstart",
-    e=>{
-
-        e.preventDefault();
-
-        joystickActive=true;
-
-        const t=e.touches[0];
-
-        moveJoystick(
-            t.clientX,
-            t.clientY
-        );
-
-    },
-    {passive:false}
-);
-
-
-joystick.addEventListener(
-    "touchmove",
-    e=>{
-
-        e.preventDefault();
-
-        if(!joystickActive)
-            return;
-
-        const t=e.touches[0];
-
-        moveJoystick(
-            t.clientX,
-            t.clientY
-        );
-
-    },
-    {passive:false}
-);
-
-
-function releaseJoystick(){
-
-    joystickActive=false;
-
-    input.joystick=false;
-
-    input.joystickX=0;
-    input.joystickY=0;
-
-    stick.style.transform=
-        "translate(-50%,-50%)";
-
-}
-
-
-joystick.addEventListener(
-    "touchend",
-    releaseJoystick
-);
-
-joystick.addEventListener(
-    "touchcancel",
-    releaseJoystick
-);
-
-
-/* =========================================================
-   TECLADO
-========================================================= */
-
-const keys={};
-
-window.addEventListener(
-    "keydown",
-    e=>{
-
-        keys[e.key.toLowerCase()]=true;
-
-        if(
-            e.key==="Enter" &&
-            !running
-        ){
-
-            startGame();
+            updateHUD();
 
         }
 
     }
-);
-
-window.addEventListener(
-    "keyup",
-    e=>{
-
-        keys[e.key.toLowerCase()]=false;
-
-    }
-);
 
 
-/*
-  WASD também controla a cuia.
-*/
-
-function keyboardInput(){
-
-    if(!running)
-        return;
-
-    let x=0;
-    let y=0;
-
-
-    if(keys["w"]||keys["arrowup"])
-        y-=1;
-
-    if(keys["s"]||keys["arrowdown"])
-        y+=1;
-
-    if(keys["a"]||keys["arrowleft"])
-        x-=1;
-
-    if(keys["d"]||keys["arrowright"])
-        x+=1;
-
-
-    if(x!==0||y!==0){
-
-        input.joystick=false;
-
-        const len=
-            Math.hypot(x,y);
-
-        input.x=
-            W/2+
-            x/len*
-            Math.min(W,H)*.3;
-
-        input.y=
-            H/2+
-            y/len*
-            Math.min(W,H)*.3;
-
-    }
+    renderer.render(
+        scene,
+        camera
+    );
 
 }
 
 
-/* =========================================================
-   LOOP AUXILIAR DE TECLADO
-========================================================= */
-
-setInterval(
-    keyboardInput,
-    30
+animate(
+    performance.now()
 );
 
 
 /* =========================================================
-   INICIALIZAÇÃO
+   LOADING
 ========================================================= */
 
-requestAnimationFrame(loop);
+setTimeout(
+    ()=>{
+        document.getElementById(
+            "loading"
+        ).style.display="none";
+
+        document.getElementById(
+            "menu"
+        ).style.display="flex";
+    },
+    800
+);
 
 </script>
 
