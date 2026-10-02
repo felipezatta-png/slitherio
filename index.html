@@ -2,20 +2,10 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-
-<title>Neon Snake Arena</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Cuia.io — A Cuia que Engole a Cidade</title>
 
 <style>
-:root{
-    --cyan:#00eaff;
-    --purple:#8b5cff;
-    --pink:#ff3cac;
-    --green:#00ff9d;
-    --bg:#030812;
-}
-
 *{
     box-sizing:border-box;
     margin:0;
@@ -26,14 +16,10 @@ html,body{
     width:100%;
     height:100%;
     overflow:hidden;
-    background:var(--bg);
-    color:#fff;
+    background:#08110d;
     font-family:Arial,Helvetica,sans-serif;
-}
-
-body{
+    color:#fff;
     user-select:none;
-    -webkit-user-select:none;
     touch-action:none;
 }
 
@@ -47,9 +33,9 @@ button{
     font-family:inherit;
 }
 
-/* ==============================
+/* =========================
    MENU
-============================== */
+========================= */
 
 #menu{
     position:fixed;
@@ -61,125 +47,137 @@ button{
     justify-content:center;
 
     background:
-        radial-gradient(circle at 50% 40%,#123c5e88,transparent 40%),
-        linear-gradient(#02050bdd,#030914ee);
+        radial-gradient(
+            circle at 50% 35%,
+            #294d2eaa,
+            transparent 42%
+        ),
+        linear-gradient(
+            145deg,
+            #061009f5,
+            #020604fa
+        );
 }
 
-.panel{
-    width:min(460px,92vw);
-    padding:38px 32px;
+.card{
+    width:min(500px,92vw);
+    padding:38px;
 
     text-align:center;
 
-    border:1px solid #ffffff1c;
+    border:1px solid #b9d69b22;
     border-radius:28px;
 
     background:
-        linear-gradient(145deg,#102235ee,#050c16ee);
+        linear-gradient(
+            145deg,
+            #152419f2,
+            #07100bf2
+        );
 
     box-shadow:
-        0 30px 100px #000,
+        0 30px 100px #000c,
         inset 0 1px #ffffff12;
-
-    backdrop-filter:blur(20px);
 }
 
 .logo{
-    font-size:clamp(42px,10vw,70px);
-    font-weight:900;
-    letter-spacing:-4px;
+    font-size:clamp(48px,12vw,78px);
+    font-weight:1000;
+    letter-spacing:-5px;
 
     background:
         linear-gradient(
-            90deg,
-            #00eaff,
-            #7d6cff,
-            #ff3cac
+            100deg,
+            #c4df7d,
+            #55a84c,
+            #d5a85e
         );
 
     -webkit-background-clip:text;
     background-clip:text;
     color:transparent;
-
-    text-shadow:0 0 35px #00eaff33;
 }
 
-.subtitle{
-    margin-top:7px;
-    color:#8fa8bd;
+.logoSmall{
+    margin-top:-8px;
+    color:#b8cda7;
+    font-size:14px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+}
+
+.description{
+    margin:20px 0;
+
+    color:#9db29d;
+    line-height:1.6;
     font-size:14px;
 }
 
-.info{
-    margin:25px 0;
-
+.features{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:10px;
+
+    margin:25px 0;
 }
 
-.info div{
+.feature{
     padding:13px;
 
-    border:1px solid #ffffff0d;
-    border-radius:13px;
+    border-radius:14px;
+    border:1px solid #ffffff0b;
+    background:#ffffff05;
 
-    background:#ffffff06;
-
-    color:#9db0c0;
+    color:#9db19f;
     font-size:12px;
 }
 
-.info b{
+.feature b{
     display:block;
     margin-bottom:4px;
-    color:white;
+    color:#e9f1e4;
     font-size:14px;
 }
 
 #play{
     width:100%;
+    min-height:52px;
+
     border:0;
     border-radius:15px;
 
-    padding:16px;
-
-    color:white;
-    font-size:17px;
-    font-weight:800;
-
     cursor:pointer;
+
+    color:#15200f;
+    font-weight:900;
+    font-size:17px;
 
     background:
         linear-gradient(
             100deg,
-            #00a8ff,
-            #6c55ff,
-            #db3caa
+            #a8d36e,
+            #5eae5c
         );
 
     box-shadow:
-        0 10px 35px #455cff44;
-
-    transition:
-        transform .15s,
-        filter .15s;
+        0 10px 35px #5eae5c33;
 }
 
 #play:hover{
-    transform:translateY(-2px);
-    filter:brightness(1.12);
+    filter:brightness(1.08);
 }
 
 .best{
-    margin-top:16px;
-    color:#71869a;
+    margin-top:15px;
+
+    color:#718171;
     font-size:12px;
 }
 
-/* ==============================
+/* =========================
    HUD
-============================== */
+========================= */
 
 #hud{
     position:fixed;
@@ -189,62 +187,74 @@ button{
     pointer-events:none;
 }
 
-#top{
+#topHud{
     position:absolute;
-    top:18px;
-    left:18px;
-    right:18px;
+    top:16px;
+    left:16px;
+    right:16px;
 
     display:flex;
     justify-content:space-between;
     align-items:flex-start;
 }
 
-.box{
-    min-width:145px;
-
+.hudBox{
     padding:10px 14px;
 
     border:1px solid #ffffff12;
     border-radius:13px;
 
-    background:#071321bb;
+    background:#08130ddd;
 
     backdrop-filter:blur(12px);
 
-    box-shadow:0 10px 30px #0005;
+    box-shadow:0 10px 30px #0006;
 }
 
 .label{
-    color:#6d8296;
+    color:#718575;
     font-size:10px;
-    text-transform:uppercase;
     letter-spacing:1px;
+    text-transform:uppercase;
 }
 
 .value{
-    margin-top:2px;
+    margin-top:3px;
 
-    font-size:21px;
+    font-size:22px;
     font-weight:900;
 }
 
-#energyBox{
-    width:190px;
+#sizeValue{
+    color:#b5d878;
 }
 
-.energy{
-    height:6px;
-    margin-top:7px;
-
-    overflow:hidden;
-    border-radius:20px;
-
-    background:#ffffff10;
+#timer{
+    text-align:center;
 }
 
-#energyBar{
+#timerValue{
+    color:#d7e7cc;
+}
+
+#progressBox{
+    width:180px;
+}
+
+.progress{
     width:100%;
+    height:7px;
+
+    margin-top:8px;
+
+    border-radius:20px;
+    overflow:hidden;
+
+    background:#ffffff0d;
+}
+
+#progressBar{
+    width:5%;
     height:100%;
 
     border-radius:20px;
@@ -252,76 +262,60 @@ button{
     background:
         linear-gradient(
             90deg,
-            #00eaff,
-            #6c5cff
+            #77bd57,
+            #d5bd62
         );
-
-    box-shadow:0 0 12px #00eaff;
 }
 
-#message{
+#hint{
     position:absolute;
+
     left:50%;
-    top:14%;
+    bottom:24px;
 
     transform:translateX(-50%);
 
-    color:#ffffffcc;
-    font-size:14px;
+    color:#91a691;
+    font-size:12px;
 
-    text-shadow:0 2px 10px #000;
-
-    opacity:0;
-    transition:opacity .3s;
+    text-shadow:0 2px 8px #000;
 }
 
 #minimap{
     position:absolute;
 
-    right:18px;
-    bottom:18px;
+    right:16px;
+    bottom:16px;
 
     width:150px;
     height:150px;
 
-    border-radius:16px;
+    border-radius:15px;
 
-    background:#050c15bb;
-    border:1px solid #ffffff15;
+    border:1px solid #ffffff18;
 
-    box-shadow:0 10px 35px #0008;
-
-    backdrop-filter:blur(8px);
+    background:#071009cc;
 }
 
-#controls{
-    position:absolute;
-    bottom:20px;
-    left:20px;
-
-    color:#71879b;
-    font-size:11px;
-}
-
-/* ==============================
+/* =========================
    MOBILE
-============================== */
+========================= */
 
 #joystick{
     position:absolute;
-    bottom:30px;
+
     left:25px;
+    bottom:25px;
 
     width:125px;
     height:125px;
 
     display:none;
 
+    border:1px solid #ffffff18;
     border-radius:50%;
 
-    border:1px solid #ffffff18;
-
-    background:#ffffff08;
+    background:#ffffff07;
 }
 
 #stick{
@@ -330,125 +324,100 @@ button{
     left:50%;
     top:50%;
 
-    width:48px;
-    height:48px;
+    width:50px;
+    height:50px;
 
     transform:translate(-50%,-50%);
 
     border-radius:50%;
 
-    background:
-        radial-gradient(circle at 35% 30%,#fff8,#00eaffaa);
-
-    box-shadow:
-        0 0 25px #00eaff88;
-}
-
-#boostButton{
-    position:absolute;
-    right:30px;
-    bottom:35px;
-
-    width:85px;
-    height:85px;
-
-    display:none;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:50%;
-
-    border:1px solid #ff3cac55;
-
-    background:#ff3cac20;
-
-    color:#ff8bc8;
-    font-weight:900;
-
-    box-shadow:0 0 30px #ff3cac22;
+    background:#a9cf6e;
+    box-shadow:0 0 25px #a9cf6e44;
 }
 
 @media(max-width:700px){
-    #controls{
+
+    #joystick{
+        display:block;
+    }
+
+    #hint{
         display:none;
     }
 
-    #joystick,
-    #boostButton{
-        display:flex;
-    }
-
     #minimap{
-        width:110px;
-        height:110px;
-        right:12px;
-        bottom:12px;
+        width:105px;
+        height:105px;
     }
 
-    .box{
-        min-width:115px;
+    #progressBox{
+        width:130px;
     }
 
-    #energyBox{
-        width:135px;
+    .hudBox{
+        padding:8px 10px;
     }
+
 }
 
-/* ==============================
-   DEATH SCREEN
-============================== */
+/* =========================
+   GAME OVER
+========================= */
 
-#death{
+#gameover{
     position:fixed;
     inset:0;
-
     z-index:30;
 
     display:none;
+
     align-items:center;
     justify-content:center;
 
-    background:#02050acc;
-    backdrop-filter:blur(5px);
+    background:#020603cc;
+
+    backdrop-filter:blur(6px);
 }
 
-.deathPanel{
-    width:min(390px,90vw);
+.gameoverCard{
+    width:min(420px,90vw);
 
-    padding:35px;
+    padding:36px;
 
     text-align:center;
 
-    border:1px solid #ffffff15;
     border-radius:24px;
 
-    background:#07111ddd;
+    border:1px solid #ffffff14;
+
+    background:#0a160dde;
 
     box-shadow:0 30px 100px #000;
 }
 
-.deathPanel h2{
+.gameoverCard h2{
     font-size:40px;
-    margin-bottom:8px;
+    margin-bottom:10px;
 }
 
 .finalScore{
-    margin:18px 0 25px;
-    color:#00eaff;
-    font-size:35px;
+    margin:18px 0;
+
+    color:#b7d97b;
+    font-size:38px;
     font-weight:900;
 }
 
 #restart{
     width:100%;
-    padding:15px;
+    min-height:50px;
 
     border:0;
-    border-radius:13px;
+    border-radius:14px;
 
-    background:linear-gradient(90deg,#00a8ff,#7a4dff);
+    background:#74b65c;
+    color:#12200f;
 
-    color:white;
     font-weight:900;
     cursor:pointer;
 }
@@ -459,96 +428,140 @@ button{
 
 <canvas id="game"></canvas>
 
-<!-- MENU -->
+<!-- =========================
+     MENU
+========================= -->
+
 <div id="menu">
-    <div class="panel">
 
-        <div class="logo">NEON</div>
-        <div class="logo">SNAKE</div>
+    <div class="card">
 
-        <div class="subtitle">
-            Arena multiplayer-style com inteligência artificial
+        <div class="logo">CUIA.IO</div>
+
+        <div class="logoSmall">
+            A cidade é seu chimarrão
         </div>
 
-        <div class="info">
-            <div>
-                <b>🖱️ Mouse</b>
-                Direcione a cobra
+        <div class="description">
+            Controle uma cuia gigante e engula tudo pela frente.
+            Comece pelas pequenas coisas e cresça até conseguir
+            devorar prédios, carros, cavalos e muito mais.
+        </div>
+
+        <div class="features">
+
+            <div class="feature">
+                <b>🧉 Cuia</b>
+                Seu buraco começa pequeno.
             </div>
 
-            <div>
-                <b>⚡ Clique</b>
-                Use o boost
+            <div class="feature">
+                <b>🌿 Erva-mate</b>
+                Colete erva para crescer.
             </div>
 
-            <div>
-                <b>🍬 Comida</b>
-                Cresça coletando
+            <div class="feature">
+                <b>🐎 Gaúchos</b>
+                Cuidado com os cavaleiros.
             </div>
 
-            <div>
-                <b>💥 Colisão</b>
-                Evite as outras cobras
+            <div class="feature">
+                <b>🏙️ Cidade</b>
+                Engula tudo.
             </div>
+
         </div>
 
         <button id="play">
-            ENTRAR NA ARENA
+            COMEÇAR O CHIMARRÃO
         </button>
 
         <div class="best">
-            Melhor pontuação:
-            <b id="menuBest">0</b>
+            Recorde:
+            <b id="best">0</b>
         </div>
 
     </div>
+
 </div>
 
-<!-- HUD -->
+
+<!-- =========================
+     HUD
+========================= -->
+
 <div id="hud">
 
-    <div id="top">
+    <div id="topHud">
 
-        <div class="box">
-            <div class="label">Pontuação</div>
-            <div class="value" id="score">0</div>
-        </div>
+        <div class="hudBox">
 
-        <div class="box" id="energyBox">
-            <div class="label">Boost</div>
-
-            <div class="energy">
-                <div id="energyBar"></div>
+            <div class="label">
+                Pontos
             </div>
+
+            <div class="value" id="score">
+                0
+            </div>
+
+        </div>
+
+        <div class="hudBox" id="timer">
+
+            <div class="label">
+                Tempo
+            </div>
+
+            <div class="value" id="timerValue">
+                02:00
+            </div>
+
+        </div>
+
+        <div class="hudBox" id="progressBox">
+
+            <div class="label">
+                Tamanho da cuia
+            </div>
+
+            <div class="value" id="sizeValue">
+                18
+            </div>
+
+            <div class="progress">
+                <div id="progressBar"></div>
+            </div>
+
         </div>
 
     </div>
 
-    <div id="message"></div>
+    <canvas
+        id="minimap"
+        width="150"
+        height="150">
+    </canvas>
 
-    <div id="controls">
-        MOUSE = DIREÇÃO &nbsp; • &nbsp;
-        SEGURE CLIQUE = BOOST
+    <div id="hint">
+        MOUSE / TOQUE = MOVER A CUIA
     </div>
-
-    <canvas id="minimap" width="150" height="150"></canvas>
 
     <div id="joystick">
         <div id="stick"></div>
     </div>
 
-    <div id="boostButton">
-        BOOST
-    </div>
-
 </div>
 
-<!-- DEATH -->
-<div id="death">
 
-    <div class="deathPanel">
+<!-- =========================
+     GAME OVER
+========================= -->
 
-        <h2>Você morreu</h2>
+<div id="gameover">
+
+    <div class="gameoverCard">
+
+        <h2>Fim do chimarrão</h2>
 
         <div>
             Pontuação
@@ -558,43 +571,61 @@ button{
             0
         </div>
 
+        <div style="color:#80917f;margin-bottom:20px">
+            Você conseguiu engolir uma boa parte da cidade.
+        </div>
+
         <button id="restart">
-            JOGAR NOVAMENTE
+            NOVO CHIMARRÃO
         </button>
 
     </div>
 
 </div>
 
+
 <script>
 "use strict";
 
-/* ==========================================================
+/* =========================================================
    CANVAS
-========================================================== */
+========================================================= */
 
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d", {
-    alpha:false,
-    desynchronized:true
-});
+const canvas =
+    document.getElementById("game");
 
-const mini = document.getElementById("minimap");
-const mctx = mini.getContext("2d");
+const ctx =
+    canvas.getContext("2d",{
+        alpha:false,
+        desynchronized:true
+    });
 
-let W = 0;
-let H = 0;
-let DPR = 1;
+const minimap =
+    document.getElementById("minimap");
+
+const mctx =
+    minimap.getContext("2d");
+
+let W=0;
+let H=0;
+let DPR=1;
 
 function resize(){
 
-    W = window.innerWidth;
-    H = window.innerHeight;
+    W=window.innerWidth;
+    H=window.innerHeight;
 
-    DPR = Math.min(window.devicePixelRatio || 1,2);
+    DPR=
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
 
-    canvas.width = Math.floor(W * DPR);
-    canvas.height = Math.floor(H * DPR);
+    canvas.width=
+        Math.floor(W*DPR);
+
+    canvas.height=
+        Math.floor(H*DPR);
 
     ctx.setTransform(
         DPR,0,
@@ -603,178 +634,118 @@ function resize(){
     );
 }
 
-window.addEventListener("resize",resize);
+window.addEventListener(
+    "resize",
+    resize
+);
+
 resize();
 
 
-/* ==========================================================
-   CONFIG
-========================================================== */
+/* =========================================================
+   CONFIGURAÇÃO
+========================================================= */
 
-const CONFIG = {
+const WORLD=5000;
 
-    worldSize:8000,
+const CONFIG={
 
-    foodCount:900,
+    cityObjects:850,
 
-    bots:14,
+    buildings:90,
 
-    segmentDistance:7,
+    cars:65,
 
-    playerSpeed:170,
+    trees:150,
 
-    boostSpeed:300,
+    pedestrians:70,
 
-    maxParticles:350,
+    herbs:170,
 
-    cameraSmooth:7,
+    chimarrao:55,
 
-    botThinkMin:.35,
-    botThinkMax:1.4
+    gauchos:18,
+
+    horses:18,
+
+    particles:350,
+
+    startRadius:22,
+
+    growthPerSmallObject:.045,
+
+    timeLimit:120
+
 };
 
 
-/* ==========================================================
-   UTIL
-========================================================== */
+/* =========================================================
+   UTILITÁRIOS
+========================================================= */
 
-const TAU = Math.PI * 2;
+const TAU=Math.PI*2;
 
 function rand(a,b){
-    return Math.random() * (b-a) + a;
+    return Math.random()*(b-a)+a;
 }
 
 function clamp(v,a,b){
     return Math.max(a,Math.min(b,v));
 }
 
-function lerp(a,b,t){
-    return a + (b-a)*t;
-}
-
-function distanceSq(ax,ay,bx,by){
-
+function distanceSq(
+    ax,ay,bx,by
+){
     const dx=ax-bx;
     const dy=ay-by;
 
     return dx*dx+dy*dy;
 }
 
-function angleDifference(a,b){
-
-    let d = a-b;
-
-    while(d > Math.PI)
-        d -= TAU;
-
-    while(d < -Math.PI)
-        d += TAU;
-
-    return d;
+function distance(
+    ax,ay,bx,by
+){
+    return Math.hypot(
+        ax-bx,
+        ay-by
+    );
 }
 
-function randomColor(){
-
-    const colors=[
-        "#00eaff",
-        "#ff3cac",
-        "#8b5cff",
-        "#00ff9d",
-        "#ffc400",
-        "#ff6438",
-        "#36a9ff",
-        "#c75cff"
-    ];
-
-    return colors[
-        Math.floor(Math.random()*colors.length)
-    ];
+function lerp(a,b,t){
+    return a+(b-a)*t;
 }
 
 
-/* ==========================================================
+/* =========================================================
    INPUT
-========================================================== */
+========================================================= */
 
-const input = {
+const input={
 
     x:W/2,
     y:H/2,
 
-    boosting:false,
-
     joystickX:0,
     joystickY:0,
 
-    usingJoystick:false
+    joystick:false
 };
 
-window.addEventListener("mousemove",e=>{
 
-    input.x=e.clientX;
-    input.y=e.clientY;
+window.addEventListener(
+    "mousemove",
+    e=>{
 
-});
+        input.x=e.clientX;
+        input.y=e.clientY;
 
-window.addEventListener("mousedown",()=>{
-
-    input.boosting=true;
-
-});
-
-window.addEventListener("mouseup",()=>{
-
-    input.boosting=false;
-
-});
+    }
+);
 
 
-/* ==========================================================
-   AUDIO
-========================================================== */
-
-let audioCtx=null;
-
-function initAudio(){
-
-    if(audioCtx)
-        return;
-
-    try{
-        audioCtx =
-            new (window.AudioContext ||
-                 window.webkitAudioContext)();
-    }catch(e){}
-}
-
-function beep(freq,duration=.06){
-
-    if(!audioCtx)
-        return;
-
-    const osc=audioCtx.createOscillator();
-    const gain=audioCtx.createGain();
-
-    osc.frequency.value=freq;
-    osc.type="sine";
-
-    gain.gain.setValueAtTime(.04,audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(
-        .001,
-        audioCtx.currentTime+duration
-    );
-
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-
-    osc.start();
-    osc.stop(audioCtx.currentTime+duration);
-}
-
-
-/* ==========================================================
+/* =========================================================
    CAMERA
-========================================================== */
+========================================================= */
 
 const camera={
 
@@ -785,86 +756,435 @@ const camera={
 };
 
 
-/* ==========================================================
-   FOOD
-========================================================== */
+/* =========================================================
+   CIDADE
+========================================================= */
 
-const foods=[];
+const objects=[];
 
-function createFood(x,y){
 
-    return {
+/*
+Tipos:
 
+building
+car
+tree
+person
+herb
+water
+chimarrao
+gaucho
+horse
+lamp
+bench
+house
+*/
+
+function addObject(
+    type,
+    x,
+    y,
+    radius,
+    value,
+    color
+){
+
+    objects.push({
+
+        type,
         x,
         y,
 
-        radius:rand(3,6),
+        radius,
 
-        color:randomColor(),
+        value,
 
-        phase:rand(0,TAU)
+        color,
 
-    };
+        alive:true,
+
+        phase:rand(0,TAU),
+
+        vx:0,
+        vy:0,
+
+        angle:rand(0,TAU)
+
+    });
+
 }
 
-function spawnFood(){
 
-    while(foods.length < CONFIG.foodCount){
+/* =========================================================
+   GERADOR DA CIDADE
+========================================================= */
 
-        foods.push(
-            createFood(
-                rand(
-                    -CONFIG.worldSize,
-                    CONFIG.worldSize
-                ),
-                rand(
-                    -CONFIG.worldSize,
-                    CONFIG.worldSize
-                )
-            )
-        );
+function generateCity(){
+
+    objects.length=0;
+
+
+    /* ruas */
+
+    /*
+      Em vez de gerar prédios totalmente aleatórios,
+      criamos uma malha urbana simples.
+    */
+
+    const block=420;
+
+    for(
+        let x=-WORLD+block;
+        x<WORLD;
+        x+=block
+    ){
+
+        for(
+            let y=-WORLD+block;
+            y<WORLD;
+            y+=block
+        ){
+
+            /*
+              prédios no interior dos quarteirões
+            */
+
+            const buildingCount=
+                Math.floor(rand(1,4));
+
+            for(
+                let i=0;
+                i<buildingCount;
+                i++
+            ){
+
+                const bx=
+                    x+rand(-130,130);
+
+                const by=
+                    y+rand(-130,130);
+
+                addObject(
+                    "building",
+                    bx,
+                    by,
+                    rand(55,95),
+                    80,
+                    [
+                        "#8e9b9b",
+                        "#a2a49b",
+                        "#7f8e86",
+                        "#b2a994"
+                    ][
+                        Math.floor(
+                            Math.random()*4
+                        )
+                    ]
+                );
+
+            }
+
+            /*
+              árvores
+            */
+
+            for(
+                let i=0;
+                i<2;
+                i++
+            ){
+
+                addObject(
+                    "tree",
+                    x+rand(-160,160),
+                    y+rand(-160,160),
+                    rand(18,27),
+                    10,
+                    "#4e8a4b"
+                );
+
+            }
+
+        }
+
     }
+
+
+    /* carros */
+
+    for(
+        let i=0;
+        i<CONFIG.cars;
+        i++
+    ){
+
+        const horizontal=
+            Math.random()<.5;
+
+        const road=
+            Math.round(
+                rand(
+                    -WORLD,
+                    WORLD
+                )/420
+            )*420;
+
+        let x,y,angle;
+
+        if(horizontal){
+
+            x=rand(-WORLD,WORLD);
+            y=road;
+
+            angle=
+                Math.random()<.5
+                ?0
+                :Math.PI;
+
+        }else{
+
+            x=road;
+            y=rand(-WORLD,WORLD);
+
+            angle=
+                Math.random()<.5
+                ?Math.PI/2
+                :-Math.PI/2;
+
+        }
+
+        addObject(
+            "car",
+            x,y,
+            17,
+            16,
+            Math.random()<.5
+            ?"#d95b4b"
+            :"#4b79a7"
+        );
+
+    }
+
+
+    /* bancos */
+
+    for(
+        let i=0;
+        i<55;
+        i++
+    ){
+
+        addObject(
+            "bench",
+            rand(-WORLD,WORLD),
+            rand(-WORLD,WORLD),
+            15,
+            12,
+            "#775437"
+        );
+
+    }
+
+
+    /* postes */
+
+    for(
+        let i=0;
+        i<70;
+        i++
+    ){
+
+        addObject(
+            "lamp",
+            rand(-WORLD,WORLD),
+            rand(-WORLD,WORLD),
+            11,
+            9,
+            "#4b524c"
+        );
+
+    }
+
+
+    /* pessoas */
+
+    for(
+        let i=0;
+        i<CONFIG.pedestrians;
+        i++
+    ){
+
+        addObject(
+            "person",
+            rand(-WORLD,WORLD),
+            rand(-WORLD,WORLD),
+            12,
+            20,
+            "#c48a68"
+        );
+
+    }
+
+
+    /* erva mate */
+
+    for(
+        let i=0;
+        i<CONFIG.herbs;
+        i++
+    ){
+
+        addObject(
+            "herb",
+            rand(-WORLD,WORLD),
+            rand(-WORLD,WORLD),
+            rand(6,10),
+            8,
+            "#4f9c42"
+        );
+
+    }
+
+
+    /* água de chimarrão */
+
+    for(
+        let i=0;
+        i<CONFIG.chimarrao;
+        i++
+    ){
+
+        addObject(
+            "water",
+            rand(-WORLD,WORLD),
+            rand(-WORLD,WORLD),
+            rand(12,17),
+            15,
+            "#63b8bd"
+        );
+
+    }
+
+
+    /* gaúchos */
+
+    for(
+        let i=0;
+        i<CONFIG.gauchos;
+        i++
+    ){
+
+        addObject(
+            "gaucho",
+            rand(-WORLD,WORLD),
+            rand(-WORLD,WORLD),
+            17,
+            35,
+            "#b68b58"
+        );
+
+    }
+
+
+    /* cavalos */
+
+    for(
+        let i=0;
+        i<CONFIG.horses;
+        i++
+    ){
+
+        addObject(
+            "horse",
+            rand(-WORLD,WORLD),
+            rand(-WORLD,WORLD),
+            26,
+            55,
+            "#855d3c"
+        );
+
+    }
+
 }
 
 
-/* ==========================================================
-   PARTICLES
-========================================================== */
+/* =========================================================
+   CUIA
+========================================================= */
+
+const hole={
+
+    x:0,
+    y:0,
+
+    radius:CONFIG.startRadius,
+
+    score:0,
+
+    alive:true,
+
+    speed:390
+
+};
+
+
+/* =========================================================
+   PARTÍCULAS
+========================================================= */
 
 const particles=[];
 
-function particleBurst(x,y,color,count=5){
+function explode(
+    x,
+    y,
+    color,
+    amount=10
+){
 
-    for(let i=0;i<count;i++){
+    for(
+        let i=0;
+        i<amount;
+        i++
+    ){
 
-        if(particles.length>=CONFIG.maxParticles)
+        if(
+            particles.length>=
+            CONFIG.particles
+        )
             break;
 
-        const angle=rand(0,TAU);
-        const speed=rand(25,100);
+        const a=rand(0,TAU);
+        const s=rand(30,180);
 
         particles.push({
 
             x,
             y,
 
-            vx:Math.cos(angle)*speed,
-            vy:Math.sin(angle)*speed,
+            vx:Math.cos(a)*s,
+            vy:Math.sin(a)*s,
 
-            life:rand(.3,.7),
-            maxLife:.7,
+            life:rand(.3,.8),
+            maxLife:.8,
 
-            size:rand(2,5),
+            size:rand(2,6),
 
             color
 
         });
+
     }
+
 }
+
 
 function updateParticles(dt){
 
-    for(let i=particles.length-1;i>=0;i--){
+    for(
+        let i=particles.length-1;
+        i>=0;
+        i--
+    ){
 
         const p=particles[i];
 
@@ -880,957 +1200,1220 @@ function updateParticles(dt){
         p.x+=p.vx*dt;
         p.y+=p.vy*dt;
 
-        p.vx*=.97;
-        p.vy*=.97;
-    }
-}
-
-
-/* ==========================================================
-   SNAKE CLASS
-========================================================== */
-
-class Snake{
-
-    constructor(x,y,color,isBot=false){
-
-        this.x=x;
-        this.y=y;
-
-        this.color=color;
-
-        this.isBot=isBot;
-
-        this.angle=rand(0,TAU);
-
-        this.targetAngle=this.angle;
-
-        this.radius=11;
-
-        this.length=isBot
-            ? rand(25,65)
-            : 32;
-
-        this.speed=CONFIG.playerSpeed;
-
-        this.energy=100;
-
-        this.alive=true;
-
-        this.thinkTimer=0;
-
-        this.targetX=x;
-        this.targetY=y;
-
-        this.body=[];
-
-        for(
-            let i=0;
-            i<this.length;
-            i++
-        ){
-
-            this.body.push({
-
-                x:x-
-                    Math.cos(this.angle)*
-                    i*
-                    CONFIG.segmentDistance,
-
-                y:y-
-                    Math.sin(this.angle)*
-                    i*
-                    CONFIG.segmentDistance
-
-            });
-
-        }
-
-    }
-
-    grow(amount){
-
-        this.length += amount;
-
-        this.length =
-            Math.min(this.length,800);
-
-    }
-
-    update(dt){
-
-        if(!this.alive)
-            return;
-
-        if(this.isBot)
-            this.updateAI(dt);
-        else
-            this.updatePlayer();
-
-        let difference =
-            angleDifference(
-                this.targetAngle,
-                this.angle
-            );
-
-        const turnSpeed =
-            this.isBot ? 3.5 : 5.5;
-
-        this.angle +=
-            clamp(
-                difference,
-                -turnSpeed*dt,
-                turnSpeed*dt
-            );
-
-        let boost=false;
-
-        if(this.isBot){
-
-            boost =
-                this.energy>30 &&
-                Math.random()<.002;
-
-        }else{
-
-            boost =
-                input.boosting &&
-                this.energy>0;
-
-        }
-
-        let speed=this.speed;
-
-        if(boost){
-
-            speed=CONFIG.boostSpeed;
-
-            this.energy -=
-                this.isBot
-                ? 8*dt
-                : 30*dt;
-
-            if(this.energy<0)
-                this.energy=0;
-
-            if(Math.random()<.25){
-
-                particleBurst(
-                    this.x-
-                    Math.cos(this.angle)*this.radius,
-                    this.y-
-                    Math.sin(this.angle)*this.radius,
-                    this.color,
-                    1
-                );
-
-            }
-
-        }else{
-
-            this.energy +=
-                15*dt;
-
-            if(this.energy>100)
-                this.energy=100;
-
-        }
-
-        this.x +=
-            Math.cos(this.angle)*
-            speed*
-            dt;
-
-        this.y +=
-            Math.sin(this.angle)*
-            speed*
-            dt;
-
-
-        /* ===============================================
-           WORLD WRAP
-        =============================================== */
-
-        const limit=CONFIG.worldSize;
-
-        if(this.x>limit)
-            this.x=-limit;
-
-        if(this.x<-limit)
-            this.x=limit;
-
-        if(this.y>limit)
-            this.y=-limit;
-
-        if(this.y<-limit)
-            this.y=limit;
-
-
-        /* ===============================================
-           BODY
-        =============================================== */
-
-        if(!this.body.length){
-
-            this.body.push({
-                x:this.x,
-                y:this.y
-            });
-
-        }else{
-
-            this.body[0].x=this.x;
-            this.body[0].y=this.y;
-
-        }
-
-        const required =
-            Math.floor(this.length);
-
-        while(
-            this.body.length <
-            required
-        ){
-
-            const last=
-                this.body[
-                    this.body.length-1
-                ];
-
-            this.body.push({
-                x:last.x,
-                y:last.y
-            });
-
-        }
-
-        while(
-            this.body.length >
-            required
-        ){
-
-            this.body.pop();
-
-        }
-
-
-        /* ===============================================
-           FOLLOW HEAD
-        =============================================== */
-
-        for(
-            let i=1;
-            i<this.body.length;
-            i++
-        ){
-
-            const previous=
-                this.body[i-1];
-
-            const current=
-                this.body[i];
-
-            const dx=
-                previous.x-current.x;
-
-            const dy=
-                previous.y-current.y;
-
-            const dist=
-                Math.sqrt(dx*dx+dy*dy);
-
-            const target=
-                CONFIG.segmentDistance;
-
-            if(dist>target){
-
-                const ratio=
-                    (dist-target)/dist;
-
-                current.x +=
-                    dx*ratio;
-
-                current.y +=
-                    dy*ratio;
-
-            }
-
-        }
-
-    }
-
-
-    /* ===============================================
-       PLAYER AI
-    =============================================== */
-
-    updatePlayer(){
-
-        let tx=input.x-W/2;
-        let ty=input.y-H/2;
-
-        if(
-            input.usingJoystick &&
-            (
-                Math.abs(input.joystickX)>.05 ||
-                Math.abs(input.joystickY)>.05
-            )
-        ){
-
-            tx=input.joystickX;
-            ty=input.joystickY;
-
-        }
-
-        if(Math.hypot(tx,ty)>4){
-
-            this.targetAngle=
-                Math.atan2(ty,tx);
-
-        }
-
-    }
-
-
-    /* ===============================================
-       BOT AI
-    =============================================== */
-
-    updateAI(dt){
-
-        this.thinkTimer-=dt;
-
-        if(this.thinkTimer<=0){
-
-            this.thinkTimer=
-                rand(
-                    CONFIG.botThinkMin,
-                    CONFIG.botThinkMax
-                );
-
-            this.chooseBotTarget();
-
-        }
-
-        this.targetAngle=
-            Math.atan2(
-                this.targetY-this.y,
-                this.targetX-this.x
-            );
-
-
-        /* Evitar bordas */
-
-        const limit=
-            CONFIG.worldSize*.82;
-
-        if(
-            Math.abs(this.x)>limit ||
-            Math.abs(this.y)>limit
-        ){
-
-            this.targetX=
-                -this.x;
-
-            this.targetY=
-                -this.y;
-
-        }
-
-    }
-
-
-    chooseBotTarget(){
-
-        let best=null;
-        let bestDist=Infinity;
-
-        /* procura comida próxima */
-
-        for(let i=0;i<foods.length;i++){
-
-            const f=foods[i];
-
-            const d=
-                distanceSq(
-                    this.x,
-                    this.y,
-                    f.x,
-                    f.y
-                );
-
-            if(d<bestDist){
-
-                bestDist=d;
-                best=f;
-
-            }
-
-        }
-
-        if(best){
-
-            this.targetX=best.x;
-            this.targetY=best.y;
-
-        }else{
-
-            this.targetX=
-                this.x+Math.cos(this.angle)*500;
-
-            this.targetY=
-                this.y+Math.sin(this.angle)*500;
-
-        }
-
-    }
-
-
-    draw(){
-
-        if(!this.alive)
-            return;
-
-        const body=this.body;
-
-        if(body.length<2)
-            return;
-
-
-        /* sombra neon */
-
-        ctx.save();
-
-        ctx.lineCap="round";
-        ctx.lineJoin="round";
-
-        ctx.shadowColor=this.color;
-        ctx.shadowBlur=20;
-
-        ctx.strokeStyle=this.color;
-
-        ctx.lineWidth=
-            this.radius*2;
-
-        ctx.beginPath();
-
-        for(
-            let i=0;
-            i<body.length;
-            i++
-        ){
-
-            const p=body[i];
-
-            if(i===0)
-                ctx.moveTo(p.x,p.y);
-            else
-                ctx.lineTo(p.x,p.y);
-
-        }
-
-        ctx.stroke();
-
-        ctx.shadowBlur=0;
-
-
-        /* brilho interno */
-
-        ctx.strokeStyle="#ffffff35";
-
-        ctx.lineWidth=
-            this.radius*.45;
-
-        ctx.beginPath();
-
-        for(
-            let i=0;
-            i<body.length;
-            i++
-        ){
-
-            const p=body[i];
-
-            if(i===0)
-                ctx.moveTo(p.x,p.y);
-            else
-                ctx.lineTo(p.x,p.y);
-
-        }
-
-        ctx.stroke();
-
-
-        /* cabeça */
-
-        ctx.fillStyle=this.color;
-
-        ctx.beginPath();
-
-        ctx.arc(
-            this.x,
-            this.y,
-            this.radius+2,
-            0,
-            TAU
-        );
-
-        ctx.fill();
-
-
-        /* olhos */
-
-        const fx=
-            Math.cos(this.angle);
-
-        const fy=
-            Math.sin(this.angle);
-
-        const sx=-fy;
-        const sy=fx;
-
-        ctx.fillStyle="#fff";
-
-        ctx.beginPath();
-
-        ctx.arc(
-            this.x+
-            fx*7+
-            sx*5,
-
-            this.y+
-            fy*7+
-            sy*5,
-
-            4,
-
-            0,
-            TAU
-        );
-
-        ctx.fill();
-
-        ctx.beginPath();
-
-        ctx.arc(
-            this.x+
-            fx*7-
-            sx*5,
-
-            this.y+
-            fy*7-
-            sy*5,
-
-            4,
-
-            0,
-            TAU
-        );
-
-        ctx.fill();
-
-
-        ctx.fillStyle="#06101b";
-
-        ctx.beginPath();
-
-        ctx.arc(
-            this.x+
-            fx*8+
-            sx*5,
-
-            this.y+
-            fy*8+
-            sy*5,
-
-            2,
-
-            0,
-            TAU
-        );
-
-        ctx.fill();
-
-        ctx.beginPath();
-
-        ctx.arc(
-            this.x+
-            fx*8-
-            sx*5,
-
-            this.y+
-            fy*8-
-            sy*5,
-
-            2,
-
-            0,
-            TAU
-        );
-
-        ctx.fill();
-
-
-        ctx.restore();
+        p.vx*=.96;
+        p.vy*=.96;
 
     }
 
 }
 
 
-/* ==========================================================
-   GAME STATE
-========================================================== */
+/* =========================================================
+   OBJETOS MÓVEIS
+========================================================= */
 
-let player=null;
-let bots=[];
+function updateObjects(dt){
 
-let running=false;
+    for(const o of objects){
 
-let lastTime=performance.now();
-
-let score=0;
-
-let best=
-    Number(
-        localStorage.getItem(
-            "neonSnakeBest"
-        ) || 0
-    );
-
-document.getElementById("menuBest")
-    .textContent=best;
-
-
-/* ==========================================================
-   START GAME
-========================================================== */
-
-function startGame(){
-
-    initAudio();
-
-    foods.length=0;
-    bots.length=0;
-    particles.length=0;
-
-    spawnFood();
-
-
-    player=new Snake(
-        0,
-        0,
-        "#00eaff",
-        false
-    );
-
-
-    for(
-        let i=0;
-        i<CONFIG.bots;
-        i++
-    ){
-
-        let x,y;
-
-        do{
-
-            x=rand(
-                -CONFIG.worldSize*.7,
-                CONFIG.worldSize*.7
-            );
-
-            y=rand(
-                -CONFIG.worldSize*.7,
-                CONFIG.worldSize*.7
-            );
-
-        }while(
-            Math.hypot(x,y)<600
-        );
-
-
-        bots.push(
-            new Snake(
-                x,
-                y,
-                randomColor(),
-                true
-            )
-        );
-
-    }
-
-
-    camera.x=player.x;
-    camera.y=player.y;
-    camera.zoom=1;
-
-
-    score=0;
-
-    input.boosting=false;
-
-
-    document.getElementById("menu")
-        .style.display="none";
-
-    document.getElementById("death")
-        .style.display="none";
-
-
-    running=true;
-
-    beep(440,.1);
-
-}
-
-
-/* ==========================================================
-   EATING
-========================================================== */
-
-function collectFood(snake){
-
-    if(!snake.alive)
-        return;
-
-    const eatRadius=
-        snake.radius+7;
-
-    const eatRadiusSq=
-        eatRadius*eatRadius;
-
-
-    for(
-        let i=foods.length-1;
-        i>=0;
-        i--
-    ){
-
-        const f=foods[i];
-
-        if(
-            distanceSq(
-                snake.x,
-                snake.y,
-                f.x,
-                f.y
-            )<
-            eatRadiusSq
-        ){
-
-            snake.grow(.45);
-
-            particleBurst(
-                f.x,
-                f.y,
-                f.color,
-                2
-            );
-
-            if(snake===player){
-
-                score+=10;
-
-                if(score%100===0)
-                    beep(620,.04);
-
-            }
-
-            foods.splice(i,1);
-
-        }
-
-    }
-
-
-    while(
-        foods.length<
-        CONFIG.foodCount
-    ){
-
-        foods.push(
-            createFood(
-                rand(
-                    -CONFIG.worldSize,
-                    CONFIG.worldSize
-                ),
-                rand(
-                    -CONFIG.worldSize,
-                    CONFIG.worldSize
-                )
-            )
-        );
-
-    }
-
-}
-
-
-/* ==========================================================
-   COLLISIONS
-========================================================== */
-
-function killSnake(snake){
-
-    if(!snake.alive)
-        return;
-
-    snake.alive=false;
-
-
-    /* transforma o corpo em comida */
-
-    for(
-        let i=4;
-        i<snake.body.length;
-        i+=3
-    ){
-
-        const p=snake.body[i];
-
-        foods.push(
-            createFood(
-                p.x+rand(-10,10),
-                p.y+rand(-10,10)
-            )
-        );
-
-    }
-
-
-    particleBurst(
-        snake.x,
-        snake.y,
-        snake.color,
-        35
-    );
-
-
-    if(snake===player){
-
-        endGame();
-
-    }
-
-}
-
-
-/* cabeça contra corpo */
-
-function checkCollisions(){
-
-    if(!player.alive)
-        return;
-
-
-    const all=[
-        player,
-        ...bots
-    ];
-
-
-    for(const a of all){
-
-        if(!a.alive)
+        if(!o.alive)
             continue;
 
 
-        /* contra outras cobras */
+        if(o.type==="car"){
 
-        for(const b of all){
+            o.x+=
+                Math.cos(o.angle)*
+                90*
+                dt;
+
+            o.y+=
+                Math.sin(o.angle)*
+                90*
+                dt;
+
+            if(o.x>WORLD+100)
+                o.x=-WORLD;
+
+            if(o.x<-WORLD-100)
+                o.x=WORLD;
+
+            if(o.y>WORLD+100)
+                o.y=-WORLD;
+
+            if(o.y<-WORLD-100)
+                o.y=WORLD;
+
+        }
+
+
+        if(
+            o.type==="person" ||
+            o.type==="gaucho"
+        ){
+
+            o.phase+=dt;
 
             if(
-                a===b ||
-                !b.alive
-            )
-                continue;
-
-
-            /*
-              Começa depois da cabeça para
-              impedir mortes instantâneas
-            */
-
-            for(
-                let i=7;
-                i<b.body.length;
-                i+=3
+                Math.random()<.008
             ){
 
-                const p=b.body[i];
+                o.angle+=
+                    rand(-1,1);
 
-                const radius=
-                    a.radius+
-                    b.radius*.75;
+            }
+
+            const speed=
+                o.type==="gaucho"
+                ?35
+                :20;
+
+            o.x+=
+                Math.cos(o.angle)*
+                speed*
+                dt;
+
+            o.y+=
+                Math.sin(o.angle)*
+                speed*
+                dt;
+
+        }
 
 
-                if(
-                    distanceSq(
-                        a.x,
-                        a.y,
-                        p.x,
-                        p.y
-                    )<
-                    radius*radius
+        if(o.type==="horse"){
+
+            o.phase+=dt;
+
+            if(
+                Math.random()<.006
+            ){
+
+                o.angle+=
+                    rand(-.8,.8);
+
+            }
+
+            o.x+=
+                Math.cos(o.angle)*
+                27*
+                dt;
+
+            o.y+=
+                Math.sin(o.angle)*
+                27*
+                dt;
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   O QUE A CUIA CONSEGUE ENGOLIR?
+========================================================= */
+
+function minimumRadius(type){
+
+    switch(type){
+
+        case "herb":
+            return 12;
+
+        case "water":
+            return 15;
+
+        case "person":
+            return 22;
+
+        case "lamp":
+            return 25;
+
+        case "bench":
+            return 30;
+
+        case "tree":
+            return 38;
+
+        case "car":
+            return 48;
+
+        case "horse":
+            return 58;
+
+        case "gaucho":
+            return 45;
+
+        case "building":
+            return 100;
+
+        default:
+            return 20;
+
+    }
+
+}
+
+
+/* =========================================================
+   COMER OBJETOS
+========================================================= */
+
+function eatObjects(){
+
+    const r=hole.radius;
+
+    /*
+      Só verificamos objetos próximos.
+      Como a cidade tem centenas de objetos,
+      evitamos fazer operações pesadas em objetos
+      que estão muito longe da câmera.
+    */
+
+    const search=r+120;
+
+    for(const o of objects){
+
+        if(!o.alive)
+            continue;
+
+        const d2=
+            distanceSq(
+                hole.x,
+                hole.y,
+                o.x,
+                o.y
+            );
+
+        if(d2>search*search)
+            continue;
+
+
+        const min=
+            minimumRadius(o.type);
+
+
+        /*
+          O objeto precisa caber dentro da cuia.
+        */
+
+        if(r<min)
+            continue;
+
+
+        const eatDistance=
+            Math.max(
+                4,
+                r-o.radius*.45
+            );
+
+
+        if(d2<eatDistance*eatDistance){
+
+            o.alive=false;
+
+            hole.score+=o.value;
+
+            /*
+              crescimento escalado para impedir
+              crescimento absurdo com objetos pequenos
+            */
+
+            let growth=
+                CONFIG.growthPerSmallObject;
+
+            if(o.type==="building")
+                growth=.45;
+
+            if(o.type==="horse")
+                growth=.24;
+
+            if(o.type==="gaucho")
+                growth=.16;
+
+            if(o.type==="car")
+                growth=.14;
+
+            hole.radius+=growth;
+
+            explode(
+                o.x,
+                o.y,
+                o.color,
+                o.type==="building"
+                ?22
+                :7
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   DESENHO DO CHÃO
+========================================================= */
+
+function drawGround(){
+
+    ctx.fillStyle="#7c9272";
+
+    ctx.fillRect(
+        -WORLD,
+        -WORLD,
+        WORLD*2,
+        WORLD*2
+    );
+
+
+    /* ruas */
+
+    const road=420;
+
+    ctx.fillStyle="#4c554d";
+
+    for(
+        let x=-WORLD;
+        x<=WORLD;
+        x+=road
+    ){
+
+        ctx.fillRect(
+            x-42,
+            -WORLD,
+            84,
+            WORLD*2
+        );
+
+    }
+
+    for(
+        let y=-WORLD;
+        y<=WORLD;
+        y+=road
+    ){
+
+        ctx.fillRect(
+            -WORLD,
+            y-42,
+            WORLD*2,
+            84
+        );
+
+    }
+
+
+    /* faixas */
+
+    ctx.strokeStyle="#d8c87977";
+    ctx.lineWidth=4;
+    ctx.setLineDash([35,30]);
+
+    for(
+        let x=-WORLD;
+        x<=WORLD;
+        x+=road
+    ){
+
+        ctx.beginPath();
+
+        ctx.moveTo(x,-WORLD);
+        ctx.lineTo(x,WORLD);
+
+        ctx.stroke();
+
+    }
+
+    for(
+        let y=-WORLD;
+        y<=WORLD;
+        y+=road
+    ){
+
+        ctx.beginPath();
+
+        ctx.moveTo(-WORLD,y);
+        ctx.lineTo(WORLD,y);
+
+        ctx.stroke();
+
+    }
+
+    ctx.setLineDash([]);
+
+
+    /* pequenos detalhes do terreno */
+
+    ctx.fillStyle="#ffffff08";
+
+    for(
+        let x=-WORLD;
+        x<WORLD;
+        x+=100
+    ){
+
+        for(
+            let y=-WORLD;
+            y<WORLD;
+            y+=100
+        ){
+
+            ctx.fillRect(
+                x+8,
+                y+8,
+                2,
+                2
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   DESENHO DOS OBJETOS
+========================================================= */
+
+function drawObject(o,time){
+
+    if(!o.alive)
+        return;
+
+
+    const x=o.x;
+    const y=o.y;
+    const r=o.radius;
+
+
+    ctx.save();
+
+    ctx.translate(x,y);
+
+
+    /* sombra */
+
+    ctx.fillStyle="#0003";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        3,
+        5,
+        r,
+        r*.55,
+        0,
+        0,
+        TAU
+    );
+
+    ctx.fill();
+
+
+    switch(o.type){
+
+        /* ---------------------
+           PRÉDIO
+        --------------------- */
+
+        case "building":
+
+            ctx.fillStyle=o.color;
+
+            ctx.fillRect(
+                -r,
+                -r,
+                r*2,
+                r*2
+            );
+
+            ctx.strokeStyle="#ffffff25";
+            ctx.lineWidth=3;
+
+            ctx.strokeRect(
+                -r,
+                -r,
+                r*2,
+                r*2
+            );
+
+
+            const windowSize=
+                Math.max(5,r*.13);
+
+            ctx.fillStyle="#dce3a566";
+
+            for(
+                let xx=-r+15;
+                xx<r-10;
+                xx+=25
+            ){
+
+                for(
+                    let yy=-r+15;
+                    yy<r-10;
+                    yy+=27
                 ){
 
-                    killSnake(a);
-
-                    break;
+                    ctx.fillRect(
+                        xx,
+                        yy,
+                        windowSize,
+                        windowSize
+                    );
 
                 }
 
             }
 
+            break;
 
-            if(!a.alive)
-                break;
 
-        }
+        /* ---------------------
+           CARRO
+        --------------------- */
+
+        case "car":
+
+            ctx.rotate(o.angle);
+
+            ctx.fillStyle=o.color;
+
+            ctx.fillRect(
+                -r,
+                -r*.55,
+                r*2,
+                r*1.1
+            );
+
+            ctx.fillStyle="#8eb4bd";
+
+            ctx.fillRect(
+                -r*.35,
+                -r*.42,
+                r*.7,
+                r*.35
+            );
+
+            ctx.fillStyle="#111";
+
+            ctx.fillRect(
+                -r*.65,
+                -r*.75,
+                r*.32,
+                r*.2
+            );
+
+            ctx.fillRect(
+                r*.33,
+                -r*.75,
+                r*.32,
+                r*.2
+            );
+
+            ctx.fillRect(
+                -r*.65,
+                r*.55,
+                r*.32,
+                r*.2
+            );
+
+            ctx.fillRect(
+                r*.33,
+                r*.55,
+                r*.32,
+                r*.2
+            );
+
+            break;
+
+
+        /* ---------------------
+           ÁRVORE
+        --------------------- */
+
+        case "tree":
+
+            ctx.fillStyle="#684b32";
+
+            ctx.fillRect(
+                -5,
+                -3,
+                10,
+                r+8
+            );
+
+            ctx.fillStyle=o.color;
+
+            ctx.beginPath();
+
+            ctx.arc(
+                0,
+                -r*.35,
+                r,
+                0,
+                TAU
+            );
+
+            ctx.fill();
+
+            ctx.fillStyle="#73a85b";
+
+            ctx.beginPath();
+
+            ctx.arc(
+                -r*.35,
+                -r*.55,
+                r*.55,
+                0,
+                TAU
+            );
+
+            ctx.fill();
+
+            break;
+
+
+        /* ---------------------
+           PESSOA
+        --------------------- */
+
+        case "person":
+
+            ctx.fillStyle="#3b5b9a";
+
+            ctx.fillRect(
+                -6,
+                0,
+                12,
+                13
+            );
+
+            ctx.fillStyle="#d39a72";
+
+            ctx.beginPath();
+
+            ctx.arc(
+                0,
+                -7,
+                6,
+                0,
+                TAU
+            );
+
+            ctx.fill();
+
+            ctx.fillStyle="#4b3326";
+
+            ctx.beginPath();
+
+            ctx.arc(
+                0,
+                -10,
+                6,
+                Math.PI,
+                TAU
+            );
+
+            ctx.fill();
+
+            break;
+
+
+        /* ---------------------
+           ERVA-MATE
+        --------------------- */
+
+        case "herb":
+
+            ctx.fillStyle="#327a32";
+
+            for(
+                let i=0;
+                i<5;
+                i++
+            ){
+
+                const a=
+                    i*TAU/5;
+
+                ctx.beginPath();
+
+                ctx.ellipse(
+                    Math.cos(a)*5,
+                    Math.sin(a)*5,
+                    3,
+                    8,
+                    a,
+                    0,
+                    TAU
+                );
+
+                ctx.fill();
+
+            }
+
+            break;
+
+
+        /* ---------------------
+           ÁGUA
+        --------------------- */
+
+        case "water":
+
+            ctx.fillStyle="#4faeb5";
+
+            ctx.beginPath();
+
+            ctx.arc(
+                0,
+                0,
+                r,
+                0,
+                TAU
+            );
+
+            ctx.fill();
+
+            ctx.strokeStyle="#b7ffff99";
+            ctx.lineWidth=2;
+
+            ctx.beginPath();
+
+            ctx.arc(
+                -3,
+                -3,
+                r*.55,
+                0,
+                TAU
+            );
+
+            ctx.stroke();
+
+            break;
+
+
+        /* ---------------------
+           CUIA DE CHIMARRÃO
+        --------------------- */
+
+        case "chimarrao":
+
+            ctx.fillStyle="#795536";
+
+            ctx.beginPath();
+
+            ctx.ellipse(
+                0,
+                0,
+                r,
+                r*.75,
+                0,
+                0,
+                TAU
+            );
+
+            ctx.fill();
+
+            ctx.fillStyle="#426b31";
+
+            ctx.beginPath();
+
+            ctx.ellipse(
+                0,
+                -3,
+                r*.75,
+                r*.45,
+                0,
+                0,
+                TAU
+            );
+
+            ctx.fill();
+
+            break;
+
+
+        /* ---------------------
+           GAÚCHO
+        --------------------- */
+
+        case "gaucho":
+
+            /*
+              chapéu
+            */
+
+            ctx.fillStyle="#493522";
+
+            ctx.beginPath();
+
+            ctx.ellipse(
+                0,
+                -r*.7,
+                r*.75,
+                r*.25,
+                0,
+                0,
+                TAU
+            );
+
+            ctx.fill();
+
+            ctx.fillRect(
+                -r*.25,
+                -r*.95,
+                r*.5,
+                r*.35
+            );
+
+
+            /* corpo */
+
+            ctx.fillStyle="#70482f";
+
+            ctx.fillRect(
+                -7,
+                -3,
+                14,
+                19
+            );
+
+
+            /* rosto */
+
+            ctx.fillStyle="#b97853";
+
+            ctx.beginPath();
+
+            ctx.arc(
+                0,
+                -8,
+                7,
+                0,
+                TAU
+            );
+
+            ctx.fill();
+
+
+            /* lenço */
+
+            ctx.fillStyle="#b23d38";
+
+            ctx.fillRect(
+                -6,
+                -1,
+                12,
+                4
+            );
+
+            break;
+
+
+        /* ---------------------
+           CAVALO
+        --------------------- */
+
+        case "horse":
+
+            ctx.rotate(o.angle);
+
+            ctx.fillStyle=o.color;
+
+            ctx.beginPath();
+
+            ctx.ellipse(
+                0,
+                0,
+                r,
+                r*.48,
+                0,
+                0,
+                TAU
+            );
+
+            ctx.fill();
+
+
+            /* pescoço */
+
+            ctx.fillRect(
+                r*.45,
+                -r*.42,
+                r*.45,
+                r*.55
+            );
+
+
+            /* cabeça */
+
+            ctx.beginPath();
+
+            ctx.ellipse(
+                r*.8,
+                -r*.35,
+                r*.35,
+                r*.27,
+                0,
+                0,
+                TAU
+            );
+
+            ctx.fill();
+
+
+            /* pernas */
+
+            ctx.fillRect(
+                -r*.55,
+                r*.25,
+                5,
+                r*.6
+            );
+
+            ctx.fillRect(
+                -r*.1,
+                r*.25,
+                5,
+                r*.6
+            );
+
+            ctx.fillRect(
+                r*.3,
+                r*.25,
+                5,
+                r*.6
+            );
+
+            ctx.fillRect(
+                r*.65,
+                r*.2,
+                5,
+                r*.6
+            );
+
+
+            /* crina */
+
+            ctx.fillStyle="#30251e";
+
+            ctx.fillRect(
+                r*.4,
+                -r*.55,
+                r*.18,
+                r*.65
+            );
+
+            break;
+
+
+        /* ---------------------
+           BANCO
+        --------------------- */
+
+        case "bench":
+
+            ctx.fillStyle=o.color;
+
+            ctx.fillRect(
+                -r,
+                -r*.35,
+                r*2,
+                r*.45
+            );
+
+            ctx.fillRect(
+                -r*.8,
+                r*.25,
+                5,
+                r*.55
+            );
+
+            ctx.fillRect(
+                r*.65,
+                r*.25,
+                5,
+                r*.55
+            );
+
+            break;
+
+
+        /* ---------------------
+           POSTE
+        --------------------- */
+
+        case "lamp":
+
+            ctx.fillStyle=o.color;
+
+            ctx.fillRect(
+                -2,
+                -r,
+                4,
+                r*2
+            );
+
+            ctx.fillStyle="#e7d783";
+
+            ctx.beginPath();
+
+            ctx.arc(
+                0,
+                -r,
+                6,
+                0,
+                TAU
+            );
+
+            ctx.fill();
+
+            break;
 
     }
+
+
+    ctx.restore();
 
 }
 
 
-/* ==========================================================
-   CAMERA
-========================================================== */
+/* =========================================================
+   DESENHO DA CUIA PRINCIPAL
+========================================================= */
+
+function drawHole(){
+
+    const r=hole.radius;
+
+
+    /*
+      Sombra externa
+    */
+
+    ctx.save();
+
+    ctx.shadowColor="#000";
+    ctx.shadowBlur=30;
+
+
+    /* borda da cuia */
+
+    const gradient=
+        ctx.createRadialGradient(
+            hole.x-r*.25,
+            hole.y-r*.25,
+            r*.2,
+            hole.x,
+            hole.y,
+            r
+        );
+
+    gradient.addColorStop(
+        0,
+        "#172218"
+    );
+
+    gradient.addColorStop(
+        .65,
+        "#07100b"
+    );
+
+    gradient.addColorStop(
+        1,
+        "#020503"
+    );
+
+
+    ctx.fillStyle=gradient;
+
+    ctx.beginPath();
+
+    ctx.arc(
+        hole.x,
+        hole.y,
+        r,
+        0,
+        TAU
+    );
+
+    ctx.fill();
+
+    ctx.shadowBlur=0;
+
+
+    /*
+      Borda externa
+    */
+
+    ctx.strokeStyle="#a77a46";
+
+    ctx.lineWidth=
+        clamp(r*.12,3,14);
+
+    ctx.stroke();
+
+
+    /*
+      interior escuro
+    */
+
+    ctx.fillStyle="#020302";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        hole.x,
+        hole.y,
+        r*.82,
+        0,
+        TAU
+    );
+
+    ctx.fill();
+
+
+    /*
+      erva mate dentro da cuia
+    */
+
+    ctx.fillStyle="#315629";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        hole.x-r*.1,
+        hole.y-r*.1,
+        r*.55,
+        0,
+        TAU
+    );
+
+    ctx.fill();
+
+
+    /*
+      bombilla
+    */
+
+    ctx.strokeStyle="#b8b0a0";
+
+    ctx.lineWidth=
+        clamp(r*.055,2,7);
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        hole.x+r*.15,
+        hole.y-r*.2
+    );
+
+    ctx.lineTo(
+        hole.x+r*.65,
+        hole.y-r*.7
+    );
+
+    ctx.stroke();
+
+
+    /*
+      reflexo
+    */
+
+    ctx.strokeStyle="#ffffff22";
+
+    ctx.lineWidth=3;
+
+    ctx.beginPath();
+
+    ctx.arc(
+        hole.x-r*.2,
+        hole.y-r*.2,
+        r*.68,
+        Math.PI*1.1,
+        Math.PI*1.65
+    );
+
+    ctx.stroke();
+
+
+    ctx.restore();
+
+}
+
+
+/* =========================================================
+   TRANSFORMAÇÃO DE CÂMERA
+========================================================= */
+
+function beginWorld(){
+
+    ctx.save();
+
+    ctx.translate(
+        W/2,
+        H/2
+    );
+
+    ctx.scale(
+        camera.zoom,
+        camera.zoom
+    );
+
+    ctx.translate(
+        -camera.x,
+        -camera.y
+    );
+
+}
+
+
+function endWorld(){
+
+    ctx.restore();
+
+}
+
+
+/* =========================================================
+   CÂMERA
+========================================================= */
 
 function updateCamera(dt){
-
-    if(!player)
-        return;
-
 
     camera.x=
         lerp(
             camera.x,
-            player.x,
-            1-Math.exp(
-                -CONFIG.cameraSmooth*dt
-            )
+            hole.x,
+            1-Math.exp(-7*dt)
         );
-
 
     camera.y=
         lerp(
             camera.y,
-            player.y,
-            1-Math.exp(
-                -CONFIG.cameraSmooth*dt
-            )
+            hole.y,
+            1-Math.exp(-7*dt)
         );
 
 
+    /*
+      Conforme a cuia cresce,
+      a câmera afasta.
+    */
+
     const targetZoom=
         clamp(
-            1.05-
-            player.length/600,
-            .58,
-            1.05
+            1.15-
+            hole.radius/650,
+            .42,
+            1.15
         );
 
 
@@ -1844,247 +2427,342 @@ function updateCamera(dt){
 }
 
 
-/* ==========================================================
-   WORLD RENDER
-========================================================== */
+/* =========================================================
+   MOVIMENTO DA CUIA
+========================================================= */
 
-function drawBackground(){
+function updateHole(dt){
 
-    ctx.fillStyle="#030812";
+    let dx=
+        input.x-W/2;
 
-    ctx.fillRect(
-        0,
-        0,
-        W,
-        H
-    );
+    let dy=
+        input.y-H/2;
 
 
-    /* grade */
+    if(input.joystick){
 
-    const grid=
-        100*camera.zoom;
+        dx=
+            input.joystickX;
 
-    let offsetX=
-        W/2-
-        camera.x*camera.zoom;
+        dy=
+            input.joystickY;
 
-    let offsetY=
-        H/2-
-        camera.y*camera.zoom;
+        const len=
+            Math.hypot(dx,dy);
 
+        if(len>.05){
 
-    offsetX=
-        ((offsetX%grid)+grid)%grid;
+            dx/=len;
+            dy/=len;
 
-    offsetY=
-        ((offsetY%grid)+grid)%grid;
-
-
-    ctx.strokeStyle="#00b8e80b";
-    ctx.lineWidth=1;
-
-    ctx.beginPath();
-
-
-    for(
-        let x=offsetX;
-        x<W;
-        x+=grid
-    ){
-
-        ctx.moveTo(x,0);
-        ctx.lineTo(x,H);
+        }
 
     }
 
 
-    for(
-        let y=offsetY;
-        y<H;
-        y+=grid
-    ){
+    const len=
+        Math.hypot(dx,dy);
 
-        ctx.moveTo(0,y);
-        ctx.lineTo(W,y);
+
+    if(len>4){
+
+        dx/=len;
+        dy/=len;
+
+
+        /*
+          Cuia fica mais lenta conforme cresce,
+          mas nunca fica inutilizável.
+        */
+
+        const speed=
+            hole.speed/
+            (1+hole.radius/450);
+
+
+        hole.x+=
+            dx*
+            speed*
+            dt;
+
+        hole.y+=
+            dy*
+            speed*
+            dt;
 
     }
 
 
-    ctx.stroke();
+    /*
+      limite do mapa
+    */
 
+    const limit=
+        WORLD-hole.radius;
 
-    /* iluminação central */
-
-    const glow=
-        ctx.createRadialGradient(
-            W/2,
-            H/2,
-            50,
-            W/2,
-            H/2,
-            Math.max(W,H)*.75
+    hole.x=
+        clamp(
+            hole.x,
+            -limit,
+            limit
         );
 
-    glow.addColorStop(
-        0,
-        "#08304b18"
-    );
-
-    glow.addColorStop(
-        1,
-        "#000000aa"
-    );
-
-
-    ctx.fillStyle=glow;
-
-    ctx.fillRect(
-        0,
-        0,
-        W,
-        H
-    );
+    hole.y=
+        clamp(
+            hole.y,
+            -limit,
+            limit
+        );
 
 }
 
 
-/* ==========================================================
-   DRAW FOOD
-========================================================== */
+/* =========================================================
+   MINIMAPA
+========================================================= */
 
-function drawFood(time){
+function drawMinimap(){
 
-    const maxDistance=
-        Math.max(W,H)/
-        camera.zoom+
-        300;
+    const size=150;
+
+    mctx.clearRect(
+        0,
+        0,
+        size,
+        size
+    );
+
+    mctx.fillStyle="#071009";
+
+    mctx.fillRect(
+        0,
+        0,
+        size,
+        size
+    );
 
 
-    for(const f of foods){
+    /*
+      ruas simplificadas
+    */
+
+    mctx.strokeStyle="#ffffff09";
+    mctx.lineWidth=1;
+
+    for(
+        let i=0;
+        i<10;
+        i++
+    ){
+
+        const p=
+            10+i*14;
+
+        mctx.beginPath();
+        mctx.moveTo(p,0);
+        mctx.lineTo(p,size);
+        mctx.stroke();
+
+        mctx.beginPath();
+        mctx.moveTo(0,p);
+        mctx.lineTo(size,p);
+        mctx.stroke();
+
+    }
+
+
+    const scale=
+        (size-12)/
+        (WORLD*2);
+
+
+    function mx(x){
+
+        return 6+
+            (x+WORLD)*scale;
+
+    }
+
+    function my(y){
+
+        return 6+
+            (y+WORLD)*scale;
+
+    }
+
+
+    /* objetos importantes */
+
+    for(const o of objects){
+
+        if(!o.alive)
+            continue;
 
         if(
-            Math.abs(f.x-camera.x)>
-            maxDistance ||
-            Math.abs(f.y-camera.y)>
-            maxDistance
+            o.type!=="building" &&
+            o.type!=="horse" &&
+            o.type!=="gaucho"
         )
             continue;
 
 
-        const sx=
-            W/2+
-            (f.x-camera.x)*
-            camera.zoom;
-
-        const sy=
-            H/2+
-            (f.y-camera.y)*
-            camera.zoom;
+        mctx.fillStyle=
+            o.type==="building"
+            ?"#6d7d70"
+            :"#bd8a58";
 
 
-        const pulse=
-            Math.sin(
-                time*.004+
-                f.phase
-            )*.8;
-
-
-        const r=
-            Math.max(
-                1.5,
-                (f.radius+pulse)*
-                camera.zoom
-            );
-
-
-        ctx.fillStyle=f.color;
-
-        ctx.shadowColor=f.color;
-        ctx.shadowBlur=12;
-
-
-        ctx.beginPath();
-
-        ctx.arc(
-            sx,
-            sy,
-            r,
-            0,
-            TAU
+        mctx.fillRect(
+            mx(o.x),
+            my(o.y),
+            2,
+            2
         );
-
-        ctx.fill();
 
     }
 
 
-    ctx.shadowBlur=0;
+    /* cuia */
+
+    mctx.fillStyle="#d0e889";
+
+    mctx.shadowColor="#a8d36e";
+    mctx.shadowBlur=8;
+
+    mctx.beginPath();
+
+    mctx.arc(
+        mx(hole.x),
+        my(hole.y),
+        3,
+        0,
+        TAU
+    );
+
+    mctx.fill();
+
+    mctx.shadowBlur=0;
 
 }
 
 
-/* ==========================================================
-   DRAW SNAKES
-========================================================== */
+/* =========================================================
+   HUD
+========================================================= */
 
-function drawSnakes(){
+let timeLeft=
+    CONFIG.timeLimit;
 
-    ctx.save();
+function updateHUD(){
+
+    document.getElementById("score")
+        .textContent=
+        hole.score.toLocaleString(
+            "pt-BR"
+        );
+
+
+    document.getElementById("sizeValue")
+        .textContent=
+        Math.floor(hole.radius);
+
+
+    const progress=
+        clamp(
+            hole.radius/160,
+            .05,
+            1
+        )*100;
+
+
+    document.getElementById("progressBar")
+        .style.width=
+        progress+"%";
+
+
+    const minutes=
+        Math.floor(timeLeft/60);
+
+    const seconds=
+        Math.floor(timeLeft%60)
+        .toString()
+        .padStart(2,"0");
+
+
+    document.getElementById("timerValue")
+        .textContent=
+        `${minutes}:${seconds}`;
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function render(time){
+
+    ctx.fillStyle="#7c9272";
+
+    ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    beginWorld();
+
+
+    drawGround();
 
 
     /*
-      Transformação única do mundo.
-      Isso corrige o principal problema do código anterior:
-      não misturamos coordenadas de tela e mundo.
+      Ordena objetos por posição Y para
+      criar uma pequena sensação de profundidade.
     */
 
-    ctx.translate(W/2,H/2);
+    const visible=[];
 
-    ctx.scale(
-        camera.zoom,
-        camera.zoom
+    const viewW=
+        W/camera.zoom+300;
+
+    const viewH=
+        H/camera.zoom+300;
+
+
+    for(const o of objects){
+
+        if(!o.alive)
+            continue;
+
+        if(
+            Math.abs(o.x-camera.x)>
+            viewW ||
+            Math.abs(o.y-camera.y)>
+            viewH
+        )
+            continue;
+
+        visible.push(o);
+
+    }
+
+
+    visible.sort(
+        (a,b)=>a.y-b.y
     );
 
-    ctx.translate(
-        -camera.x,
-        -camera.y
-    );
+
+    for(const o of visible)
+        drawObject(o,time);
 
 
-    for(const bot of bots)
-        bot.draw();
-
-
-    if(player)
-        player.draw();
-
-
-    ctx.restore();
-
-}
-
-
-/* ==========================================================
-   PARTICLES RENDER
-========================================================== */
-
-function drawParticles(){
-
-    ctx.save();
-
-    ctx.translate(W/2,H/2);
-
-    ctx.scale(
-        camera.zoom,
-        camera.zoom
-    );
-
-    ctx.translate(
-        -camera.x,
-        -camera.y
-    );
-
+    /*
+      partículas
+    */
 
     for(const p of particles){
 
@@ -2111,169 +2789,166 @@ function drawParticles(){
 
     }
 
-
     ctx.globalAlpha=1;
 
-    ctx.restore();
+
+    /*
+      A cuia fica por cima
+    */
+
+    drawHole();
+
+
+    endWorld();
+
+
+    /*
+      vinheta
+    */
+
+    const vignette=
+        ctx.createRadialGradient(
+            W/2,
+            H/2,
+            Math.min(W,H)*.25,
+            W/2,
+            H/2,
+            Math.max(W,H)*.75
+        );
+
+    vignette.addColorStop(
+        0,
+        "transparent"
+    );
+
+    vignette.addColorStop(
+        1,
+        "#00000055"
+    );
+
+
+    ctx.fillStyle=vignette;
+
+    ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    drawMinimap();
 
 }
 
 
-/* ==========================================================
-   MINIMAP
-========================================================== */
+/* =========================================================
+   GAME STATE
+========================================================= */
 
-function drawMinimap(){
+let running=false;
+let lastTime=performance.now();
 
-    const size=150;
-
-    mctx.clearRect(
-        0,
-        0,
-        size,
-        size
+let best=
+    Number(
+        localStorage.getItem(
+            "cuiaBest"
+        )||0
     );
 
 
-    mctx.fillStyle="#050c15";
-
-    mctx.fillRect(
-        0,
-        0,
-        size,
-        size
-    );
+document.getElementById("best")
+    .textContent=
+    best;
 
 
-    /* grade */
+/* =========================================================
+   START
+========================================================= */
 
-    mctx.strokeStyle="#ffffff0a";
+function startGame(){
 
-    mctx.strokeRect(
-        4,
-        4,
-        size-8,
-        size-8
-    );
+    generateCity();
 
 
-    const scale=
-        (size-16)/
-        (CONFIG.worldSize*2);
+    hole.x=0;
+    hole.y=0;
+
+    hole.radius=
+        CONFIG.startRadius;
+
+    hole.score=0;
+
+    timeLeft=
+        CONFIG.timeLimit;
 
 
-    function mapX(x){
-
-        return 8+
-            (x+
-            CONFIG.worldSize)*
-            scale;
-
-    }
+    particles.length=0;
 
 
-    function mapY(y){
-
-        return 8+
-            (y+
-            CONFIG.worldSize)*
-            scale;
-
-    }
+    camera.x=0;
+    camera.y=0;
+    camera.zoom=1;
 
 
-    /* bots */
-
-    for(const bot of bots){
-
-        if(!bot.alive)
-            continue;
-
-        mctx.fillStyle=bot.color;
-
-        mctx.beginPath();
-
-        mctx.arc(
-            mapX(bot.x),
-            mapY(bot.y),
-            2,
-            0,
-            TAU
-        );
-
-        mctx.fill();
-
-    }
+    running=true;
 
 
-    /* player */
+    document.getElementById("menu")
+        .style.display="none";
 
-    if(player){
+    document.getElementById("gameover")
+        .style.display="none";
 
-        mctx.fillStyle="#fff";
 
-        mctx.shadowColor="#00eaff";
-        mctx.shadowBlur=8;
-
-        mctx.beginPath();
-
-        mctx.arc(
-            mapX(player.x),
-            mapY(player.y),
-            3.5,
-            0,
-            TAU
-        );
-
-        mctx.fill();
-
-        mctx.shadowBlur=0;
-
-    }
+    input.x=W/2;
+    input.y=H/2;
 
 }
 
 
-/* ==========================================================
-   HUD
-========================================================== */
+/* =========================================================
+   GAME OVER
+========================================================= */
 
-function updateHUD(){
+function gameOver(){
 
-    if(!player)
-        return;
+    running=false;
 
 
-    document.getElementById("score")
+    if(hole.score>best){
+
+        best=hole.score;
+
+        localStorage.setItem(
+            "cuiaBest",
+            best
+        );
+
+    }
+
+
+    document.getElementById("best")
         .textContent=
-        score.toLocaleString("pt-BR");
+        best;
 
 
-    document.getElementById("energyBar")
-        .style.width=
-        player.energy+"%";
+    document.getElementById("finalScore")
+        .textContent=
+        hole.score.toLocaleString(
+            "pt-BR"
+        );
 
 
-    if(player.energy<25){
-
-        document.getElementById("energyBar")
-            .style.background=
-            "linear-gradient(90deg,#ff3c6e,#ff8b3d)";
-
-    }else{
-
-        document.getElementById("energyBar")
-            .style.background=
-            "linear-gradient(90deg,#00eaff,#6c5cff)";
-
-    }
+    document.getElementById("gameover")
+        .style.display="flex";
 
 }
 
 
-/* ==========================================================
-   GAME UPDATE
-========================================================== */
+/* =========================================================
+   UPDATE
+========================================================= */
 
 function update(dt){
 
@@ -2281,19 +2956,25 @@ function update(dt){
         return;
 
 
-    player.update(dt);
-
-    for(const bot of bots)
-        bot.update(dt);
+    timeLeft-=dt;
 
 
-    collectFood(player);
+    if(timeLeft<=0){
 
-    for(const bot of bots)
-        collectFood(bot);
+        timeLeft=0;
+
+        gameOver();
+
+        return;
+
+    }
 
 
-    checkCollisions();
+    updateHole(dt);
+
+    updateObjects(dt);
+
+    eatObjects();
 
     updateParticles(dt);
 
@@ -2301,31 +2982,12 @@ function update(dt){
 
     updateHUD();
 
-    drawMinimap();
-
 }
 
 
-/* ==========================================================
-   RENDER
-========================================================== */
-
-function render(time){
-
-    drawBackground();
-
-    drawFood(time);
-
-    drawParticles();
-
-    drawSnakes();
-
-}
-
-
-/* ==========================================================
+/* =========================================================
    MAIN LOOP
-========================================================== */
+========================================================= */
 
 function loop(time){
 
@@ -2334,14 +2996,16 @@ function loop(time){
 
     lastTime=time;
 
+
     /*
-      Limita o delta para impedir que o jogo
-      exploda caso a aba fique congelada.
+      Impede grandes saltos depois de
+      trocar de aba ou minimizar o navegador.
     */
 
     dt=
-        Math.min(
+        clamp(
             dt,
+            0,
             .033
         );
 
@@ -2356,53 +3020,9 @@ function loop(time){
 }
 
 
-/* ==========================================================
-   GAME OVER
-========================================================== */
-
-function endGame(){
-
-    running=false;
-
-    const final=
-        Math.floor(
-            score
-        );
-
-
-    if(final>best){
-
-        best=final;
-
-        localStorage.setItem(
-            "neonSnakeBest",
-            best
-        );
-
-    }
-
-
-    document.getElementById("finalScore")
-        .textContent=
-        final.toLocaleString("pt-BR");
-
-
-    document.getElementById("menuBest")
-        .textContent=best;
-
-
-    document.getElementById("death")
-        .style.display="flex";
-
-
-    beep(120,.25);
-
-}
-
-
-/* ==========================================================
-   BUTTONS
-========================================================== */
+/* =========================================================
+   BOTÃO MENU
+========================================================= */
 
 document
     .getElementById("play")
@@ -2420,61 +3040,75 @@ document
     );
 
 
-/* ==========================================================
-   MOBILE JOYSTICK
-========================================================== */
+/* =========================================================
+   JOYSTICK MOBILE
+========================================================= */
 
 const joystick=
-    document.getElementById("joystick");
+    document.getElementById(
+        "joystick"
+    );
 
 const stick=
-    document.getElementById("stick");
+    document.getElementById(
+        "stick"
+    );
 
 let joystickActive=false;
 
-function joystickMove(clientX,clientY){
+
+function moveJoystick(x,y){
 
     const rect=
         joystick.getBoundingClientRect();
 
-    const centerX=
+
+    const cx=
         rect.left+
         rect.width/2;
 
-    const centerY=
+    const cy=
         rect.top+
         rect.height/2;
 
-    let dx=
-        clientX-centerX;
 
-    let dy=
-        clientY-centerY;
+    let dx=x-cx;
+    let dy=y-cy;
+
 
     const max=
-        rect.width*.38;
+        rect.width*.37;
 
-    const d=
+
+    const len=
         Math.hypot(dx,dy);
 
-    if(d>max){
+
+    if(len>max){
 
         dx=
-            dx/d*max;
+            dx/len*max;
 
         dy=
-            dy/d*max;
+            dy/len*max;
 
     }
 
 
     stick.style.transform=
-        `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px))`;
+        `translate(
+            calc(-50% + ${dx}px),
+            calc(-50% + ${dy}px)
+        )`;
 
 
-    input.joystickX=dx/max;
-    input.joystickY=dy/max;
-    input.usingJoystick=true;
+    input.joystickX=
+        dx/max;
+
+    input.joystickY=
+        dy/max;
+
+    input.joystick=true;
 
 }
 
@@ -2483,17 +3117,19 @@ joystick.addEventListener(
     "touchstart",
     e=>{
 
+        e.preventDefault();
+
         joystickActive=true;
 
         const t=e.touches[0];
 
-        joystickMove(
+        moveJoystick(
             t.clientX,
             t.clientY
         );
 
     },
-    {passive:true}
+    {passive:false}
 );
 
 
@@ -2501,78 +3137,144 @@ joystick.addEventListener(
     "touchmove",
     e=>{
 
+        e.preventDefault();
+
         if(!joystickActive)
             return;
 
         const t=e.touches[0];
 
-        joystickMove(
+        moveJoystick(
             t.clientX,
             t.clientY
         );
 
     },
-    {passive:true}
+    {passive:false}
 );
+
+
+function releaseJoystick(){
+
+    joystickActive=false;
+
+    input.joystick=false;
+
+    input.joystickX=0;
+    input.joystickY=0;
+
+    stick.style.transform=
+        "translate(-50%,-50%)";
+
+}
 
 
 joystick.addEventListener(
     "touchend",
-    ()=>{
+    releaseJoystick
+);
 
-        joystickActive=false;
+joystick.addEventListener(
+    "touchcancel",
+    releaseJoystick
+);
 
-        input.joystickX=0;
-        input.joystickY=0;
 
-        input.usingJoystick=false;
+/* =========================================================
+   TECLADO
+========================================================= */
 
-        stick.style.transform=
-            "translate(-50%,-50%)";
+const keys={};
+
+window.addEventListener(
+    "keydown",
+    e=>{
+
+        keys[e.key.toLowerCase()]=true;
+
+        if(
+            e.key==="Enter" &&
+            !running
+        ){
+
+            startGame();
+
+        }
+
+    }
+);
+
+window.addEventListener(
+    "keyup",
+    e=>{
+
+        keys[e.key.toLowerCase()]=false;
 
     }
 );
 
 
-/* ==========================================================
-   MOBILE BOOST
-========================================================== */
+/*
+  WASD também controla a cuia.
+*/
 
-const boostButton=
-    document.getElementById(
-        "boostButton"
-    );
+function keyboardInput(){
+
+    if(!running)
+        return;
+
+    let x=0;
+    let y=0;
 
 
-boostButton.addEventListener(
-    "touchstart",
-    e=>{
+    if(keys["w"]||keys["arrowup"])
+        y-=1;
 
-        e.preventDefault();
+    if(keys["s"]||keys["arrowdown"])
+        y+=1;
 
-        input.boosting=true;
+    if(keys["a"]||keys["arrowleft"])
+        x-=1;
 
-    },
-    {passive:false}
+    if(keys["d"]||keys["arrowright"])
+        x+=1;
+
+
+    if(x!==0||y!==0){
+
+        input.joystick=false;
+
+        const len=
+            Math.hypot(x,y);
+
+        input.x=
+            W/2+
+            x/len*
+            Math.min(W,H)*.3;
+
+        input.y=
+            H/2+
+            y/len*
+            Math.min(W,H)*.3;
+
+    }
+
+}
+
+
+/* =========================================================
+   LOOP AUXILIAR DE TECLADO
+========================================================= */
+
+setInterval(
+    keyboardInput,
+    30
 );
 
 
-boostButton.addEventListener(
-    "touchend",
-    e=>{
-
-        e.preventDefault();
-
-        input.boosting=false;
-
-    },
-    {passive:false}
-);
-
-
-/* ==========================================================
-   START
-========================================================== */
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
 
 requestAnimationFrame(loop);
 
